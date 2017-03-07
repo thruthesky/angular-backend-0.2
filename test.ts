@@ -91,12 +91,8 @@ export class Test {
             else this.error( error, "This is not timeout error. But another error");
         });
 
-
     }
-
-    system() {
-    }
-
+    
 
     error( error, message = '' ) {
         this.count ++;
