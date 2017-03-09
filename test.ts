@@ -43,16 +43,16 @@ export class Test {
 
 
     private run() {
-        //console.info('Test::run()');
         this.api();
-        //this.system();
         this.register();
-        // this.login();
-        //this.getUserData();
         this.session_id.subscribe( id => this.login() );
         this.login_session_id.subscribe( session_id => this.getUserData( () => this.userUpdate() ) );
         this.update_session_id.subscribe( x => this.logout() );
+        
+        
         // this.forumCreate( () => this.postCreate() );
+
+
     }
 
     success( str, ...vars ) {
