@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Base } from './base';
+import { Observable } from 'rxjs/Rx';
 export * from './interface';
 export * from './define';
 import {
-    USER_LOGIN,
-    // USER_LOGIN_REPONSE_DATA,
-     USER_LOGOUT,
-     USER_REGISTER,
-    // USER_REGISTER_RESPONSE_DATA,
-     USER_UPDATE,
-    // USER_UPDATE_RESPONSE_DATA,
-    // USER_DATA_RESPONSE_DATA,
-    // USER_META_RESPONSE_DATA,
-    // USER_META_REQUEST_DATA,
-    // USER_DATA_REQUEST_DATA
+    USER_GET,
+    USER_LOGIN, USER_LOGOUT,
+    USER_REGISTER, USER_REGISTER_RESPONSE,
+    USER_UPDATE, USER_UPDATE_RESPONSE,
+    USER_GET_RESPONSE
 } from './interface';
 // import { KEY_SESSION_ID } from './defines';
 @Injectable()
@@ -33,6 +28,10 @@ export class User extends Base {
 
 
     /**
+     * 
+     * Gets user data from backend.
+     * 
+     * @note User can only get his data. so, no need to get 'session_id' as parameter. Just get it from localStorage.
      * 
      * @code
 
@@ -60,57 +59,52 @@ export class User extends Base {
 
      * @endcode
      */
-    getUserData() {
-        if( this.logged == false) return;
-        let req:any = {};
+    data() : Observable<USER_GET_RESPONSE> {
+        if ( this.logged == false ) return Observable.throw( this.errorResponse( -420, "user-not-logged-in" ));
+        let req = <USER_GET> {};
         req.route = 'user.get';
         req.session_id = this.getSessionId();
-        console.log(req);
-        return this.post( req )
-            .map( (res: any) => {
-                if ( this.isError( res ) ) return res;
-                return res;
-            });
+        return this.post( req );
     }
-    register( req: USER_REGISTER ) {
+    register( req: USER_REGISTER ) : Observable<USER_REGISTER_RESPONSE> {
         req.route = 'register';
         return this.post( req )
-        .map( (res: any) => {
-            if ( this.isError( res ) ) return res;
+        .map( ( res: USER_REGISTER_RESPONSE ) => {
             this.setSessionId( res );
             return res;
         });
     }
     
-    update( req: USER_UPDATE ) {
+    update( req: USER_UPDATE ) : Observable<USER_UPDATE_RESPONSE> {
         req.route = 'user.edit';
         req.session_id = this.getSessionId();
         return this.post( req )
-            .map( (res: any) => {
-                if ( this.isError( res ) ) return res;
+            .map( ( res: USER_UPDATE_RESPONSE ) => {
                 this.setSessionId( res );
                 return res;
             });
     }
+
     login( req: USER_LOGIN ) {
         req.route = 'login';
         return this.post( req )
             .map( (res: any) => {
-                if ( this.isError( res ) ) return res;
                 this.setSessionId( res );
                 return res;
             });
     }
+
     logout() {
-        this.deleteSessionId( );
         let req: USER_LOGOUT = {
-            route: 'user.logout',
+            route: 'logout',
             session_id: this.getSessionId()
         };
-        this.post( req ).subscribe( res => {
-            console.log("logout success: ", res );
-        });
+        let observable = this.post( req );
+        this.deleteSessionId();
+        return observable;
+
     }
+
     // getUserData() {
     //     if( this.logged == false) return;
     //     let req:any = {};

@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Backend } from './backend';
 import {
-    User, USER_REGISTER, USER_REGISTER_RESPONSE, USER_LOGIN,
+
+    User,
+    RESPONSE,
+    USER_REGISTER, USER_REGISTER_RESPONSE, USER_LOGIN, USER_LOGIN_RESPONSE,
+    USER_UPDATE, USER_UPDATE_RESPONSE,
     ERROR_TIMEOUT
 } from './user';
 // import { Forum, CONFIG_CREATE, CONFIG_CREATE_RESPONSE } from './forum';
 
 //import { URL_BACKEND_API } from './config';
+
 
 
 
@@ -21,7 +26,11 @@ export class Test {
     private count: number = 0;
 
     form = <USER_REGISTER> {};
+    
     session_id = new Subject<string>();
+    login_session_id = new Subject<string>();
+    update_session_id = new Subject<string>();
+
     my_session_id: string = null;
     constructor(
         // private forum: Forum,
@@ -35,45 +44,35 @@ export class Test {
 
     private run() {
         //console.info('Test::run()');
-        // this.result();
+        this.api();
         //this.system();
         this.register();
-        this.login();
-        this.getUserData();
-        // this.session_id.subscribe( id => this.login(id) );
-        
+        // this.login();
+        //this.getUserData();
+        this.session_id.subscribe( id => this.login() );
+        this.login_session_id.subscribe( session_id => this.getUserData( () => this.userUpdate() ) );
+        this.update_session_id.subscribe( x => this.logout() );
         // this.forumCreate( () => this.postCreate() );
     }
 
-    success( str ) {
+    success( str, ...vars ) {
         this.count ++;
-        console.info(`[${this.count}] SUCCESS: ${str}`);
+        console.info(`[${this.count}] SUCCESS: ${str}`, vars);
     }
     
-    result() {
-        //Testing
-        // let data:any = {
-        //     route:null,
-        //     id:null,
-        //     password:null
-        // };
-        // data.id ="test6";
-        // data.password ="testpassword";
-        // this.user.register(data).subscribe( (re:any)=>{
-        //     console.log("Registration:",re);
-        //     this.success("Registration: " + re['data']['session_id']);
-        // },err => this.error( err ));
-         //Testing
+    api() {
+
         this.backend.successCall().subscribe( re => {
             this.success("Version: " + re['data']['version']);
-        }, err => this.error( err ) );
+        }, err => {
+            this.error( err, "successCall Test: " );
+        } );
 
         this.backend.errorCall().subscribe( re => {
             this.error(re, 'This should be an error. But success ' + this.backend.getErrorString( re ));
         }, ( error ) => {
             this.success("errorCall() : This is fake error. " + this.backend.getErrorString(error) );
         } );
-
 
         this.backend.internalServerError().subscribe( re => {
             this.error("This must be 500 internal server error. but success");
@@ -95,12 +94,29 @@ export class Test {
 
         
         this.backend.timeoutError().subscribe( re => {
-            console.error( re, "This should be timeout error. But success." );
+            this.error( re, "This should be timeout error. But success." );
         }, error => {
             if ( error.message == ERROR_TIMEOUT ) {
                 this.success('This should be timeout error. ' + this.backend.getErrorString( error ));
             }
             else this.error( error, "This is not timeout error. But another error");
+        });
+
+
+
+        // route error
+        this.backend.routeMethodError().subscribe( re => {
+            this.error( re, "Must be error");
+        }, error => {
+            this.success("Route Error");
+            console.log( error );
+        });
+
+        this.backend.routeRequiredError().subscribe( re => {
+            this.error( re, "Must be error");
+        }, error => {
+            this.success("Route required variable error: name is missing.");
+            console.log( error );
         });
 
     }
@@ -111,6 +127,8 @@ export class Test {
         console.error( `[${this.count}] ERROR: ${message} - ${this.backend.getErrorString( error )}` );
     }
 
+
+
     register() {
         let id = 'user' + (new Date).getHours() + (new Date).getMinutes() + (new Date).getSeconds();
         this.form.id = id;
@@ -119,43 +137,59 @@ export class Test {
         this.form.password = id;
         this.form.mobile = '09174678000';
         this.form.gender = 'M';
-
         this.user.register( this.form ).subscribe( (res: USER_REGISTER_RESPONSE ) => {
-            if ( this.user.isError( res ) ) this.error( res );
-            else {
-                // console.log( res );
-                this.success("User registration:\n "+res['data']['session_id']);
-                this.session_id.next( res.data.session_id );
-            }
+            this.success("User registration:\n " + res.data.session_id );
+            this.session_id.next( res.data.session_id );
         }, error => {
             this.error( error );
         } );
     }
 
-    login( ) {
+
+
+    login() {
         let sampleLoginData = {
             id: this.form.id,
             password: this.form.password
         };
-        this.user.login( sampleLoginData ).subscribe( ( res: USER_LOGIN ) => {
-            if ( this.user.isError( res ) ) this.error( res );
-            else this.success( "User Login:\n "+res['data']['session_id'] );
-            this.session_id.next( res['data']['session_id'] );
+        this.user.login( sampleLoginData ).subscribe( ( res: USER_LOGIN_RESPONSE ) => {
+            this.success( "User Login:\n " + res.data.session_id );
+            this.login_session_id.next(res.data.session_id);
         }, error => {
             this.error( error );
         });
     }
-    getUserData( ) {
-        this.user.getUserData(  ).subscribe( ( res: any ) => {
-            if ( this.user.isError( res ) ) this.error( res );
-            else {
-                this.success( "User Get Data: ");
-                console.log(res['data']['user']);
-            } 
+
+
+    getUserData( callback ) {
+        this.user.data().subscribe( ( res: any ) => {
+            this.success( "User Get Data: ");
+            console.log(res['data']['user']);
+            callback();
         }, error => {
-            this.error( error );
+            this.error( error, "getUserData() : error : " );
         });
     }
+
+    userUpdate() {
+        let record: USER_UPDATE = {};
+        this.user.update( record ).subscribe( (res: USER_UPDATE_RESPONSE ) => {
+            this.success("userUpdate() : ", res);
+            this.update_session_id.next( res.data.session_id );
+        }, err => {
+            this.error( err, "userUpdate(): ");
+        });
+    }
+
+    logout() {
+        this.user.logout().subscribe( (res: RESPONSE ) => {
+            this.success("logout() : ", res);
+        }, err => {
+            this.error( err, "logout(): ");
+        });
+    }
+
+
 
     // forumCreate( callback ) {
     //     //console.log('forumCreate');

@@ -1,7 +1,7 @@
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { URL_BACKEND_API, BACKEND_API_CONNECTION_TIMEOUT } from './config';
-import { USER_LOGIN_RESPONSE } from './interface';
+import { USER_LOGIN_RESPONSE, RESPONSE } from './interface';
 import { API_KEY_SESSION_ID, ERROR_JSON_PARSE, ERROR_TIMEOUT } from './define';
 
 
@@ -18,8 +18,21 @@ export class Api {
         this.http = http;
     }
 
-    errorCode( error_code ) {
-        return {
+
+    /**
+     * 
+     * @param error_code 
+     * @param error_message 
+     * 
+     * @code
+     *      this.errorResponse( 'error-code' ); // Simply put error code
+     *      this.errorResponse( -1234, 'error-message' ); // Error code with message. error code must be less than 0
+     * @endcode
+     * 
+     */
+    errorResponse( error_code, error_message = '' ) : RESPONSE {
+        if ( error_message ) return { code: error_code, message: error_message };
+        else return {
             code: -999,
             message: error_code
         };
@@ -101,17 +114,17 @@ export class Api {
                 //console.log("catch() after .timeout()");
                 //console.log(err);
                 if ( err instanceof TimeoutError ) {
-                    return Observable.throw( this.errorCode( ERROR_TIMEOUT ) );
+                    return Observable.throw( this.errorResponse( ERROR_TIMEOUT ) );
                 }
                 return Observable.throw( err );
-            })         
+            })
             .map( (e) => {
                 let re = e.json();
                 if ( this.isError( re ) ) throw re;
                 else return re;
              } )
             .catch( err => {
-                if ( err instanceof SyntaxError ) return Observable.throw( this.errorCode( ERROR_JSON_PARSE )  ); // JSON 에러
+                if ( err instanceof SyntaxError ) return Observable.throw( this.errorResponse( ERROR_JSON_PARSE )  ); // JSON 에러
                 else if ( err && typeof err['code'] !== void 0 && err['code'] < 0 ) return Observable.throw( err ); // 프로그램 적 에러
                 else return Observable.throw( err );
             } );
@@ -204,10 +217,17 @@ export class Api {
     timeoutError() {
         return this.get( URL_BACKEND_API + '?route=system.timeoutError', { 'timeout': 1000 } );
     }
-
     internalServerError() {
         return this.get( URL_BACKEND_API + '?route=system.internalServerError');
     }
+    routeMethodError() {
+        return this.get( URL_BACKEND_API + '?route=system.routeMethodError' );
+    }
+    routeRequiredError() {
+        return this.get( URL_BACKEND_API + '?route=system.routeRequiredError' );
+    }
+    
+
     
 
   /**
