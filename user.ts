@@ -63,7 +63,7 @@ export class User extends Base {
     getUserData() {
         if( this.logged == false) return;
         let req:any = {};
-        req.mc = 'user.get';
+        req.route = 'user.get';
         req.session_id = this.getSessionId();
         console.log(req);
         return this.post( req )
@@ -71,13 +71,6 @@ export class User extends Base {
                 if ( this.isError( res ) ) return res;
                 return res;
             });
-
-        // this.base.post( req,
-        //     (res) => {
-        //         success( res );
-        //     },
-        //     failure,
-        //     complete );
     }
     register( req: USER_REGISTER ) {
         req.route = 'register';
@@ -88,17 +81,9 @@ export class User extends Base {
             return res;
         });
     }
-    // register( req: USER_REGISTER ) {
-    //     req.mc = 'user.create';
-    //     return this.post( req )
-    //         .map( (res: any) => {
-    //             if ( this.isError( res ) ) return res;
-    //             this.setSessionId( res );
-    //             return res;
-    //         });
-    // }
+    
     update( req: USER_UPDATE ) {
-        req.mc = 'user.update';
+        req.route = 'user.edit';
         req.session_id = this.getSessionId();
         return this.post( req )
             .map( (res: any) => {
@@ -108,7 +93,7 @@ export class User extends Base {
             });
     }
     login( req: USER_LOGIN ) {
-        req.mc = 'user.login';
+        req.route = 'login';
         return this.post( req )
             .map( (res: any) => {
                 if ( this.isError( res ) ) return res;
@@ -119,11 +104,61 @@ export class User extends Base {
     logout() {
         this.deleteSessionId( );
         let req: USER_LOGOUT = {
-            mc: 'user.logout',
+            route: 'user.logout',
             session_id: this.getSessionId()
         };
         this.post( req ).subscribe( res => {
             console.log("logout success: ", res );
         });
     }
+    // getUserData() {
+    //     if( this.logged == false) return;
+    //     let req:any = {};
+    //     req.mc = 'user.get';
+    //     req.session_id = this.getSessionId();
+    //     console.log(req);
+    //     return this.post( req )
+    //         .map( (res: any) => {
+    //             if ( this.isError( res ) ) return res;
+    //             return res;
+    //         });
+    // }
+    // register( req: USER_REGISTER ) {
+    //     req.mc = 'user.create';
+    //     return this.post( req )
+    //         .map( (res: any) => {
+    //             if ( this.isError( res ) ) return res;
+    //             this.setSessionId( res );
+    //             return res;
+    //         });
+    // }
+    // update( req: USER_UPDATE ) {
+    //     req.mc = 'user.update';
+    //     req.session_id = this.getSessionId();
+    //     return this.post( req )
+    //         .map( (res: any) => {
+    //             if ( this.isError( res ) ) return res;
+    //             this.setSessionId( res );
+    //             return res;
+    //         });
+    // }
+    // login( req: USER_LOGIN ) {
+    //     req.mc = 'user.login';
+    //     return this.post( req )
+    //         .map( (res: any) => {
+    //             if ( this.isError( res ) ) return res;
+    //             this.setSessionId( res );
+    //             return res;
+    //         });
+    // }
+    // logout() {
+    //     this.deleteSessionId( );
+    //     let req: USER_LOGOUT = {
+    //         mc: 'user.logout',
+    //         session_id: this.getSessionId()
+    //     };
+    //     this.post( req ).subscribe( res => {
+    //         console.log("logout success: ", res );
+    //     });
+    // }
 }

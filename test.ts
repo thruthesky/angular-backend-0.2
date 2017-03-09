@@ -22,7 +22,7 @@ export class Test {
 
     form = <USER_REGISTER> {};
     session_id = new Subject<string>();
-
+    my_session_id: string = null;
     constructor(
         // private forum: Forum,
         private backend: Backend,
@@ -38,7 +38,8 @@ export class Test {
         // this.result();
         //this.system();
         this.register();
-
+        this.login();
+        this.getUserData();
         // this.session_id.subscribe( id => this.login(id) );
         
         // this.forumCreate( () => this.postCreate() );
@@ -131,11 +132,26 @@ export class Test {
         } );
     }
 
-    login( session_id ) {
-        //console.log("with session_id: ", session_id );
-        this.user.login( this.form ).subscribe( ( res: USER_LOGIN ) => {
+    login( ) {
+        let sampleLoginData = {
+            id: this.form.id,
+            password: this.form.password
+        };
+        this.user.login( sampleLoginData ).subscribe( ( res: USER_LOGIN ) => {
             if ( this.user.isError( res ) ) this.error( res );
-            else this.success( "Login success" );
+            else this.success( "User Login:\n "+res['data']['session_id'] );
+            this.session_id.next( res['data']['session_id'] );
+        }, error => {
+            this.error( error );
+        });
+    }
+    getUserData( ) {
+        this.user.getUserData(  ).subscribe( ( res: any ) => {
+            if ( this.user.isError( res ) ) this.error( res );
+            else {
+                this.success( "User Get Data: ");
+                console.log(res['data']['user']);
+            } 
         }, error => {
             this.error( error );
         });
