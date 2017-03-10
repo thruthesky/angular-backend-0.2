@@ -93,14 +93,14 @@ export class Test {
         }, 100 );
 
         
-        this.backend.timeoutError().subscribe( re => {
-            this.error( re, "This should be timeout error. But success." );
-        }, error => {
-            if ( error.message == ERROR_TIMEOUT ) {
-                this.success('This should be timeout error. ' + this.backend.getErrorString( error ));
-            }
-            else this.error( error, "This is not timeout error. But another error");
-        });
+        // this.backend.timeoutError().subscribe( re => {
+        //     this.error( re, "This should be timeout error. But success." );
+        // }, error => {
+        //     if ( error.message == ERROR_TIMEOUT ) {
+        //         this.success('This should be timeout error. ' + this.backend.getErrorString( error ));
+        //     }
+        //     else this.error( error, "This is not timeout error. But another error");
+        // });
 
 
 
