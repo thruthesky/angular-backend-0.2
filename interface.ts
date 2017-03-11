@@ -56,10 +56,10 @@ export interface USER_SESSION_ID_RESPONSE extends RESPONSE {
  * This is identical of 'user' table.
  */
 export interface USER extends ID_PASSWORD, USER_FIELDS {}; // user data table.
-export interface USER_GET extends REQUEST {}; // use it to get user data.
+export interface USER_DATA extends REQUEST {}; // use it to get user data.
 
 
-export interface USER_GET_RESPONSE extends RESPONSE {                   // to get response of USER_GET
+export interface USER_DATA_RESPONSE extends RESPONSE {                   // to get response of USER_GET
     data: USER
 };
 

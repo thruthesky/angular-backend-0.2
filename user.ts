@@ -1,32 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Base } from './base';
-<<<<<<< HEAD
-export * from './interface';
-export * from './define';
-import {
-    USER_LOGIN,
-    // USER_LOGIN_REPONSE_DATA,
-     USER_LOGOUT,
-     USER_REGISTER,
-    // USER_REGISTER_RESPONSE_DATA,
-     USER_UPDATE,
-    // USER_UPDATE_RESPONSE_DATA,
-    // USER_DATA_RESPONSE_DATA,
-    // USER_META_RESPONSE_DATA,
-    // USER_META_REQUEST_DATA,
-    // USER_DATA_REQUEST_DATA
-=======
+
 import { Observable } from 'rxjs/Rx';
 export * from './interface';
 export * from './define';
 import {
-    USER_GET,
+    USER_DATA, USER_DATA_RESPONSE,
     USER_LOGIN, USER_LOGOUT,
     USER_REGISTER, USER_REGISTER_RESPONSE,
-    USER_UPDATE, USER_UPDATE_RESPONSE,
-    USER_GET_RESPONSE
->>>>>>> manuel
+    USER_UPDATE, USER_UPDATE_RESPONSE
+
+
 } from './interface';
 // import { KEY_SESSION_ID } from './defines';
 @Injectable()
@@ -46,13 +31,12 @@ export class User extends Base {
 
     /**
      * 
-<<<<<<< HEAD
-=======
+     * 
      * Gets user data from backend.
      * 
      * @note User can only get his data. so, no need to get 'session_id' as parameter. Just get it from localStorage.
      * 
->>>>>>> manuel
+     * 
      * @code
 
         let req : USER_REGISTER_REQUEST_DATA = {
@@ -79,46 +63,11 @@ export class User extends Base {
 
      * @endcode
      */
-<<<<<<< HEAD
-    getUserData() {
-        if( this.logged == false) return;
-        let req:any = {};
-        req.mc = 'user.data';
-        req.session_id = this.getSessionId();
-        console.log(req);
-        return this.post( req )
-            .map( (res: any) => {
-                if ( this.isError( res ) ) return res;
-                return res;
-            });
-
-        // this.base.post( req,
-        //     (res) => {
-        //         success( res );
-        //     },
-        //     failure,
-        //     complete );
-    }
-    register( req: USER_REGISTER ) {
-        req.mc = 'user.create';
-        return this.post( req )
-            .map( (res: any) => {
-                if ( this.isError( res ) ) return res;
-                this.setSessionId( res );
-                return res;
-            });
-    }
-    update( req: USER_UPDATE ) {
-        req.mc = 'user.update';
-        req.session_id = this.getSessionId();
-        return this.post( req )
-            .map( (res: any) => {
-                if ( this.isError( res ) ) return res;
-=======
-    data() : Observable<USER_GET_RESPONSE> {
+    
+    data() : Observable<USER_DATA_RESPONSE> {
         if ( this.logged == false ) return Observable.throw( this.errorResponse( -420, "user-not-logged-in" ));
-        let req = <USER_GET> {};
-        req.route = 'user.get';
+        let req = <USER_DATA> {};
+        req.route = 'user.data';
         req.session_id = this.getSessionId();
         return this.post( req );
     }
@@ -136,40 +85,26 @@ export class User extends Base {
         req.session_id = this.getSessionId();
         return this.post( req )
             .map( ( res: USER_UPDATE_RESPONSE ) => {
->>>>>>> manuel
+
                 this.setSessionId( res );
                 return res;
             });
     }
-<<<<<<< HEAD
-    login( req: USER_LOGIN ) {
-        req.mc = 'user.login';
-        return this.post( req )
-            .map( (res: any) => {
-                if ( this.isError( res ) ) return res;
-=======
+
+
 
     login( req: USER_LOGIN ) {
         req.route = 'login';
         return this.post( req )
             .map( (res: any) => {
->>>>>>> manuel
+
+
                 this.setSessionId( res );
                 return res;
             });
     }
-<<<<<<< HEAD
-    logout() {
-        this.deleteSessionId( );
-        let req: USER_LOGOUT = {
-            mc: 'user.logout',
-            session_id: this.getSessionId()
-        };
-        this.post( req ).subscribe( res => {
-            console.log("logout success: ", res );
-        });
-    }
-=======
+
+
 
     logout() {
         let req: USER_LOGOUT = {
@@ -232,5 +167,5 @@ export class User extends Base {
     //         console.log("logout success: ", res );
     //     });
     // }
->>>>>>> manuel
+    
 }
