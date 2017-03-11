@@ -3,6 +3,11 @@
 Angular backend server api version 0.2
 
 
+# 0.2.4
+
+* 기본 유닛 테스트 추가
+
+
 
 # Installation
 
