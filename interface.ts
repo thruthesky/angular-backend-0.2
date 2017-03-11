@@ -1,5 +1,8 @@
 export interface REQUEST {
-    mc?: string;
+
+    route?: string;
+    
+    
     session_id?: string;
 };
 export interface RESPONSE {
@@ -34,6 +37,10 @@ export interface USER_FIELDS {
     stamp_last_login?: number;
     stamp_registration?: number;
     session_id?: string;
+
+
+    meta?: any;
+    
 };
 
 export interface USER_SESSION_ID_RESPONSE extends RESPONSE {
@@ -51,7 +58,8 @@ export interface USER_SESSION_ID_RESPONSE extends RESPONSE {
 export interface USER extends ID_PASSWORD, USER_FIELDS {}; // user data table.
 export interface USER_GET extends REQUEST {}; // use it to get user data.
 
-export interface USER_RESPONSE extends RESPONSE {                   // to get response of USER_GET
+
+export interface USER_GET_RESPONSE extends RESPONSE {                   // to get response of USER_GET
     data: USER
 };
 
