@@ -1,8 +1,5 @@
 export interface REQUEST {
-
     route?: string;
-    
-    
     session_id?: string;
 };
 export interface RESPONSE {
@@ -43,10 +40,16 @@ export interface USER_FIELDS {
     
 };
 
-export interface USER_SESSION_ID_RESPONSE extends RESPONSE {
-    data: {
-        session_id: string;
-    }
+
+export interface SESSION_INFO {
+    session_id: string;
+    id: string;
+    name: string;
+    email: string;
+};
+
+export interface USER_SESSION_RESPONSE extends RESPONSE {
+    data: SESSION_INFO
 };
 
 
@@ -59,30 +62,44 @@ export interface USER extends ID_PASSWORD, USER_FIELDS {}; // user data table.
 export interface USER_DATA extends REQUEST {}; // use it to get user data.
 
 
-export interface USER_DATA_RESPONSE extends RESPONSE {                   // to get response of USER_GET
+export interface USER_DATA_RESPONSE extends RESPONSE {                   // to get response of USER_DATA
     data: USER
+};
+
+
+export interface USER_LIST extends REQUEST {
+    from?: number;
+    limit?: number;
+    where?: string;
+    bind?: string;
+    order?: string;
+};
+export interface USER_LIST_RESPONSE extends RESPONSE {                       // array of users for user.list request
+    data: {
+        users: Array<USER>
+    }
 };
 
 export interface USER_REGISTER extends REQUEST, USER {      // to register
     meta?: any;
 };
-export type USER_UPDATE_RESPONSE = USER_SESSION_ID_RESPONSE;        // to get response of USER_REGISTER
+export type USER_UPDATE_RESPONSE = USER_SESSION_RESPONSE;        // to get response of USER_REGISTER
 
 export interface USER_UPDATE extends REQUEST, USER_FIELDS { // to update a user
     meta?: any;
 };
-export type USER_REGISTER_RESPONSE = USER_SESSION_ID_RESPONSE;              // to get response of USER_UPDATE
+export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_UPDATE
 
 export interface USER_META_REQUEST  extends REQUEST {};
 export interface USER_META_RESPONSE extends RESPONSE {};
 
 
 export interface USER_LOGIN extends REQUEST, ID_PASSWORD {};        // to login
-export type USER_LOGIN_RESPONSE = USER_SESSION_ID_RESPONSE;              // to get response of USER_LOGIN
+export type USER_LOGIN_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_LOGIN
 
 
 export interface USER_LOGOUT extends REQUEST {};            // to log out. use 'RESPONSE' for the response.
-
+export interface USER_LOGOUT_RESPONSE extends REQUEST {};
 
 
 export interface ADMIN_USER_SEARCH_REQUEST extends REQUEST {        // for admin, to search user.
@@ -170,3 +187,5 @@ export interface POSTS extends RESPONSE {
         POST_FIELDS
     }>
 };
+
+

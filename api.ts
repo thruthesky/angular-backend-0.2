@@ -2,9 +2,9 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { URL_BACKEND_API, BACKEND_API_CONNECTION_TIMEOUT } from './config';
 
-import { USER_LOGIN_RESPONSE, RESPONSE } from './interface';
+import { USER_LOGIN_RESPONSE, RESPONSE, SESSION_INFO, USER_SESSION_RESPONSE } from './interface';
 
-import { API_KEY_SESSION_ID, ERROR_JSON_PARSE, ERROR_TIMEOUT } from './define';
+import { API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT } from './define';
 
 
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
@@ -42,6 +42,17 @@ export class Api {
         };
     }
 
+    /**
+     * 
+     * 
+     * 
+     * @param code 
+     * @param message 
+     */
+    error( code, message ) {
+         return Observable.throw( this.errorResponse( -420, "user-not-logged-in" ));
+    }
+
     
     get requestOptions() : RequestOptions {
         let headers  = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
@@ -50,21 +61,63 @@ export class Api {
     }
 
 
+
+    get logged() : boolean {
+        if ( this.getSessionId() ) return true;
+        else return false;
+    }
+
+    /**
+     * @deprecated use session info.
+     * @param res 
+     */
+    /*
     setSessionId( res: USER_LOGIN_RESPONSE ) {
       if ( res === void 0 || res.data === void 0 || res.data.session_id === void 0 ) {
         alert("CRITICAL ERROR: sessionSessionId() - please report this to admin.");
         return;
       }
-      localStorage.setItem( API_KEY_SESSION_ID, res.data.session_id );
+      localStorage.setItem( API_KEY_SESSION_INFO, res.data.session_id );
+    }
+    */
+
+    /**
+     * 
+     * @param res 
+     */
+    setSessionInfo( res: USER_LOGIN_RESPONSE ) {
+        if ( res === void 0 || res.data === void 0 || res.data.session_id === void 0 ) {
+        alert("CRITICAL ERROR: sessionSessionId() - please report this to admin.");
+        return;
+      }
+      localStorage.setItem( API_KEY_SESSION_INFO, JSON.stringify( res.data ) );
+    }
+
+    getSessionInfo() : SESSION_INFO {
+        let data = localStorage.getItem( API_KEY_SESSION_INFO );
+        if ( data ) {
+            try {
+                return JSON.parse( data );
+            }
+            catch (e) {
+                return null;
+            }
+        }
+        else return null;
+
     }
 
     getSessionId() : string {
-        return localStorage.getItem( API_KEY_SESSION_ID );
+
+        let info = this.getSessionInfo();
+        // console.info(info);
+        if ( info ) return info.session_id;
+        // return localStorage.getItem( API_KEY_SESSION_INFO );
     }
 
 
-    deleteSessionId() {
-        localStorage.removeItem( API_KEY_SESSION_ID );
+    deleteSessionInfo() {
+        localStorage.removeItem( API_KEY_SESSION_INFO );
     }
 
 
@@ -191,7 +244,15 @@ export class Api {
             return "unhandled error: ";
             // alert("CRITICAL - UNHANDLED ERROR"); // this should never happen
         }
-
+    }
+    /**
+     * 
+     * This simply alerts error message on browser.
+     * 
+     * @param error
+     */
+    alert( error ) {
+        alert( this.getErrorString( error ) );
     }
 
     // errorHandler( error ) {

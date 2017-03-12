@@ -7,10 +7,10 @@ export * from './interface';
 export * from './define';
 import {
     USER_DATA, USER_DATA_RESPONSE,
-    USER_LOGIN, USER_LOGOUT,
+    USER_LOGIN, USER_LOGIN_RESPONSE, USER_LOGOUT, USER_LOGOUT_RESPONSE,
     USER_REGISTER, USER_REGISTER_RESPONSE,
-    USER_UPDATE, USER_UPDATE_RESPONSE
-
+    USER_UPDATE, USER_UPDATE_RESPONSE,
+    USER_LIST, USER_LIST_RESPONSE
 
 } from './interface';
 // import { KEY_SESSION_ID } from './defines';
@@ -21,12 +21,6 @@ export class User extends Base {
     }
 
 
-
-
-    get logged() : boolean {
-        if ( this.getSessionId() ) return true;
-        else return false;
-    }
 
 
     /**
@@ -65,7 +59,7 @@ export class User extends Base {
      */
     
     data() : Observable<USER_DATA_RESPONSE> {
-        if ( this.logged == false ) return Observable.throw( this.errorResponse( -420, "user-not-logged-in" ));
+        if ( this.logged == false ) return this.error( -420, 'login-first-before-get-user-info');
         let req = <USER_DATA> {};
         req.route = 'user.data';
         req.session_id = this.getSessionId();
@@ -75,97 +69,47 @@ export class User extends Base {
         req.route = 'register';
         return this.post( req )
         .map( ( res: USER_REGISTER_RESPONSE ) => {
-            this.setSessionId( res );
+            this.setSessionInfo( res );
             return res;
         });
     }
     
     update( req: USER_UPDATE ) : Observable<USER_UPDATE_RESPONSE> {
+        if ( this.logged == false ) return this.error( -421, 'login-first-before-update');
         req.route = 'user.edit';
         req.session_id = this.getSessionId();
         return this.post( req )
             .map( ( res: USER_UPDATE_RESPONSE ) => {
-
-                this.setSessionId( res );
+                this.setSessionInfo( res );
                 return res;
             });
     }
 
-
-
-    login( req: USER_LOGIN ) {
+    login( req: USER_LOGIN ) : Observable<USER_LOGIN_RESPONSE> {
         req.route = 'login';
         return this.post( req )
             .map( (res: any) => {
-
-
-                this.setSessionId( res );
+                this.setSessionInfo( res );
                 return res;
             });
     }
 
-
-
-    logout() {
+    logout() : Observable<USER_LOGOUT_RESPONSE>  {
         let req: USER_LOGOUT = {
             route: 'logout',
             session_id: this.getSessionId()
         };
         let observable = this.post( req );
-        this.deleteSessionId();
+        this.deleteSessionInfo();
         return observable;
-
     }
 
-    // getUserData() {
-    //     if( this.logged == false) return;
-    //     let req:any = {};
-    //     req.mc = 'user.get';
-    //     req.session_id = this.getSessionId();
-    //     console.log(req);
-    //     return this.post( req )
-    //         .map( (res: any) => {
-    //             if ( this.isError( res ) ) return res;
-    //             return res;
-    //         });
-    // }
-    // register( req: USER_REGISTER ) {
-    //     req.mc = 'user.create';
-    //     return this.post( req )
-    //         .map( (res: any) => {
-    //             if ( this.isError( res ) ) return res;
-    //             this.setSessionId( res );
-    //             return res;
-    //         });
-    // }
-    // update( req: USER_UPDATE ) {
-    //     req.mc = 'user.update';
-    //     req.session_id = this.getSessionId();
-    //     return this.post( req )
-    //         .map( (res: any) => {
-    //             if ( this.isError( res ) ) return res;
-    //             this.setSessionId( res );
-    //             return res;
-    //         });
-    // }
-    // login( req: USER_LOGIN ) {
-    //     req.mc = 'user.login';
-    //     return this.post( req )
-    //         .map( (res: any) => {
-    //             if ( this.isError( res ) ) return res;
-    //             this.setSessionId( res );
-    //             return res;
-    //         });
-    // }
-    // logout() {
-    //     this.deleteSessionId( );
-    //     let req: USER_LOGOUT = {
-    //         mc: 'user.logout',
-    //         session_id: this.getSessionId()
-    //     };
-    //     this.post( req ).subscribe( res => {
-    //         console.log("logout success: ", res );
-    //     });
-    // }
+
+    list( req: USER_LIST ) : Observable<USER_LIST_RESPONSE> {
+        req.route = 'user.list';
+        req.session_id = this.getSessionId();
+        return this.post( req );
+    }
+    
     
 }

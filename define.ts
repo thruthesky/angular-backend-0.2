@@ -3,4 +3,4 @@ export const ERROR_NO_INTERNET = 'You have no Internet. Or the Internet is very 
 export const ERROR_TIMEOUT = 'http-get-post-request-timeout';
 export const ERROR_MC_IS_EMPTY = 'mc-is-empty';
 export const ERROR_INTERNAL_SERVER_ERROR = 'internal-server-error';
-export const API_KEY_SESSION_ID = 'user-session-id';
+export const API_KEY_SESSION_INFO = 'user-session-id';
