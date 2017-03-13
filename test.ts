@@ -5,7 +5,7 @@ import {
     User,
     RESPONSE,
     USER_REGISTER, USER_REGISTER_RESPONSE, USER_LOGIN, USER_LOGIN_RESPONSE,
-    USER_UPDATE, USER_UPDATE_RESPONSE,
+    USER_EDIT, USER_EDIT_RESPONSE,
     ERROR_TIMEOUT
 } from './user';
 // import { Forum, CONFIG_CREATE, CONFIG_CREATE_RESPONSE } from './forum';
@@ -182,8 +182,8 @@ export class Test {
     }
 
     userUpdate() {
-        let record: USER_UPDATE = {};
-        this.user.update( record ).subscribe( (res: USER_UPDATE_RESPONSE ) => {
+        let record: USER_EDIT = {};
+        this.user.update( record ).subscribe( (res: USER_EDIT_RESPONSE ) => {
             this.success("userUpdate() : ", res);
             this.update_session_id.next( res.data.session_id );
         }, err => {

@@ -83,9 +83,9 @@ export interface USER_LIST_RESPONSE extends RESPONSE {                       // 
 export interface USER_REGISTER extends REQUEST, USER {      // to register
     meta?: any;
 };
-export type USER_UPDATE_RESPONSE = USER_SESSION_RESPONSE;        // to get response of USER_REGISTER
+export type USER_EDIT_RESPONSE = USER_SESSION_RESPONSE;        // to get response of USER_REGISTER
 
-export interface USER_UPDATE extends REQUEST, USER_FIELDS { // to update a user
+export interface USER_EDIT extends REQUEST, USER_FIELDS { // to update a user
     meta?: any;
 };
 export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_UPDATE
