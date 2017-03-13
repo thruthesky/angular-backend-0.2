@@ -34,11 +34,9 @@ export interface USER_FIELDS {
     stamp_last_login?: number;
     stamp_registration?: number;
     session_id?: string;
-
-
     meta?: any;
-    
 };
+
 
 
 export interface SESSION_INFO {
@@ -59,12 +57,16 @@ export interface USER_SESSION_RESPONSE extends RESPONSE {
  * This is identical of 'user' table.
  */
 export interface USER extends ID_PASSWORD, USER_FIELDS {}; // user data table.
+
+
+
 export interface USER_DATA extends REQUEST {}; // use it to get user data.
-
-
 export interface USER_DATA_RESPONSE extends RESPONSE {                   // to get response of USER_DATA
-    data: USER
+    data: {
+        user: USER;
+    }
 };
+
 
 
 export interface USER_LIST extends REQUEST {
@@ -83,12 +85,13 @@ export interface USER_LIST_RESPONSE extends RESPONSE {                       // 
 export interface USER_REGISTER extends REQUEST, USER {      // to register
     meta?: any;
 };
-export type USER_EDIT_RESPONSE = USER_SESSION_RESPONSE;        // to get response of USER_REGISTER
 
-export interface USER_EDIT extends REQUEST, USER_FIELDS { // to update a user
-    meta?: any;
-};
-export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_UPDATE
+export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_EDIT
+
+
+export interface USER_EDIT extends REQUEST, USER_FIELDS {}; // to edit user data
+
+export interface USER_EDIT_RESPONSE extends USER_SESSION_RESPONSE {}; // to get response of user edit. it is only session info and name, email, id.
 
 export interface USER_META_REQUEST  extends REQUEST {};
 export interface USER_META_RESPONSE extends RESPONSE {};
@@ -117,16 +120,11 @@ export interface ADMIN_USER_SEARCH_RESPONS extends RESPONSE {
 
 ////FORUM////
 
-/**
- * 'FORUM DATA' table
- */
 interface FORUM_IDX {
-    idx: number;
+    idx?: number;
 };
-interface POST_IDX extends FORUM_IDX {};
-interface CONFIG_IDX {
-    idx_config: number;
-};
+type CONFIG_IDX= FORUM_IDX;
+type POST_IDX = FORUM_IDX;
 
 export interface POST {
     idx?: number;
@@ -141,7 +139,8 @@ export interface POST {
  * 'FORUM CONFIG' table
  */
 
-interface CONFIG_FIELDS {
+export interface CONFIG {
+    idx?: number;
     id: string;
     name?: string;
     description?: string;
@@ -153,22 +152,22 @@ interface CONFIG_FIELDS {
 
 
 
-export interface CONFIG_CREATE extends REQUEST, CONFIG_FIELDS {};               // to create a forum.
+export interface CONFIG_CREATE extends REQUEST, CONFIG {};               // to create a forum.
 export interface CONFIG_CREATE_RESPONSE extends RESPONSE {
     data: {
         idx: number;
     }
 }
-export interface CONFIG_UPDATE extends REQUEST, FORUM_IDX, CONFIG_FIELDS {};    // to update a forum.
+export interface CONFIG_EDIT extends REQUEST, CONFIG {};    // to update a forum.
 export interface CONFIG_DELETE extends REQUEST, FORUM_IDX {};                         // to delete a forum.
 export interface CONFIG_GET extends REQUEST, CONFIG_IDX {};                     // to get a forum config fields.
 export interface CONFIG_RESPONSE extends RESPONSE {
-    data: CONFIG_FIELDS
+    data: CONFIG
 };                     // to receive a complete forum config fields. Use this after create/update/get/delete a forum
 
 
 export interface POST_CREATE extends REQUEST, POST {};               // to create a post
-export interface POST_UPDATE extends REQUEST, POST {};    // to update a post
+export interface POST_EDIT extends REQUEST, POST {};    // to update a post
 export interface POST_DELETE extends REQUEST, POST_IDX {};                                         // to update a post
 export interface POST_GET extends REQUEST, POST_IDX {};
 export interface POST_RESPONSE extends RESPONSE {
@@ -179,7 +178,7 @@ export interface POST_RESPONSE extends RESPONSE {
     }
 };           // to create/update/get/delete a post.
 
-export interface POST_GETS extends REQUEST, CONFIG_IDX {};
+
 export interface POSTS extends RESPONSE {
     posts: Array<{
         POST_IDX,
@@ -187,5 +186,6 @@ export interface POSTS extends RESPONSE {
         POST_FIELDS
     }>
 };
+
 
 

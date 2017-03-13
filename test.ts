@@ -183,7 +183,7 @@ export class Test {
 
     userUpdate() {
         let record: USER_EDIT = {};
-        this.user.update( record ).subscribe( (res: USER_EDIT_RESPONSE ) => {
+        this.user.edit( record ).subscribe( (res: USER_EDIT_RESPONSE ) => {
             this.success("userUpdate() : ", res);
             this.update_session_id.next( res.data.session_id );
         }, err => {

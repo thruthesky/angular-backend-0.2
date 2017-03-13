@@ -67,6 +67,10 @@ export class Api {
         else return false;
     }
 
+    get info() : SESSION_INFO {
+        return this.getSessionInfo();
+    }
+
     /**
      * @deprecated use session info.
      * @param res 
@@ -83,9 +87,9 @@ export class Api {
 
     /**
      * 
-     * @param res 
+     * @param res - it can by any interface ( type ) as long as it has res.data.sessoin_id
      */
-    setSessionInfo( res: USER_LOGIN_RESPONSE ) {
+    setSessionInfo( res: USER_SESSION_RESPONSE ) {
         if ( res === void 0 || res.data === void 0 || res.data.session_id === void 0 ) {
         alert("CRITICAL ERROR: sessionSessionId() - please report this to admin.");
         return;

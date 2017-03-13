@@ -9,7 +9,7 @@ import {
     USER_DATA, USER_DATA_RESPONSE,
     USER_LOGIN, USER_LOGIN_RESPONSE, USER_LOGOUT, USER_LOGOUT_RESPONSE,
     USER_REGISTER, USER_REGISTER_RESPONSE,
-    USER_UPDATE, USER_UPDATE_RESPONSE,
+    USER_EDIT, USER_EDIT_RESPONSE,
     USER_LIST, USER_LIST_RESPONSE
 
 } from './interface';
@@ -74,12 +74,12 @@ export class User extends Base {
         });
     }
     
-    update( req: USER_UPDATE ) : Observable<USER_UPDATE_RESPONSE> {
-        if ( this.logged == false ) return this.error( -421, 'login-first-before-update');
+    edit( req: USER_EDIT ) : Observable<USER_EDIT_RESPONSE> {
+        if ( this.logged == false ) return this.error( -421, 'login-first-before-edit');
         req.route = 'user.edit';
         req.session_id = this.getSessionId();
         return this.post( req )
-            .map( ( res: USER_UPDATE_RESPONSE ) => {
+            .map( ( res: USER_EDIT_RESPONSE ) => {
                 this.setSessionInfo( res );
                 return res;
             });
