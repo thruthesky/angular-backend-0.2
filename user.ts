@@ -24,13 +24,13 @@ export class User extends Base {
 
 
     /**
-     * 
-     * 
+     *
+     *
      * Gets user data from backend.
-     * 
+     *
      * @note User can only get his data. so, no need to get 'session_id' as parameter. Just get it from localStorage.
-     * 
-     * 
+     *
+     *
      * @code
 
         let req : USER_REGISTER_REQUEST_DATA = {
@@ -57,12 +57,13 @@ export class User extends Base {
 
      * @endcode
      */
-    
-    data() : Observable<USER_DATA_RESPONSE> {
+
+    data( id? ) : Observable<USER_DATA_RESPONSE> {
         if ( this.logged == false ) return this.error( -420, 'login-first-before-get-user-info');
         let req = <USER_DATA> {};
         req.route = 'user.data';
         req.session_id = this.getSessionId();
+        if ( id ) req.id = id;
         return this.post( req );
     }
     register( req: USER_REGISTER ) : Observable<USER_REGISTER_RESPONSE> {
@@ -73,8 +74,9 @@ export class User extends Base {
             return res;
         });
     }
-    
+
     edit( req: USER_EDIT ) : Observable<USER_EDIT_RESPONSE> {
+      console.log('edit::req', req);
         if ( this.logged == false ) return this.error( -421, 'login-first-before-edit');
         req.route = 'user.edit';
         req.session_id = this.getSessionId();
@@ -110,6 +112,6 @@ export class User extends Base {
         req.session_id = this.getSessionId();
         return this.post( req );
     }
-    
-    
+
+
 }

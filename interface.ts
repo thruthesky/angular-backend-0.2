@@ -16,6 +16,8 @@ export interface ID_PASSWORD {
  * 'user' table data except 'id, 'password'.
  */
 export interface USER_FIELDS {
+    id?: string;
+    password?: string;
     name?: string;
     nickname?: string;
     email?: string;
@@ -56,11 +58,13 @@ export interface USER_SESSION_RESPONSE extends RESPONSE {
  *
  * This is identical of 'user' table.
  */
-export interface USER extends ID_PASSWORD, USER_FIELDS {}; // user data table.
+export interface USER extends USER_FIELDS {}; // user data table.
 
 
 
-export interface USER_DATA extends REQUEST {}; // use it to get user data.
+export interface USER_DATA extends REQUEST {
+  id?: string; // for admin request
+}; // use it to get user data.
 export interface USER_DATA_RESPONSE extends RESPONSE {                   // to get response of USER_DATA
     data: {
         user: USER;
@@ -79,6 +83,7 @@ export interface USER_LIST extends REQUEST {
 export interface USER_LIST_RESPONSE extends RESPONSE {                       // array of users for user.list request
     data: {
         users: Array<USER>
+        total?: string;
     }
 };
 
@@ -174,7 +179,7 @@ export interface POST_RESPONSE extends RESPONSE {
     data: {
         POST_IDX,
         CONFIG_IDX,
-        POST_FIELDS 
+        POST_FIELDS
     }
 };           // to create/update/get/delete a post.
 
