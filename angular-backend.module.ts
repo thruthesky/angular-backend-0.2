@@ -4,7 +4,8 @@ import { User } from './user';
 import { Test } from './test';
 export { Backend } from './backend';
 export * from './interface';
-
+export { User } from './user';
+export { Test } from './test';
 @NgModule({
     providers: [ Backend, User, Test ]
 })
