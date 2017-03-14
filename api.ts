@@ -2,12 +2,12 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { URL_BACKEND_API, BACKEND_API_CONNECTION_TIMEOUT } from './config';
 
-import { USER_LOGIN_RESPONSE, RESPONSE, SESSION_INFO, USER_SESSION_RESPONSE } from './interface';
+import { RESPONSE, SESSION_INFO, USER_SESSION_RESPONSE } from './interface';
 
 import { API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT } from './define';
 
 
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+
 import { TimeoutError } from 'rxjs/Rx';
 import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/map';
