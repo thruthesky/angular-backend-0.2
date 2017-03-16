@@ -1,9 +1,17 @@
 # Angular Backend
 
-Angular backend server api version 0.2
+Backend Server API for Angular.
 
 
-# 0.2.4
+
+# History
+
+## 2016-03-14
+
+* Sample code for admin.
+
+
+## 2016-03-10
 
 * 기본 유닛 테스트 추가
 
@@ -12,7 +20,7 @@ Angular backend server api version 0.2
 # Installation
 
 ````
-$ git clone https://github.com/thruthesky/angular-backend-0.2
+$ git clone https://github.com/thruthesky/angular-backend
 ````
 
 
@@ -45,14 +53,15 @@ app.component.ts)
 
 ## getErrorString( error )
 
-API 호출에서 에러가 발생한 경우, 그 에러를 파라메타로 전달하면 자세한 에러 내용을 문자열로 리턴한다.
+API 호출에서 에러가 발생한 경우, 그 (에러) 응답 데이터를 파라메타로 전달하면 자세한 에러 내용을 문자열로 리턴한다.
+
 
 
 # API
 
 ## successCall()
 
-successCall() 은 결과가 항상 성공(OK)이다. 결과 값은 version 값을 리턴한다. 테스트 용도로 사용 할 수 있다.
+successCall() 은 서버에서 항상 성공을 응답하는 결과를 받는다. 테스트 용도로 사용 할 수 있다.
 
 ````
 this.backend.successCall().subscribe( re => {
@@ -76,7 +85,7 @@ this.backend.errorCall().subscribe( re => {
 
 ## scriptError()
 
-서버에서 PHP 에러 메세지를 전달한다. 테스트 용도로 사용할 수 있다.
+서버에서 항상 PHP 에러를 발생시켜 클라인트로 잘못된 (에러가 포험된 ) 응답 데이터 메세지를 전달하여 클라이언트에서 JSON Parsing 에서 오류를 유발한다. 테스트 용도로 사용할 수 있다.
 
 ````
 this.backend.scriptError().subscribe( re => {
@@ -92,7 +101,7 @@ this.backend.scriptError().subscribe( re => {
 
 ## timeoutError()
 
-PHP 에서 sleep(50) 를 호출하여, timeout 을 발생 시킨다.
+서버의 PHP 에서 sleep(50) 를 호출하여, 긴 시간 동안 대기하여 timeout 을 유발(발생) 시킨다. 클라이언트에서 에러테스트 목적으로 사용가능하다.
 
 ````
 this.backend.timeoutError().subscribe( re => {
@@ -108,7 +117,7 @@ this.backend.timeoutError().subscribe( re => {
 
 ## internalServerError()
 
-서버에서 500 에러를 전달한다. 테스트 용도로 사용 할 수 있다.
+서버가 항상 "500 - Internal Server Error" 에러를 응답한다. 테스트 용도로 사용 할 수 있다.
 
 ````
 this.backend.internalServerError().subscribe( re => {
