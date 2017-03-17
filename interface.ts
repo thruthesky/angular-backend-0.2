@@ -192,5 +192,9 @@ export interface POSTS extends RESPONSE {
     }>
 };
 
-
+export interface FILE_UPLOAD extends REQUEST {
+    model:string;
+    model_idx:number;
+    code?:string;
+}
 
