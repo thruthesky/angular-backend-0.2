@@ -139,8 +139,6 @@ export class Api {
 
     post( data: any, option = {} ) : any {
 
-
-
         data = this.buildQuery( data );
 
         let url = URL_BACKEND_API + '?' + data;
@@ -168,7 +166,7 @@ export class Api {
 
     }
 
-    processQuery( o: Observable<Response>, option ) {
+    processQuery( o: Observable<Response>, option = {} ) {
         let timeout = BACKEND_API_CONNECTION_TIMEOUT;
         if ( option['timeout'] !== void 0 ) timeout = option['timeout'];
         return o

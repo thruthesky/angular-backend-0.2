@@ -16,6 +16,7 @@ export interface ID_PASSWORD {
  * 'user' table data except 'id, 'password'.
  */
 export interface USER_FIELDS {
+    idx?: number;
     id?: string;
     password?: string;
     name?: string;
@@ -89,6 +90,7 @@ export interface USER_LIST_RESPONSE extends RESPONSE {                       // 
 
 export interface USER_REGISTER extends REQUEST, USER {      // to register
     meta?: any;
+    file_hooks?: Array<number>
 };
 
 export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_EDIT
@@ -194,7 +196,21 @@ export interface POSTS extends RESPONSE {
 
 export interface FILE_UPLOAD extends REQUEST {
     model:string;
-    model_idx:number;
+    model_idx?:number;
     code?:string;
 }
 
+
+export interface FILE_UPLOAD_RESPONSE extends RESPONSE {
+    data?: {
+        idx: number;
+    }
+}
+
+export interface IMG_SRC {
+    idx: number;
+    width?: number;
+    height?: number;
+    quality?: number;
+    resize?: '' | 'crop'
+}
