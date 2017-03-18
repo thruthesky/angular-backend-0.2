@@ -75,13 +75,15 @@ export interface USER_DATA_RESPONSE extends RESPONSE {                   // to g
 
 
 
-export interface USER_LIST extends REQUEST {
+export interface LIST extends REQUEST {
+    page?: number;
     from?: number;
     limit?: number;
     where?: string;
     bind?: string;
     order?: string;
 };
+
 export interface USER_LIST_RESPONSE extends RESPONSE {                       // array of users for user.list request
     data: {
         users: Array<USER>

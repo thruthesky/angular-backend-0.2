@@ -11,7 +11,7 @@ export * from './define';
 export class File extends Base {
   percentage: number = 0;
   constructor( http: Http, private progress: ProgressService) {
-    super( http );
+    super( http, 'file' );
   }
 
   upload( req:FILE_UPLOAD, file ): Observable< FILE_UPLOAD_RESPONSE >{
