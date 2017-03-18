@@ -24,9 +24,11 @@ export class File extends Base {
     formData.append( 'userfile', file, file.name);
     formData.append( 'route', 'upload');
     if ( session_id ) formData.append( 'session_id' , session_id);
-    formData.append( 'model', req.model );
+    if ( req['model'] ) formData.append( 'model', req.model );
     if ( req['model_idx'] ) formData.append( 'model_idx', req.model_idx );
     if ( req['code'] ) formData.append( 'code', req.code );
+    if ( req['unique'] ) formData.append( 'unique', req.unique );
+    if ( req['finish'] ) formData.append( 'finish', req.finish );
     
     console.log( file );
     let o = this.http.post( URL_BACKEND_API, formData);

@@ -38,6 +38,7 @@ export interface USER_FIELDS {
     stamp_registration?: number;
     session_id?: string;
     meta?: any;
+    readonly primary_photo_idx?: number;
 };
 
 
@@ -148,13 +149,17 @@ export interface POST {
 
 export interface CONFIG {
     idx?: number;
+    created?: number;
+    updated?: number;
     id: string;
     name?: string;
     description?: string;
+    moderators?: string;
     level_list?: number;
     level_view?: number;
     level_write?: number;
     level_comment?: number;
+    deleted?: string;
 };
 
 
@@ -195,9 +200,11 @@ export interface POSTS extends RESPONSE {
 };
 
 export interface FILE_UPLOAD extends REQUEST {
-    model:string;
-    model_idx?:number;
-    code?:string;
+    model?: string;
+    model_idx?: number;
+    code?: string;
+    unique?: string;
+    finish?: string;
 }
 
 
