@@ -30,6 +30,6 @@ export { Test } from './test';
       ProgressService,
       { provide: BrowserXhr, useClass: CustomBrowserXhr } ]
 })
-export class AngularBackendModule {}
+export class AngularBackend {}
 
 
