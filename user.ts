@@ -10,14 +10,14 @@ import {
     USER_LOGIN, USER_LOGIN_RESPONSE, USER_LOGOUT, USER_LOGOUT_RESPONSE,
     USER_REGISTER, USER_REGISTER_RESPONSE,
     USER_EDIT, USER_EDIT_RESPONSE,
-    USER_LIST, USER_LIST_RESPONSE
+    LIST, USER_LIST_RESPONSE
 
 } from './interface';
 // import { KEY_SESSION_ID } from './defines';
 @Injectable()
 export class User extends Base {
     constructor( http: Http ) {
-        super( http );
+        super( http, 'user' );
     }
 
 
@@ -107,11 +107,6 @@ export class User extends Base {
     }
 
 
-    list( req: USER_LIST ) : Observable<USER_LIST_RESPONSE> {
-        req.route = 'user.list';
-        req.session_id = this.getSessionId();
-        return this.post( req );
-    }
 
 
 }

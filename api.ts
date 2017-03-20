@@ -15,23 +15,25 @@ import 'rxjs/add/operator/map';
 
 
 export class Api {
-    private http: Http;
+    public http: Http;
     constructor( http ) {
         this.http = http;
     }
 
 
 
+
+
     /**
-     * 
-     * @param error_code 
-     * @param error_message 
-     * 
+     *
+     * @param error_code
+     * @param error_message
+     *
      * @code
      *      this.errorResponse( 'error-code' ); // Simply put error code
      *      this.errorResponse( -1234, 'error-message' ); // Error code with message. error code must be less than 0
      * @endcode
-     * 
+     *
      */
     errorResponse( error_code, error_message = '' ) : RESPONSE {
         if ( error_message ) return { code: error_code, message: error_message };
@@ -43,17 +45,17 @@ export class Api {
     }
 
     /**
-     * 
-     * 
-     * 
-     * @param code 
-     * @param message 
+     *
+     *
+     *
+     * @param code
+     * @param message
      */
     error( code, message ) {
          return Observable.throw( this.errorResponse( -420, "user-not-logged-in" ));
     }
 
-    
+
     get requestOptions() : RequestOptions {
         let headers  = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options  = new RequestOptions({ headers: headers });
@@ -73,7 +75,7 @@ export class Api {
 
     /**
      * @deprecated use session info.
-     * @param res 
+     * @param res
      */
     /*
     setSessionId( res: USER_LOGIN_RESPONSE ) {
@@ -86,7 +88,7 @@ export class Api {
     */
 
     /**
-     * 
+     *
      * @param res - it can by any interface ( type ) as long as it has res.data.sessoin_id
      */
     setSessionInfo( res: USER_SESSION_RESPONSE ) {
@@ -130,14 +132,12 @@ export class Api {
 
     /**
      *
-     * 
+     *
      * Returns 'Observable' which gives an Object of 'sucess' or 'error' from PHP Backend.
      *
      */
-    
-    post( data: any, option = {} ) : any {
-        
 
+    post( data: any, option = {} ) : any {
 
         data = this.buildQuery( data );
 
@@ -147,26 +147,26 @@ export class Api {
         let o = this.http.post( URL_BACKEND_API, data, this.requestOptions )
         return this.processQuery( o, option );
     }
-    
+
 
 
 
     /**
-     * 
+     *
      * Returns 'Observable' which gives an Object of 'sucess' or 'error' from PHP Backend.
-     * 
+     *
      * @attension If there is error on json(), then 'error' callback will be called on subscribe.
      *      만약, json() 또는 JSON.parse() 에서 에러가 발생하면, subscribe() 을 에러 콜백이 호출된다.
      */
     get( url: string, option = {} ) : Observable<Response> {
-        
+
         //return this.http.get( url )
         return this.processQuery( this.http.get( url ), option );
-            
+
 
     }
 
-    processQuery( o: Observable<Response>, option ) {
+    processQuery( o: Observable<Response>, option = {} ) {
         let timeout = BACKEND_API_CONNECTION_TIMEOUT;
         if ( option['timeout'] !== void 0 ) timeout = option['timeout'];
         return o
@@ -181,7 +181,7 @@ export class Api {
                 }
                 return Observable.throw( err );
             })
-            
+
             .map( (e) => {
                 let re = e.json();
                 if ( this.isError( re ) ) throw re;
@@ -196,16 +196,16 @@ export class Api {
                 else return Observable.throw( err );
             } );
     }
-    
+
 
 
 
     /**
      * return true if the obj is error.
-     * 
-     * 
+     *
+     *
      * obj { code: ... } 에서 code 값이 없거나 참의 값이면 에러로 간주한다.
-     * 
+     *
      * 참고로 internal sever error 의 경우에는 code 값이 없으로 '참'을 리턴한다.
      */
     isError( obj: any ) {
@@ -217,9 +217,9 @@ export class Api {
     }
     /**
      * Returns true if it is an internal server error response.
-     * 
-     * 
-     * @param obj 
+     *
+     *
+     * @param obj
      */
     isInternalServerError( obj ) {
         return typeof obj['status'] !== void 0 && obj['status'] == 500;
@@ -250,9 +250,9 @@ export class Api {
         }
     }
     /**
-     * 
+     *
      * This simply alerts error message on browser.
-     * 
+     *
      * @param error
      */
     alert( error ) {
@@ -292,7 +292,7 @@ export class Api {
     timeoutError() {
         return this.get( URL_BACKEND_API + '?route=system.timeoutError', { 'timeout': 1000 } );
     }
-    
+
     internalServerError() {
         return this.get( URL_BACKEND_API + '?route=system.internalServerError');
     }
@@ -302,7 +302,7 @@ export class Api {
     routeRequiredError() {
         return this.get( URL_BACKEND_API + '?route=system.routeRequiredError' );
     }
-    
+
 
 
 

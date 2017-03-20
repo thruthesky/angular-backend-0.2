@@ -16,6 +16,7 @@ export interface ID_PASSWORD {
  * 'user' table data except 'id, 'password'.
  */
 export interface USER_FIELDS {
+    idx?: number;
     id?: string;
     password?: string;
     name?: string;
@@ -37,6 +38,7 @@ export interface USER_FIELDS {
     stamp_registration?: number;
     session_id?: string;
     meta?: any;
+    readonly primary_photo_idx?: number;
 };
 
 
@@ -73,13 +75,15 @@ export interface USER_DATA_RESPONSE extends RESPONSE {                   // to g
 
 
 
-export interface USER_LIST extends REQUEST {
+export interface LIST extends REQUEST {
+    page?: number;
     from?: number;
     limit?: number;
     where?: string;
     bind?: string;
     order?: string;
 };
+
 export interface USER_LIST_RESPONSE extends RESPONSE {                       // array of users for user.list request
     data: {
         users: Array<USER>
@@ -89,6 +93,7 @@ export interface USER_LIST_RESPONSE extends RESPONSE {                       // 
 
 export interface USER_REGISTER extends REQUEST, USER {      // to register
     meta?: any;
+    file_hooks?: Array<number>
 };
 
 export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_EDIT
@@ -150,13 +155,17 @@ export interface POST {
 
 export interface CONFIG {
     idx?: number;
+    created?: number;
+    updated?: number;
     id: string;
     name?: string;
     description?: string;
+    moderators?: string;
     level_list?: number;
     level_view?: number;
     level_write?: number;
     level_comment?: number;
+    deleted?: string;
 };
 
 
@@ -225,5 +234,25 @@ export interface POST_FIELDS {
     user_idx: string
 };
 
+export interface FILE_UPLOAD extends REQUEST {
+    model?: string;
+    model_idx?: number;
+    code?: string;
+    unique?: string;
+    finish?: string;
+}
 
 
+export interface FILE_UPLOAD_RESPONSE extends RESPONSE {
+    data?: {
+        idx: number;
+    }
+}
+
+export interface IMG_SRC {
+    idx: number;
+    width?: number;
+    height?: number;
+    quality?: number;
+    resize?: '' | 'crop'
+}
