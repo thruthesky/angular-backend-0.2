@@ -137,6 +137,10 @@ export interface POST {
     idx_user: number;
     title: string;
     content: string;
+    post_config_id?: number;
+    //user information
+    name?: string;
+    password?: string;
 };
 
 
@@ -175,7 +179,7 @@ export interface POST_CREATE extends REQUEST, POST {};               // to creat
 export interface POST_EDIT extends REQUEST, POST {};    // to update a post
 export interface POST_DELETE extends REQUEST, POST_IDX {};                                         // to update a post
 export interface POST_GET extends REQUEST, POST_IDX {};
-export interface POST_RESPONSE extends RESPONSE {
+export interface POST_RESPONSE extends RESPONSE,POST_FIELDS {
     data: {
         POST_IDX,
         CONFIG_IDX,
@@ -190,6 +194,35 @@ export interface POSTS extends RESPONSE {
         POST_CONFIG,
         POST_FIELDS
     }>
+};
+export interface POST_FIELDS {
+    address: string,
+    birthdate: string,
+    city: string,
+    contact: string,
+    content: string,
+    country: string,
+    created: string,
+    deleted: string,
+    email: string,
+    gender: string,
+    idx: string,
+    ip: string,
+    landline: string,
+    last_name: string
+    meta: [{
+
+    }],
+    middle_name: string,
+    mobile: string,
+    name: string,
+    parent_idx: string,
+    post_config_idx: string,
+    province: string,
+    secret: string,
+    title: string,
+    updated: string
+    user_idx: string
 };
 
 
