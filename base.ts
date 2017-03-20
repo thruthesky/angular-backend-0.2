@@ -34,8 +34,8 @@ export class Base extends Api {
      * @endcode
      * 
      */
-    list( req: LIST ) : Observable< any > {
-        req.route = this.taxonomy + '.list';
+    list( req: LIST = <LIST> {} ) : Observable< any > {
+        req['route'] = this.taxonomy + '.list';
 
         if ( ! req['limit'] ) req.limit = NO_OF_ITEMS_PER_PAGE;
 
@@ -50,4 +50,10 @@ export class Base extends Api {
         return this.post( req );
     }
     
+
+    create( req = {} ) : Observable<any> {
+        req['route'] = this.taxonomy + '.create';
+        req['session_id'] = this.getSessionId();
+        return this.post( req );
+    }
 }

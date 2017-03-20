@@ -34,8 +34,7 @@ export class Test {
     constructor(
         // private forum: Forum,
         private backend: Backend,
-        private user: User,
-        private post: Post
+        private user: User
     ) {
         //console.info('Test::constructor()');
         setTimeout( () => this.run(), 100 );
@@ -61,11 +60,11 @@ export class Test {
         console.info(`[${this.count}] SUCCESS: ${str}`, vars);
     }
     getPostList() {
-        this.post.list().subscribe( re => {
-            this.success("getPostList: " , re);
-        }, err => {
-            this.error( err, "success getPostList: " );
-        } );
+        // this.post.list().subscribe( re => {
+        //     this.success("getPostList: " , re);
+        // }, err => {
+        //     this.error( err, "success getPostList: " );
+        // } );
     }
     api() {
 

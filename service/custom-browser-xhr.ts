@@ -15,8 +15,9 @@ export class CustomBrowserXhr extends BrowserXhr {
       //   this.service.downloadProgress.next(event);
       // };
 
-      xhr.upload.onprogress = (event) => {      
-        this.service.uploadProgress.next(event);
+      xhr.upload.onprogress = (event) => {
+        if ( this.service )
+          this.service.uploadProgress.next(event);
       };
 
       return <any>(xhr);
