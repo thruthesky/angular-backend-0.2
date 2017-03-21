@@ -12,12 +12,8 @@ export interface ID_PASSWORD {
     password?: string;
 };
 
-/**
- * 'user' table data except 'id, 'password'.
- */
-export interface USER_FIELDS {
-    idx?: number;
-    id?: string;
+
+interface USER_EDITABLE_FIELDS {
     password?: string;
     name?: string;
     nickname?: string;
@@ -38,6 +34,17 @@ export interface USER_FIELDS {
     stamp_registration?: number;
     session_id?: string;
     meta?: any;
+}
+
+interface USER_REGISTABLE_FIELDS extends USER_EDITABLE_FIELDS {
+    id?: string;
+}
+/**
+ * 'user' table data except 'id, 'password'.
+ */
+export interface USER_FIELDS extends USER_EDITABLE_FIELDS {
+    idx?: number;
+    id?: string;
     readonly primary_photo_idx?: number;
 };
 
@@ -91,7 +98,7 @@ export interface USER_LIST_RESPONSE extends RESPONSE {                       // 
     }
 };
 
-export interface USER_REGISTER extends REQUEST, USER {      // to register
+export interface USER_REGISTER extends REQUEST, USER_REGISTABLE_FIELDS {      // to register
     meta?: any;
     file_hooks?: Array<number>
 };
@@ -99,7 +106,10 @@ export interface USER_REGISTER extends REQUEST, USER {      // to register
 export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_EDIT
 
 
-export interface USER_EDIT extends REQUEST, USER_FIELDS {}; // to edit user data
+export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
+        meta?: any;
+    file_hooks?: Array<number>
+}; // to edit user data
 
 export interface USER_EDIT_RESPONSE extends USER_SESSION_RESPONSE {}; // to get response of user edit. it is only session info and name, email, id.
 
