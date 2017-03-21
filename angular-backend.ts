@@ -9,10 +9,10 @@ import { ProgressService } from "./service/progress";
 import { BrowserXhr } from "@angular/http";
 import { CustomBrowserXhr } from "./service/custom-browser-xhr";
 
-export { Backend } from './model/backend';
+
+
 export * from './interface';
-
-
+export { Backend } from './model/backend';
 export { User } from './model/user';
 export { PostConfig } from './model/post-config';
 export { PostData } from './model/post-data';
