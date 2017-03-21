@@ -6,7 +6,7 @@ import {
     USER_REGISTER, USER_REGISTER_RESPONSE, USER_LOGIN_RESPONSE,
     USER_EDIT, USER_EDIT_RESPONSE
 } from './user';
-import { Post } from './post';
+import { PostData } from './post-data';
 // import { Forum, CONFIG_CREATE, CONFIG_CREATE_RESPONSE } from './forum';
 
 //import { URL_BACKEND_API } from './config';
