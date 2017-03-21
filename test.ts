@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Backend } from './backend';
 import {
-
     User,
     RESPONSE,
     USER_REGISTER, USER_REGISTER_RESPONSE, USER_LOGIN_RESPONSE,
     USER_EDIT, USER_EDIT_RESPONSE
 } from './user';
+import { PostData } from './post-data';
 // import { Forum, CONFIG_CREATE, CONFIG_CREATE_RESPONSE } from './forum';
 
 //import { URL_BACKEND_API } from './config';
@@ -36,7 +36,7 @@ export class Test {
         private backend: Backend,
         private user: User
     ) {
-        //console.info('Test::constructor()');
+        console.info('Test::constructor()');
         setTimeout( () => this.run(), 100 );
     }
 
@@ -48,7 +48,7 @@ export class Test {
         this.session_id.subscribe( id => this.login() );
         this.login_session_id.subscribe( session_id => this.getUserData( () => this.userUpdate() ) );
         this.update_session_id.subscribe( x => this.logout() );
-        
+        this.getPostList();
         
         // this.forumCreate( () => this.postCreate() );
 
@@ -59,7 +59,13 @@ export class Test {
         this.count ++;
         console.info(`[${this.count}] SUCCESS: ${str}`, vars);
     }
-    
+    getPostList() {
+        // this.post.list().subscribe( re => {
+        //     this.success("getPostList: " , re);
+        // }, err => {
+        //     this.error( err, "success getPostList: " );
+        // } );
+    }
     api() {
 
         this.backend.successCall().subscribe( re => {

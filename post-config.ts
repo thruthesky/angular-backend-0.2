@@ -20,7 +20,6 @@ export class PostConfig extends Base {
 
     create( req: CONFIG_CREATE ) : Observable<CONFIG_CREATE_RESPONSE> {
         req.route = 'post_config.create';
-        req.session_id = this.getSessionId();
         return this.post( req );
     }
 }

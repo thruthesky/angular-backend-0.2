@@ -136,13 +136,6 @@ interface FORUM_IDX {
 type CONFIG_IDX= FORUM_IDX;
 type POST_IDX = FORUM_IDX;
 
-export interface POST {
-    idx?: number;
-    idx_config?: number;
-    idx_user: number;
-    title: string;
-    content: string;
-};
 
 
 /**
@@ -166,6 +159,43 @@ export interface CONFIG {
 
 
 
+export interface POST_FIELDS {
+
+    idx?: number;
+    user_idx?: string
+    title?: string;
+    content?: string;
+    readonly post_config_idx?: number;
+    post_config_id?: string;
+    //user information
+    name?: string;
+    password?: string;
+
+    address?: string,
+    birthdate?: string,
+    city?: string,
+    contact?: string,
+    country?: string,
+    created?: string,
+    readonly deleted?: string,
+    email?: string,
+    gender?: string,
+    readonly ip?: string,
+    landline?: string,
+    last_name?: string
+    meta?: [{
+
+    }],
+    middle_name?: string,
+    mobile?: string,
+    parent_idx?: string,
+    province?: string,
+    secret?: string,
+    readonly updated?: string
+};
+
+export type POST = POST_FIELDS;
+export type POSTS = Array<POST>;
 export interface CONFIG_CREATE extends REQUEST, CONFIG {};               // to create a forum.
 export interface CONFIG_CREATE_RESPONSE extends RESPONSE {
     data: {
@@ -186,20 +216,12 @@ export interface POST_DELETE extends REQUEST, POST_IDX {};                      
 export interface POST_GET extends REQUEST, POST_IDX {};
 export interface POST_RESPONSE extends RESPONSE {
     data: {
-        POST_IDX,
-        CONFIG_IDX,
-        POST_FIELDS
+        configs: Array<CONFIG>,
+        posts: POSTS,
+        total: string
     }
 };           // to create/update/get/delete a post.
 
-
-export interface POSTS extends RESPONSE {
-    posts: Array<{
-        POST_IDX,
-        POST_CONFIG,
-        POST_FIELDS
-    }>
-};
 
 export interface FILE_UPLOAD extends REQUEST {
     model?: string;

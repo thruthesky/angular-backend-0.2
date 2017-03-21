@@ -62,7 +62,6 @@ export class User extends Base {
         if ( this.logged == false ) return this.error( -420, 'login-first-before-get-user-info');
         let req = <USER_DATA> {};
         req.route = 'user.data';
-        req.session_id = this.getSessionId();
         if ( id ) req.id = id;
         return this.post( req );
     }
@@ -79,7 +78,6 @@ export class User extends Base {
       console.log('edit::req', req);
         if ( this.logged == false ) return this.error( -421, 'login-first-before-edit');
         req.route = 'user.edit';
-        req.session_id = this.getSessionId();
         return this.post( req )
             .map( ( res: USER_EDIT_RESPONSE ) => {
                 this.setSessionInfo( res );
@@ -98,9 +96,9 @@ export class User extends Base {
 
     logout() : Observable<USER_LOGOUT_RESPONSE>  {
         let req: USER_LOGOUT = {
-            route: 'logout',
-            session_id: this.getSessionId()
+            route: 'logout'
         };
+
         let observable = this.post( req );
         this.deleteSessionInfo();
         return observable;
