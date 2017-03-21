@@ -20,7 +20,11 @@ export { File } from './file';
 export { Test } from './test';
 
 
+
+import { BackendAdminPage } from './pages/admin/index/index';
+
 @NgModule({
+  declarations: [ BackendAdminPage ],
     providers: [ Backend,
       User,
       PostConfig,

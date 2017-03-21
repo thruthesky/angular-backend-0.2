@@ -36,18 +36,18 @@ export class Test {
         private backend: Backend,
         private user: User
     ) {
-        //console.info('Test::constructor()');
+        console.info('Test::constructor()');
         setTimeout( () => this.run(), 100 );
     }
 
 
     private run() {
 
-        // this.api();
-        // this.register();
-        // this.session_id.subscribe( id => this.login() );
-        // this.login_session_id.subscribe( session_id => this.getUserData( () => this.userUpdate() ) );
-        // this.update_session_id.subscribe( x => this.logout() );
+        this.api();
+        this.register();
+        this.session_id.subscribe( id => this.login() );
+        this.login_session_id.subscribe( session_id => this.getUserData( () => this.userUpdate() ) );
+        this.update_session_id.subscribe( x => this.logout() );
         this.getPostList();
         
         // this.forumCreate( () => this.postCreate() );

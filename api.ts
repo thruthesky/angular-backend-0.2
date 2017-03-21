@@ -139,6 +139,10 @@ export class Api {
 
     post( data: any, option = {} ) : any {
 
+
+        let session_id = this.getSessionId();
+        if ( session_id ) data['session_id'] = session_id;
+
         data = this.buildQuery( data );
 
         let url = URL_BACKEND_API + '?' + data;
