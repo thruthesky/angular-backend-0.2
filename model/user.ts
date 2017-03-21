@@ -3,8 +3,8 @@ import { Http } from '@angular/http';
 import { Base } from './base';
 
 import { Observable } from 'rxjs/Rx';
-export * from './interface';
-export * from './define';
+export * from '../interface';
+export * from '../define';
 import {
     USER_DATA, USER_DATA_RESPONSE,
     USER_LOGIN, USER_LOGIN_RESPONSE, USER_LOGOUT, USER_LOGOUT_RESPONSE,
@@ -12,7 +12,7 @@ import {
     USER_EDIT, USER_EDIT_RESPONSE,
     LIST, USER_LIST_RESPONSE
 
-} from './interface';
+} from '../interface';
 // import { KEY_SESSION_ID } from './defines';
 @Injectable()
 export class User extends Base {

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Base } from './base';
-import { FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC } from "./interface";
-import { ProgressService } from "./service/progress";
+import { FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC } from "../interface";
+import { ProgressService } from "../service/progress";
 import { Observable } from "rxjs";
-import { URL_BACKEND_API } from "./config";
-export * from './interface';
-export * from './define';
+import { URL_BACKEND_API } from "../config";
+export * from '../interface';
+export * from '../define';
 @Injectable()
 export class File extends Base {
   percentage: number = 0;

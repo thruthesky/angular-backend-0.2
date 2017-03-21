@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Backend } from './backend';
+import { Backend } from '../model/backend';
 import {
     User,
     RESPONSE,
     USER_REGISTER, USER_REGISTER_RESPONSE, USER_LOGIN_RESPONSE,
     USER_EDIT, USER_EDIT_RESPONSE
-} from './user';
-import { PostData } from './post-data';
+} from '../model/user';
+import { PostData } from '../model/post-data';
 // import { Forum, CONFIG_CREATE, CONFIG_CREATE_RESPONSE } from './forum';
 
 //import { URL_BACKEND_API } from './config';
