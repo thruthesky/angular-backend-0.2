@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { Backend } from './model/backend';
 import { User } from './model/user';
 import { PostData } from './model/post-data';
@@ -22,9 +23,25 @@ export { Test } from './test/test';
 
 
 import { BackendAdminPage } from './pages/admin/index/index';
+export { BackendAdminPage } from './pages/admin/index/index';
+
+import { AdminHeaderComponent } from './pages/components/header/header';
+import { AdminLeftSidebarComponent } from './pages/components/sidebar/left/left';
+
+import { InfoBoxComponent } from './pages/components/info-box/info-box';
+import { ProgressGroupComponent } from './pages/components/progress-group/progress-group';
+
 
 @NgModule({
-  declarations: [ BackendAdminPage ],
+  declarations: [ BackendAdminPage,
+    AdminHeaderComponent,
+    AdminLeftSidebarComponent,
+    InfoBoxComponent,
+    ProgressGroupComponent
+  ],
+  imports: [
+    BrowserModule,
+  ],
     providers: [ Backend,
       User,
       PostConfig,
