@@ -4,4 +4,5 @@ import { Component } from '@angular/core';
   templateUrl: './index.html',
   styleUrls:['./index.scss']
 })
-export class BackendAdminPage {}
+export class BackendAdminPage {
+}
