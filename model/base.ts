@@ -1,8 +1,8 @@
-import { Api } from './api';
-import { NO_OF_ITEMS_PER_PAGE } from './config';
+import { Api } from '../api';
+import { NO_OF_ITEMS_PER_PAGE } from '../config';
 import {
     LIST
-} from './angular-backend';
+} from '../angular-backend';
 import { Observable } from 'rxjs/Observable';
 export class Base extends Api {
     constructor( public http, public taxonomy ) {

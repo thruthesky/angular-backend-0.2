@@ -192,10 +192,7 @@ export class Api {
                 else return re;
              } )
             .catch( err => {
-
-
                 if ( err instanceof SyntaxError ) return Observable.throw( this.errorResponse( ERROR_JSON_PARSE )  ); // JSON 에러
-
                 else if ( err && typeof err['code'] !== void 0 && err['code'] < 0 ) return Observable.throw( err ); // 프로그램 적 에러
                 else return Observable.throw( err );
             } );
