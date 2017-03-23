@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { RouterModule } from '@angular/router';
 
 import { BackendAdminPage } from './pages/admin/index/index';
 export { BackendAdminPage } from './pages/admin/index/index';
+
+import { BackendAdminUserPage } from './pages/admin/user/user';
+export { BackendAdminUserPage } from './pages/admin/user/user';
 
 import { AdminHeaderComponent } from './pages/admin/components/header/header';
 import { AdminSidebarComponent } from './pages/admin/components/sidebar/sidebar';
@@ -16,6 +19,7 @@ import { AdminService } from './pages/admin/services/admin.service';
 @NgModule({
   declarations: [
     BackendAdminPage,
+    BackendAdminUserPage,
     AdminHeaderComponent,
     AdminSidebarComponent,
     InfoBoxComponent,
@@ -23,6 +27,7 @@ import { AdminService } from './pages/admin/services/admin.service';
   ],
   imports: [
     CommonModule,
+    RouterModule
   ],
   providers: [ AdminService ]
 })

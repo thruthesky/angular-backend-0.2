@@ -7,6 +7,8 @@ import { AdminService } from './../services/admin.service';
 })
 export class BackendAdminPage {
   constructor( public admin: AdminService ) {
+
+    admin.onClickMenuMore();
     
   }
 }

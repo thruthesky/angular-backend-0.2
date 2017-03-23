@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { Backend } from './model/backend';
 import { User } from './model/user';
 import { PostData } from './model/post-data';
@@ -10,8 +9,6 @@ import { ProgressService } from "./service/progress";
 import { BrowserXhr } from "@angular/http";
 import { CustomBrowserXhr } from "./service/custom-browser-xhr";
 
-
-
 export * from './interface';
 export { Backend } from './model/backend';
 export { User } from './model/user';
@@ -20,12 +17,9 @@ export { PostData } from './model/post-data';
 export { File } from './model/file';
 export { Test } from './test/test';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    BrowserModule,
-  ],
+  imports: [],
     providers: [ Backend,
       User,
       PostConfig,
