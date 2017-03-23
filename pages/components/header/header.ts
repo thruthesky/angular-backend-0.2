@@ -8,6 +8,7 @@ import { User, USER_LOGOUT_RESPONSE } from './../../../angular-backend';
 export class AdminHeaderComponent implements OnInit{
   isLogged = null;
   usertype;
+  navclass = "collapse navbar-collapse";
   constructor( private user: User ){
 
   }
@@ -23,5 +24,8 @@ export class AdminHeaderComponent implements OnInit{
     }, err => {
       this.user.alert(err);
     });
+  }
+  onClickMore() {
+    this.navclass = this.navclass ? null : "collapse navbar-collapse";
   }
 }
