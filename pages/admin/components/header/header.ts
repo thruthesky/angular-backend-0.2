@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User, USER_LOGOUT_RESPONSE } from './../../../angular-backend';
+import { User, USER_LOGOUT_RESPONSE } from './../../../../angular-backend';
+
+import { AdminService } from './../../services/admin.service';
 @Component({
   selector: 'admin-header',
   templateUrl: './header.html',
@@ -9,7 +11,9 @@ export class AdminHeaderComponent implements OnInit{
   isLogged = null;
   usertype;
   navclass = "collapse navbar-collapse";
-  constructor( private user: User ){
+  constructor( private user: User,
+     public admin: AdminService  )
+  {
 
   }
   ngOnInit(){

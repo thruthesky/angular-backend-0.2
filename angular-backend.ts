@@ -21,24 +21,8 @@ export { File } from './model/file';
 export { Test } from './test/test';
 
 
-
-import { BackendAdminPage } from './pages/admin/index/index';
-export { BackendAdminPage } from './pages/admin/index/index';
-
-import { AdminHeaderComponent } from './pages/components/header/header';
-import { AdminLeftSidebarComponent } from './pages/components/sidebar/left/left';
-
-import { InfoBoxComponent } from './pages/components/info-box/info-box';
-import { ProgressGroupComponent } from './pages/components/progress-group/progress-group';
-
-
 @NgModule({
-  declarations: [ BackendAdminPage,
-    AdminHeaderComponent,
-    AdminLeftSidebarComponent,
-    InfoBoxComponent,
-    ProgressGroupComponent
-  ],
+  declarations: [],
   imports: [
     BrowserModule,
   ],
