@@ -51,12 +51,12 @@ export class Api {
      * @param code
      * @param message
      */
-    error( code, message ) {
+    protected error( code, message ) {
          return Observable.throw( this.errorResponse( -420, "user-not-logged-in" ));
     }
 
 
-    get requestOptions() : RequestOptions {
+    protected get requestOptions() : RequestOptions {
         let headers  = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options  = new RequestOptions({ headers: headers });
         return options;
@@ -69,7 +69,7 @@ export class Api {
         else return false;
     }
 
-    get info() : SESSION_INFO {
+    protected get info() : SESSION_INFO {
         return this.getSessionInfo();
     }
 
@@ -91,7 +91,7 @@ export class Api {
      *
      * @param res - it can by any interface ( type ) as long as it has res.data.sessoin_id
      */
-    setSessionInfo( res: USER_SESSION_RESPONSE ) {
+    protected setSessionInfo( res: USER_SESSION_RESPONSE ) {
         if ( res === void 0 || res.data === void 0 || res.data.session_id === void 0 ) {
         alert("CRITICAL ERROR: sessionSessionId() - please report this to admin.");
         return;
@@ -122,7 +122,7 @@ export class Api {
     }
 
 
-    deleteSessionInfo() {
+    protected deleteSessionInfo() {
         localStorage.removeItem( API_KEY_SESSION_INFO );
     }
 
@@ -170,7 +170,7 @@ export class Api {
 
     }
 
-    processQuery( o: Observable<Response>, option = {} ) {
+    protected processQuery( o: Observable<Response>, option = {} ) {
         let timeout = BACKEND_API_CONNECTION_TIMEOUT;
         if ( option['timeout'] !== void 0 ) timeout = option['timeout'];
         return o
@@ -314,7 +314,7 @@ export class Api {
    *
    * @param params must be an object.
    */
-  buildQuery( params ) {
+  protected buildQuery( params ) {
     // params[ 'module' ] = 'ajax'; // 'module' must be ajax.
     // params[ 'submit' ] = 1; // all submit must send 'submit'=1
     return this.http_build_query( params );
@@ -323,7 +323,7 @@ export class Api {
 
 
 
-  http_build_query (formdata, numericPrefix='', argSeparator='') {
+  protected http_build_query (formdata, numericPrefix='', argSeparator='') {
     var urlencode = this.urlencode;
     var value
     var key
@@ -373,7 +373,7 @@ export class Api {
 
 
 
-  urlencode (str) {
+  protected urlencode (str) {
     str = (str + '')
     return encodeURIComponent(str)
       .replace(/!/g, '%21')

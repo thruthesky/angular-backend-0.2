@@ -9,7 +9,7 @@ export * from '../interface';
 export * from '../define';
 @Injectable()
 export class File extends Base {
-  percentage: number = 0;
+  protected percentage: number = 0;
   constructor( http: Http, private progress: ProgressService) {
     super( http, 'file' );
   }
