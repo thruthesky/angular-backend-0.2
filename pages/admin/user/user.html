@@ -5,9 +5,59 @@
     <main class="col-12 col-sm-9 col-md-10">
 
 
-        user list.
-          
-          
+      <h2>Login</h2>
+      <div class="user-box">
+        <div *ngIf=" ! user.logged " class="login-form">
+          <input name="id" [(ngModel)]="_id"><input name="password" [(ngModel)]="_password"><button (click)="onClickLogin(_id, _password)" type="button">Login</button>
+        </div>
+        <div *ngIf=" user.logged " class="user-info">
+          User are logged in: {{ user.getSessionInfo().id }}
+          <button (click)="onClickLogout()" type="button">logout</button>
+        </div>
+      </div>
+
+
+
+      <h2>User management By admin</h2>
+      <div>UserID: <input name="id" [(ngModel)]="searchForm.id" (keyup)="onChangeSearch()"></div>
+      <div>Name: <input name="name" [(ngModel)]="searchForm.name" (keyup)="onChangeSearch()"></div>
+      <div>Email: <input name="email" [(ngModel)]="searchForm.email" (keyup)="onChangeSearch()"></div>
+      {{ searchForm.name }}
+      <h2>User Pagination</h2>
+      <div *ngIf="paginationUsers" class="pagination-user" >
+        <table class="table">
+          <thead class="thead-inverse">
+          <tr>
+            <th>IDX</th>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Mobile</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="paginationUsers" class="users">
+          <tr *ngFor="let user of paginationUsers" class="user">
+            <th scope="row">{{user.idx}}</th>
+            <td>{{user.id}}</td>
+            <td>{{user.name}} {{user.middle_name}} {{user.last_name}}</td>
+            <td>{{user.gender}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.mobile}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <page-navigation
+                [no_of_total_items]=" totalRecord "
+                [no_of_items_in_one_page] = " limitPerPage "
+                [no_of_pages_in_navigator] = " numberPerNav "
+                [no_of_current_page] = " currentPage "
+                [show_prev_next] = " true "
+                (pageClick)="onPageClick($event)"
+        >
+        </page-navigation>
+      </div>
+
     </main>
   </div>
 </div>

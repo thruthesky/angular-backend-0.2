@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { BackendAdminPage } from './pages/admin/index/index';
 export { BackendAdminPage } from './pages/admin/index/index';
@@ -27,7 +29,8 @@ import { AdminService } from './pages/admin/services/admin.service';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
   ],
   providers: [ AdminService ]
 })
