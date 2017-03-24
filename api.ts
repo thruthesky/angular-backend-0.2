@@ -93,10 +93,11 @@ export class Api {
      */
     protected setSessionInfo( res: USER_SESSION_RESPONSE ) {
         if ( res === void 0 || res.data === void 0 || res.data.session_id === void 0 ) {
-        alert("CRITICAL ERROR: sessionSessionId() - please report this to admin.");
-        return;
-      }
-      localStorage.setItem( API_KEY_SESSION_INFO, JSON.stringify( res.data ) );
+            // No session_id will be returned if admin edits user info.
+            // alert("CRITICAL ERROR: sessionSessionId() - please report this to admin.");
+            return;
+        }
+        localStorage.setItem( API_KEY_SESSION_INFO, JSON.stringify( res.data ) );
     }
 
     getSessionInfo() : SESSION_INFO {
@@ -186,6 +187,8 @@ export class Api {
             })
 
             .map( (e) => {
+                ///
+                if ( e['_body'] == '' ) throw this.errorResponse( -408, 'response-is-empty.');
                 let re = e.json();
                 if ( this.isError( re ) ) throw re;
                 else return re;

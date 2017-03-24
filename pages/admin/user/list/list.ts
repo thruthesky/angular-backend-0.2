@@ -5,7 +5,9 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 
 import { User, USER, LIST,
-  USER_LIST_RESPONSE, USER_LOGOUT_RESPONSE, USER_LOGIN, USER_LOGIN_RESPONSE
+  USER_LIST_RESPONSE, USER_LOGOUT_RESPONSE, USER_LOGIN, USER_LOGIN_RESPONSE,
+  USER_EDIT, USER_EDIT_RESPONSE,
+  USER_DELETE, USER_DELETE_RESPONSE
 } from './../../../../angular-backend';
 @Component({
   selector: 'backend-admin-user-list',
@@ -118,6 +120,27 @@ export class BackendAdminUserListPage {
       this.totalRecord = parseInt(res.data.total);
     }, err => this.user.alert(err));
   }
+
+
+
+  onClickEdit( user: USER ) {
+    console.log(user);
+    let edit: USER_EDIT = { id: user.id, email: user.email };
+    this.user.edit( edit ).subscribe( (res: USER_EDIT_RESPONSE) => {
+      console.log("edit response: ", res);
+    }, err => this.user.alert( err ) );
+  }
+
+  onClickDelete( id: string ) {
+
+    console.log(id);
+    
+    this.user.delete( id ).subscribe( (res: USER_DELETE_RESPONSE) => {
+      console.log("delete response: ", res);
+      this.paginationUsers = this.paginationUsers.filter( ( user: USER ) => user.id != id );
+    }, err => this.user.alert( err ) );
+  }
+
 
 }
 

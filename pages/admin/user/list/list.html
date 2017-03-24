@@ -52,10 +52,14 @@
             <th scope="row">{{user.idx}}</th>
             <td>{{user.id}}</td>
             <td>{{user.name}} {{user.middle_name}} {{user.last_name}}</td>
-            <td>{{user.gender}}</td>
-            <td>{{user.email}}</td>
-            <td class="text-center" role="button"><i class="fa fa-pencil"></i></td>
-            <td class="text-center" role="button"><i class="fa fa-trash"></i></td>
+            <td>
+              {{user.gender}}
+            </td>
+            <td>
+              <input type="email" name="email" [(ngModel)]="user.email">
+            </td>
+            <td (click)="onClickEdit( user )" class="text-center" role="button"><i class="fa fa-pencil"></i></td>
+            <td (click)="onClickDelete( user.id )" class="text-center" role="button"><i class="fa fa-trash"></i></td>
           </tr>
           </tbody>
         </table>

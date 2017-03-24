@@ -57,11 +57,13 @@ export class Base extends Api {
     return this.post(req);
   }
 
-  delete( idx: number ): Observable<DELETE_RESPONSE> {
+  delete( idx: any ): Observable<DELETE_RESPONSE> {
     let req: DELETE_REQUEST = {
-      route: this.taxonomy + '.delete',
-      idx: idx
+      route: this.taxonomy + '.delete'
     }
+    if ( Number.isInteger( idx ) ) req.idx = idx;
+    else req.id = idx;
+
     return this.post(req);
   }
 

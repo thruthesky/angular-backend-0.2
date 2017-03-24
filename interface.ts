@@ -13,13 +13,16 @@ export interface ID_PASSWORD {
 };
 
 interface IDX {
-    idx: number;
+    idx?: number;
+};
+interface ID {
+    id?: string;
 };
 interface FILE_HOOKS {
     file_hooks?: Array<number>
 };
 
-export interface DELETE_REQUEST extends REQUEST, IDX {}; // universal. all kinds of delete requst.
+export interface DELETE_REQUEST extends REQUEST, IDX, ID {}; // universal. all kinds of delete requst.
 export interface DELETE_RESPONSE extends RESPONSE{}; // universal. all kinds of delete response.
 
 interface USER_EDITABLE_FIELDS {
@@ -92,12 +95,14 @@ export interface USER_DATA_RESPONSE extends RESPONSE {                   // to g
 
 
 export interface LIST extends REQUEST {
-    page?: number;
+    select?: string;
     from?: number;
-    limit?: number;
     where?: string;
     bind?: string;
     order?: string;
+    limit?: number;
+    extra?: any;
+    page?: number;
 };
 
 export interface USER_LIST_RESPONSE extends RESPONSE {                       // array of users for user.list request
@@ -122,6 +127,13 @@ export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
 }; // to edit user data
 
 export interface USER_EDIT_RESPONSE extends USER_SESSION_RESPONSE {}; // to get response of user edit. it is only session info and name, email, id.
+
+export interface USER_DELETE extends REQUEST, ID {};
+export interface USER_DELETE_RESPONSE extends RESPONSE {
+    data: ID
+};
+
+
 
 export interface USER_META_REQUEST  extends REQUEST {};
 export interface USER_META_RESPONSE extends RESPONSE {};
