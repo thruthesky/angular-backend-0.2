@@ -18,6 +18,9 @@ import { ProgressGroupComponent } from './pages/components/progress-group/progre
 
 import { AdminService } from './pages/admin/services/admin.service';
 
+
+import { AngularBackendComponentModule } from './modules/angular-backend-components.module';
+
 @NgModule({
   declarations: [
     BackendAdminPage,
@@ -31,6 +34,7 @@ import { AdminService } from './pages/admin/services/admin.service';
     CommonModule,
     RouterModule,
     FormsModule,
+    AngularBackendComponentModule
   ],
   providers: [ AdminService ]
 })

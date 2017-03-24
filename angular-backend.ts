@@ -5,9 +5,9 @@ import { PostData } from './model/post-data';
 import { PostConfig } from './model/post-config';
 import { Test } from './test/test';
 import { File } from './model/file';
-import { ProgressService } from "./service/progress";
+import { ProgressService } from "./services/progress";
 import { BrowserXhr } from "@angular/http";
-import { CustomBrowserXhr } from "./service/custom-browser-xhr";
+import { CustomBrowserXhr } from "./services/custom-browser-xhr";
 
 export * from './interface';
 export { Backend } from './model/backend';
