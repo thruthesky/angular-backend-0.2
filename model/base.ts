@@ -45,27 +45,22 @@ export class Base extends Api {
       delete( req.page );
     }
 
-    req.session_id = this.getSessionId();
     return this.post(req);
   }
 
 
   create(req = {}): Observable<any> {
     req['route'] = this.taxonomy + '.create';
-    req['session_id'] = this.getSessionId();
     return this.post(req);
   }
 
   delete(req = {}): Observable<any> {
     req['route'] = this.taxonomy + '.delete';
-    req['session_id'] = this.getSessionId();
     return this.post(req);
   }
 
-
-  update(req = {}): Observable<any> {
+  edit(req = {}): Observable<any> {
     req['route'] = this.taxonomy + '.edit';
-    req['session_id'] = this.getSessionId;
     return this.post(req);
   }
 }
