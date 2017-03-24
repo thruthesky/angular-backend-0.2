@@ -107,7 +107,7 @@ export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to g
 
 
 export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
-        meta?: any;
+    meta?: any;
     file_hooks?: Array<number>
 }; // to edit user data
 
@@ -168,16 +168,10 @@ export interface CONFIG {
 };
 
 
-
-export interface POST_FIELDS {
-
-    idx?: number;
-    user_idx?: string
+interface POST_CREATIBLE_FIELDS {
     title?: string;
     content?: string;
-    readonly post_config_idx?: number;
     post_config_id?: string;
-    //user information
     name?: string;
     password?: string;
 
@@ -187,10 +181,9 @@ export interface POST_FIELDS {
     contact?: string,
     country?: string,
     created?: string,
-    readonly deleted?: string,
     email?: string,
     gender?: string,
-    readonly ip?: string,
+    
     landline?: string,
     last_name?: string
     meta?: [{
@@ -200,10 +193,32 @@ export interface POST_FIELDS {
     mobile?: string,
     parent_idx?: string,
     province?: string,
+    
     secret?: string,
+    file_hooks?: Array<number>
+}
+
+interface POST_EDITABLE_FIELDS extends POST_CREATIBLE_FIELDS {
+    idx: number;
+}
+
+interface POST_FIELDS extends POST_CREATIBLE_FIELDS {
+    readonly idx?: number;
+    readonly user_idx?: string
+    readonly post_config_idx?: number;
+    readonly deleted?: string,
+    readonly ip?: string,
+    readonly create?: string
     readonly updated?: string
+    readonly files?: Array<{}>
 };
 
+
+interface IDX_RESPONSE {
+    data: {
+        idx: number;
+    }
+}
 export type POST = POST_FIELDS;
 export type POSTS = Array<POST>;
 export interface CONFIG_CREATE extends REQUEST, CONFIG {};               // to create a forum.
@@ -220,11 +235,14 @@ export interface CONFIG_RESPONSE extends RESPONSE {
 };                     // to receive a complete forum config fields. Use this after create/update/get/delete a forum
 
 
-export interface POST_CREATE extends REQUEST, POST {};               // to create a post
-export interface POST_EDIT extends REQUEST, POST {};    // to update a post
+export interface POST_CREATE extends REQUEST, POST_CREATIBLE_FIELDS {};               // to create a post
+export interface POST_EDIT extends REQUEST, POST_EDITABLE_FIELDS {};    // to update a post
+export interface POST_CREATE_RESPONSE extends RESPONSE, IDX_RESPONSE {};
+export interface POST_EDIT_RESPONSE extends RESPONSE, IDX_RESPONSE {};
+
 export interface POST_DELETE extends REQUEST, POST_IDX {};                                         // to update a post
 export interface POST_GET extends REQUEST, POST_IDX {};
-export interface POST_RESPONSE extends RESPONSE {
+export interface POST_LIST_RESPONSE extends RESPONSE {
     data: {
         configs: Array<CONFIG>,
         posts: POSTS,

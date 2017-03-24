@@ -5,10 +5,9 @@ import {
 } from '../angular-backend';
 import { Observable } from 'rxjs/Observable';
 export class Base extends Api {
-    constructor( public http, public taxonomy ) {
-      super( http );
-    }
-
+  constructor(public http, public taxonomy) {
+    super(http);
+  }
 
 
     /**
@@ -19,10 +18,12 @@ export class Base extends Api {
      *
      * @code example code.
         this.config.list( {} ).subscribe( res => {
+          
             console.log(res);
         }, err => {
             console.log(err);
         });
+        
      *
      * @endcode
      *
@@ -50,9 +51,18 @@ export class Base extends Api {
         return this.post( req );
     }
 
-    create( req = {} ) : Observable<any> {
-        req['route'] = this.taxonomy + '.create';
-        req['session_id'] = this.getSessionId();
-        return this.post( req );
-    }
+  create(req = {}): Observable<any> {
+    req['route'] = this.taxonomy + '.create';
+    return this.post(req);
+  }
+
+  delete(req = {}): Observable<any> {
+    req['route'] = this.taxonomy + '.delete';
+    return this.post(req);
+  }
+
+  edit(req = {}): Observable<any> {
+    req['route'] = this.taxonomy + '.edit';
+    return this.post(req);
+  }
 }

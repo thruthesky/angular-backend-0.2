@@ -77,8 +77,7 @@ export class User extends Base {
     edit( req: USER_EDIT ) : Observable<USER_EDIT_RESPONSE> {
       console.log('edit::req', req);
         if ( this.logged == false ) return this.error( -421, 'login-first-before-edit');
-        req.route = 'user.edit';
-        return this.post( req )
+        return super.edit( req )
             .map( ( res: USER_EDIT_RESPONSE ) => {
                 this.setSessionInfo( res );
                 return res;
