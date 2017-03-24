@@ -12,6 +12,15 @@ export interface ID_PASSWORD {
     password?: string;
 };
 
+interface IDX {
+    idx: number;
+};
+interface FILE_HOOKS {
+    file_hooks?: Array<number>
+};
+
+export interface DELETE_REQUEST extends REQUEST, IDX {}; // universal. all kinds of delete requst.
+export interface DELETE_RESPONSE extends RESPONSE{}; // universal. all kinds of delete response.
 
 interface USER_EDITABLE_FIELDS {
     password?: string;
@@ -107,6 +116,7 @@ export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to g
 
 
 export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
+    id?: string;    // =====> This is needed only by admin when admin wants to update user's profile.
     meta?: any;
     file_hooks?: Array<number>
 }; // to edit user data
@@ -136,13 +146,17 @@ export interface ADMIN_USER_SEARCH_RESPONS extends RESPONSE {
 };
 
 
+export interface POST_CONFIG_ID {
+    post_config_id?: string;
+};
+
+
+
 
 
 ////FORUM////
 
-interface FORUM_IDX {
-    idx?: number;
-};
+interface FORUM_IDX extends IDX {};
 type CONFIG_IDX= FORUM_IDX;
 type POST_IDX = FORUM_IDX;
 
@@ -168,49 +182,52 @@ export interface CONFIG {
 };
 
 
-interface POST_CREATIBLE_FIELDS {
+
+interface POST_COMMON_FIELDS {
     title?: string;
     content?: string;
     post_config_id?: string;
     name?: string;
     password?: string;
 
-    address?: string,
-    birthdate?: string,
-    city?: string,
-    contact?: string,
-    country?: string,
+    address?: string;
+    birthdate?: string;
+    city?: string;
+    contact?: string;
+    country?: string;
     created?: string,
-    email?: string,
-    gender?: string,
+    email?: string;
+    gender?: string;
     
-    landline?: string,
-    last_name?: string
+    landline?: string;
+    last_name?: string;
+    middle_name?: string;
+    mobile?: string;
+    parent_idx?: string;
+    province?: string;
+    
+    secret?: string;
+}
+
+interface POST_PRE_FIELDS {
     meta?: [{
-
     }],
-    middle_name?: string,
-    mobile?: string,
-    parent_idx?: string,
-    province?: string,
-    
-    secret?: string,
-    file_hooks?: Array<number>
 }
 
-interface POST_EDITABLE_FIELDS extends POST_CREATIBLE_FIELDS {
-    idx: number;
-}
+interface POST_CREATIBLE_FIELDS extends POST_CONFIG_ID, POST_COMMON_FIELDS, FILE_HOOKS {};
 
-interface POST_FIELDS extends POST_CREATIBLE_FIELDS {
+interface POST_EDITABLE_FIELDS extends IDX, POST_COMMON_FIELDS, FILE_HOOKS {};
+
+
+interface POST_FIELDS extends POST_COMMON_FIELDS {
     readonly idx?: number;
-    readonly user_idx?: string
+    readonly user_idx?: string;
     readonly post_config_idx?: number;
-    readonly deleted?: string,
-    readonly ip?: string,
-    readonly create?: string
-    readonly updated?: string
-    readonly files?: Array<{}>
+    readonly deleted?: string;
+    readonly ip?: string;
+    readonly create?: string;
+    readonly updated?: string;
+    readonly files?: FILES;
 };
 
 
@@ -219,7 +236,20 @@ interface IDX_RESPONSE {
         idx: number;
     }
 }
-export type POST = POST_FIELDS;
+
+export interface FILE {
+    idx: number;
+    name?: string;
+    type?: string;
+    url?: string;
+};
+export type FILES = Array<FILE>;
+
+// POST is the resopnse of POST_GET
+// export type POST = POST_FIELDS;
+export interface POST extends RESPONSE, POST_FIELDS, POST_PRE_FIELDS {
+
+}
 export type POSTS = Array<POST>;
 export interface CONFIG_CREATE extends REQUEST, CONFIG {};               // to create a forum.
 export interface CONFIG_CREATE_RESPONSE extends RESPONSE {

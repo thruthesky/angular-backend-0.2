@@ -1,7 +1,8 @@
 import { Api } from '../api';
 import { NO_OF_ITEMS_PER_PAGE } from '../config';
 import {
-    LIST
+    LIST,
+    DELETE_REQUEST, DELETE_RESPONSE
 } from '../angular-backend';
 import { Observable } from 'rxjs/Observable';
 export class Base extends Api {
@@ -56,8 +57,11 @@ export class Base extends Api {
     return this.post(req);
   }
 
-  delete(req = {}): Observable<any> {
-    req['route'] = this.taxonomy + '.delete';
+  delete( idx: number ): Observable<DELETE_RESPONSE> {
+    let req: DELETE_REQUEST = {
+      route: this.taxonomy + '.delete',
+      idx: idx
+    }
     return this.post(req);
   }
 
