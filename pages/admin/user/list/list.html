@@ -19,11 +19,21 @@
 
 
       <h2>User management By admin</h2>
-      <div>UserID: <input name="id" [(ngModel)]="searchForm.id" (keyup)="onChangeSearch()"></div>
-      <div>Name: <input name="name" [(ngModel)]="searchForm.name" (keyup)="onChangeSearch()"></div>
-      <div>Email: <input name="email" [(ngModel)]="searchForm.email" (keyup)="onChangeSearch()"></div>
-      {{ searchForm.name }}
-      <h2>User Pagination</h2>
+
+      <div class="container mb-3">
+        <div class="row">
+          <div class="col">
+            <div>UserID: <input name="id" [(ngModel)]="searchForm.id" (keyup)="onChangeSearch()"></div>
+          </div>
+          <div class="col">
+            <div>Name: <input name="name" [(ngModel)]="searchForm.name" (keyup)="onChangeSearch()"></div>
+          </div>
+          <div class="col">
+            <div>Email: <input name="email" [(ngModel)]="searchForm.email" (keyup)="onChangeSearch()"></div>
+          </div>
+        </div>
+      </div>
+
       <div *ngIf="paginationUsers" class="pagination-user" >
         <table class="table">
           <thead class="thead-inverse">
@@ -33,7 +43,8 @@
             <th>Name</th>
             <th>Gender</th>
             <th>Email</th>
-            <th>Mobile</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Delete</th>
           </tr>
           </thead>
           <tbody *ngIf="paginationUsers" class="users">
@@ -43,7 +54,8 @@
             <td>{{user.name}} {{user.middle_name}} {{user.last_name}}</td>
             <td>{{user.gender}}</td>
             <td>{{user.email}}</td>
-            <td>{{user.mobile}}</td>
+            <td class="text-center" role="button"><i class="fa fa-pencil"></i></td>
+            <td class="text-center" role="button"><i class="fa fa-trash"></i></td>
           </tr>
           </tbody>
         </table>

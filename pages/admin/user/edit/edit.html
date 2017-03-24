@@ -1,0 +1,18 @@
+<admin-header></admin-header>
+<div class="container-fluid margin-top-5 mt-sm-5">
+  <div class="row">
+    <admin-sidebar class="{{ admin.hidden_xs_down }} col-sm-3 col-md-2 px-0"></admin-sidebar>
+    <main class="col-12 col-sm-9 col-md-10">
+        <div>
+            <input #userfileEdit type="file" (change)="onEditChangeFile( userfileEdit )">
+            <div class="progress" *ngIf="percentage">{{percentage}}%</div>
+            <img src="{{ edit_src_photo }}" width="100%">
+            <div>Name: <input name="name" [(ngModel)]="edit.name"></div>
+            <div>Email: <input name="email" [(ngModel)]="edit.email"></div>
+            <div>Gender<input name="gender" [(ngModel)]="edit.gender"></div>
+            <div><button (click)="onClickUpdateProfile()" type="button">Update Profile</button></div>
+        </div>
+    </main>
+  </div>
+</div>
+

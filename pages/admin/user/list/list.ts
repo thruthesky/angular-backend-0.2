@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { AdminService } from './../services/admin.service';
+import { AdminService } from './../../services/admin.service';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 
 import { User, USER, LIST,
   USER_LIST_RESPONSE, USER_LOGOUT_RESPONSE, USER_LOGIN, USER_LOGIN_RESPONSE
-} from './../../../angular-backend';
+} from './../../../../angular-backend';
 @Component({
-  selector: 'backend-admin-user-page',
-  templateUrl: './user.html',
-  styleUrls:['./user.scss']
+  selector: 'backend-admin-user-list',
+  templateUrl: 'list.html',
+  styleUrls:['list.scss']
 })
-export class BackendAdminUserPage {
+export class BackendAdminUserListPage {
 
   _id: string = null;
   _password: string = null;
