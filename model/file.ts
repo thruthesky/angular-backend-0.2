@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Base } from './base';
 import { FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC } from "../interface";
-import { ProgressService } from "../service/progress";
+import { ProgressService } from "../services/progress";
 import { Observable } from "rxjs";
 import { URL_BACKEND_API } from "../config";
 export * from '../interface';
