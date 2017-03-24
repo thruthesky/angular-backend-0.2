@@ -57,7 +57,6 @@ export class File extends Base {
     return URL_BACKEND_API + '?route=download&idx='+idx;
   }
   src( option: IMG_SRC ) {
-
     let url = this.url( option.idx );
     if ( option['width'] ) url += 'width=' + option.width;
     if ( option['height'] ) url += 'height=' + option.height;
