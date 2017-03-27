@@ -180,9 +180,9 @@ type POST_IDX = FORUM_IDX;
 
 export interface CONFIG {
     idx?: number;
-    created?: number;
+    created?: string;
     updated?: number;
-    id: string;
+    id?: string;
     name?: string;
     description?: string;
     moderators?: string;
@@ -210,14 +210,14 @@ interface POST_COMMON_FIELDS {
     created?: string,
     email?: string;
     gender?: string;
-    
+
     landline?: string;
     last_name?: string;
     middle_name?: string;
     mobile?: string;
     parent_idx?: string;
     province?: string;
-    
+
     secret?: string;
 }
 
@@ -263,6 +263,7 @@ export interface POST extends RESPONSE, POST_FIELDS, POST_PRE_FIELDS {
 
 }
 export type POSTS = Array<POST>;
+export type CONFIGS = Array<CONFIG>;
 export interface CONFIG_CREATE extends REQUEST, CONFIG {};               // to create a forum.
 export interface CONFIG_CREATE_RESPONSE extends RESPONSE {
     data: {
@@ -286,7 +287,7 @@ export interface POST_DELETE extends REQUEST, POST_IDX {};                      
 export interface POST_GET extends REQUEST, POST_IDX {};
 export interface POST_LIST_RESPONSE extends RESPONSE {
     data: {
-        configs: Array<CONFIG>,
+        configs: CONFIGS,
         posts: POSTS,
         total: string
     }
