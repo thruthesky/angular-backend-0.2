@@ -31,6 +31,7 @@ export class File extends Base {
     if ( req['finish'] ) formData.append( 'finish', req.finish );
     
     console.log( file );
+    console.log( formData) ;
     let o = this.http.post( URL_BACKEND_API, formData);
 
     let subscription = this.progress.uploadProgress.subscribe( res => {

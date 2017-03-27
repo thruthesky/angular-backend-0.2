@@ -8,7 +8,9 @@
         <div *ngFor=" let post of posts ">
             {{ post.idx }} -
             {{ post.title }} -
-            {{ post.created }}
+            {{ post.created }} -
+
+            {{ post.files | json }}
         </div>
 
     </main>

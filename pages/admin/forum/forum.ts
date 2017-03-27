@@ -18,7 +18,8 @@ export class BackendAdminForumPage {
 
         let list: LIST = {
             select: 'idx, title, created',
-            order: 'idx DESC'
+            order: 'idx DESC',
+            extra: { file: false, meta: true, post_config_id: 'qna' }
         };
         this.postData.list( list ).subscribe( (res: POST_LIST_RESPONSE ) => {
 
