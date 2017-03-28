@@ -60,10 +60,7 @@ export class User extends Base {
 
     data( id? ) : Observable<USER_DATA_RESPONSE> {
         if ( this.logged == false ) return this.error( -420, 'login-first-before-get-user-info');
-        let req = <USER_DATA> {};
-        req.route = 'user.data';
-        if ( id ) req.id = id;
-        return this.post( req );
+        return super.data( id );
     }
     register( req: USER_REGISTER ) : Observable<USER_REGISTER_RESPONSE> {
         req.route = 'register';

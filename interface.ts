@@ -23,8 +23,10 @@ interface FILE_HOOKS {
 };
 
 export interface DELETE_REQUEST extends REQUEST, IDX, ID {}; // universal. all kinds of delete requst.
+export interface DATA_REQUEST extends REQUEST, IDX, ID {};
 export interface DELETE_RESPONSE extends RESPONSE, IDX, ID {}; // universal. all kinds of delete response.
 export interface EDIT_RESPONSE extends RESPONSE, IDX, ID {};
+
 
 interface USER_EDITABLE_FIELDS {
     password?: string;
