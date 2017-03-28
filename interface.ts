@@ -46,7 +46,7 @@ interface USER_EDITABLE_FIELDS {
     stamp_last_login?: number;
     stamp_registration?: number;
     session_id?: string;
-    meta?: any;
+    meta?: METAS;
 }
 
 interface USER_REGISTABLE_FIELDS extends USER_EDITABLE_FIELDS {
@@ -114,7 +114,7 @@ export interface USER_LIST_RESPONSE extends RESPONSE {                       // 
 };
 
 export interface USER_REGISTER extends REQUEST, USER_REGISTABLE_FIELDS {      // to register
-    meta?: any;
+    meta?: METAS;
     file_hooks?: Array<number>
 };
 
@@ -123,15 +123,15 @@ export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to g
 
 export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
     id?: string;    // =====> This is needed only by admin when admin wants to update user's profile.
-    meta?: any;
-    file_hooks?: Array<number>
+    meta?: METAS;
+    file_hooks?: Array<number>;
 }; // to edit user data
 
 export interface USER_EDIT_RESPONSE extends USER_SESSION_RESPONSE {}; // to get response of user edit. it is only session info and name, email, id.
 
 export interface USER_DELETE extends REQUEST, ID {};
 export interface USER_DELETE_RESPONSE extends RESPONSE {
-    data: ID
+    data: ID;
 };
 
 
@@ -222,10 +222,13 @@ interface POST_COMMON_FIELDS {
     secret?: string;
 }
 
-interface POST_PRE_FIELDS {
-    meta?: [{
-    }],
+interface META {
+    [key: string] : string;
 }
+type METAS = Array<META>;
+interface POST_PRE_FIELDS {
+    meta?: METAS;
+};
 
 interface POST_CREATIBLE_FIELDS extends POST_CONFIG_ID, POST_COMMON_FIELDS, FILE_HOOKS {};
 
@@ -287,6 +290,8 @@ export interface POST_EDIT_RESPONSE extends RESPONSE, IDX_RESPONSE {};
 
 export interface POST_DELETE extends REQUEST, POST_IDX {};                                         // to update a post
 export interface POST_GET extends REQUEST, POST_IDX {};
+
+export type POST_LIST = LIST;
 export interface POST_LIST_RESPONSE extends RESPONSE {
     data: {
         configs: CONFIGS,
