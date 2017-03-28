@@ -33,8 +33,8 @@ export class BackendAdminForumPage {
 
   pageOption: PAGINATION_OPTION = {
     limitPerPage: 5,
-    currentPage:1,
-    numberPerNav: 4,
+    currentPage:3,
+    numberPerNav: 4, //
     totalRecord: 0
   };
 
