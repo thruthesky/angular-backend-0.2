@@ -2,6 +2,7 @@ import { Api } from '../api';
 import { NO_OF_ITEMS_PER_PAGE } from '../config';
 import {
     LIST,
+    DATA_REQUEST,
     DELETE_REQUEST, DELETE_RESPONSE
 } from '../angular-backend';
 import { Observable } from 'rxjs/Observable';
@@ -69,8 +70,18 @@ export class Base extends Api {
     return this.post(req);
   }
 
-  edit(req = {}): Observable<any> {
+  edit( req = {} ): Observable<any> {
     req['route'] = this.taxonomy + '.edit';
     return this.post(req);
   }
+
+  data( idx: any ) : Observable<any> {
+    let req: DATA_REQUEST = {
+      route: this.taxonomy + '.data'
+    }
+    if ( Number.isInteger( idx ) ) req.idx = idx;
+    else req.id = idx;
+    return this.post( req );
+  }
+
 }
