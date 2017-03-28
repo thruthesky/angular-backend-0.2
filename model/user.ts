@@ -97,7 +97,6 @@ export class User extends Base {
         let req: USER_LOGOUT = {
             route: 'logout'
         };
-
         let observable = this.post( req );
         this.deleteSessionInfo();
         return observable;

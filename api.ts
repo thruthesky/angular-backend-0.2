@@ -102,6 +102,7 @@ export class Api {
 
     getSessionInfo() : SESSION_INFO {
         let data = localStorage.getItem( API_KEY_SESSION_INFO );
+        //console.log(data);
         if ( data ) {
             try {
                 return JSON.parse( data );
@@ -120,6 +121,7 @@ export class Api {
         // console.info(info);
         if ( info ) return info.session_id;
         // return localStorage.getItem( API_KEY_SESSION_INFO );
+        else return null;
     }
 
 
@@ -141,6 +143,7 @@ export class Api {
     post( data: any, option = {} ) : any {
 
         let session_id = this.getSessionId();
+        //console.log(session_id);
         if ( session_id ) data['session_id'] = session_id;
 
         data = this.buildQuery( data );
