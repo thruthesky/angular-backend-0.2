@@ -34,7 +34,7 @@ export class BackendAdminUserEditPage {
 
     admin.onClickMenuMore();
 
-    let id = this.route.snapshot.params['id'];
+    let id = this.route.snapshot.params['idx'];
     if( id ){ //if idx exist then edit
       this.loadData( id );
     }

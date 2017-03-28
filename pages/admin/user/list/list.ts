@@ -133,8 +133,8 @@ export class BackendAdminUserListPage {
 
   onClickDelete( id: string ) {
 
-    console.log(id);
-    
+    console.log( id );
+
     this.user.delete( id ).subscribe( (res: USER_DELETE_RESPONSE) => {
       console.log("delete response: ", res);
       this.paginationUsers = this.paginationUsers.filter( ( user: USER ) => user.id != id );
