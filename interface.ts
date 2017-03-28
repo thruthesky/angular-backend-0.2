@@ -23,7 +23,8 @@ interface FILE_HOOKS {
 };
 
 export interface DELETE_REQUEST extends REQUEST, IDX, ID {}; // universal. all kinds of delete requst.
-export interface DELETE_RESPONSE extends RESPONSE{}; // universal. all kinds of delete response.
+export interface DELETE_RESPONSE extends RESPONSE, IDX, ID {}; // universal. all kinds of delete response.
+export interface EDIT_RESPONSE extends RESPONSE, IDX, ID {};
 
 interface USER_EDITABLE_FIELDS {
     password?: string;
@@ -262,9 +263,8 @@ export type FILES = Array<FILE>;
 
 // POST is the resopnse of POST_GET
 // export type POST = POST_FIELDS;
-export interface POST extends RESPONSE, POST_FIELDS, POST_PRE_FIELDS {
+export interface POST extends POST_FIELDS, POST_PRE_FIELDS {}
 
-}
 export type POSTS = Array<POST>;
 export type CONFIGS = Array<CONFIG>;
 export interface CONFIG_CREATE extends REQUEST, CONFIG {};               // to create a forum.
@@ -275,6 +275,8 @@ export interface CONFIG_CREATE_RESPONSE extends RESPONSE {
 }
 export interface CONFIG_EDIT extends REQUEST, CONFIG {};    // to update a forum.
 export interface CONFIG_DELETE extends REQUEST, FORUM_IDX {};                         // to delete a forum.
+export type CONFIG_DELETE_RESPONSE = DELETE_RESPONSE;
+export type CONFIG_EDIT_RESPONSE = EDIT_RESPONSE;
 export interface CONFIG_GET extends REQUEST, CONFIG_IDX {};                     // to get a forum config fields.
 export interface CONFIG_RESPONSE extends RESPONSE {
     data: CONFIG
@@ -320,4 +322,12 @@ export interface IMG_SRC {
     height?: number;
     quality?: number;
     resize?: '' | 'crop'
+}
+
+
+export interface PAGINATION_OPTION {
+  limitPerPage:number;
+  currentPage:number;
+  numberPerNav:number;
+  totalRecord:number;
 }
