@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Base } from './base';
-import { FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC } from "../interface";
+import { FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC,
+
+  UPLOAD,
+  PRIMARY_PHOTO_UPLOAD,
+  ANONYMOUS_PRIMARY_PHOTO_UPLOAD
+ } from "../interface";
 import { ProgressService } from "../services/progress";
 import { Observable } from "rxjs";
 import { URL_BACKEND_API } from "../config";
@@ -14,8 +19,16 @@ export class File extends Base {
     super( http, 'file' );
   }
 
-  upload( req:FILE_UPLOAD, file ): Observable< FILE_UPLOAD_RESPONSE >{
 
+  uploadAnonymousPrimaryPhoto( req: ANONYMOUS_PRIMARY_PHOTO_UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
+    return this.upload( req, file );
+  }
+  uploadPrimaryPhoto( req: PRIMARY_PHOTO_UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
+    return this.upload( req, file );
+  }
+
+
+  upload( req:UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
     //
     // req.route = 'upload';
     // req.session_id = this.getSessionId();
@@ -31,7 +44,7 @@ export class File extends Base {
     if ( req['finish'] ) formData.append( 'finish', req.finish );
     
     console.log( file );
-    console.log( formData) ;
+    console.log( formData ) ;
     let o = this.http.post( URL_BACKEND_API, formData);
 
     let subscription = this.progress.uploadProgress.subscribe( res => {
@@ -42,9 +55,6 @@ export class File extends Base {
       console.log(subscription);
       if ( this.percentage == 100 ) subscription.unsubscribe();
     });
-
-    
-  
 
     return this.processQuery( o );
     //   .subscribe(res=>{
@@ -63,7 +73,7 @@ export class File extends Base {
     if ( option['height'] ) url += 'height=' + option.height;
     if ( option['quality'] ) url += 'quality=' + option.quality;
     if ( option['resize'] ) url += 'resize=' + option.resize;
+    console.log('file.src() returns: ', url);
     return url;
-
   }
 }

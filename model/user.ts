@@ -76,6 +76,7 @@ export class User extends Base {
         if ( this.logged == false ) return this.error( -421, 'login-first-before-edit');
         return super.edit( req )
             .map( ( res: USER_EDIT_RESPONSE ) => {
+                console.log('edit res: ', res );
                 this.setSessionInfo( res );
                 return res;
             });

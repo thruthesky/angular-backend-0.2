@@ -68,6 +68,7 @@ export interface USER_FIELDS extends USER_EDITABLE_FIELDS {
 export interface SESSION_INFO {
     session_id: string;
     id: string;
+    idx: number;
     name: string;
     email: string;
 };
@@ -332,4 +333,54 @@ export interface PAGINATION_OPTION {
   currentPage:number;
   numberPerNav:number;
   totalRecord:number;
+}
+
+
+/**
+ * ---------------- Strict Interfaces -------------------
+ * 
+ * @warning Use interfaces below !!
+ * @warning All the interfaces above are DEPRECATED !!
+ * 
+ * 
+ */
+
+interface _IDX {
+    idx: string;
+}
+interface _IDX_O {
+    idx?: string;
+}
+
+export interface _REQUEST_O {
+    route?: string;
+    session_id?: string;
+};
+export interface _RESPONSE {
+    readonly code: number;
+    readonly message?: string;
+};
+
+
+
+//// file upload
+
+
+export interface UPLOAD extends _REQUEST_O {
+    model?: string;
+    model_idx?: number;
+    code?: string;
+    unique?: string;
+    finish?: string;
+}
+
+
+export interface ANONYMOUS_PRIMARY_PHOTO_UPLOAD extends _REQUEST_O {
+    model: string;
+    code: 'primary_photo';
+}
+export interface PRIMARY_PHOTO_UPLOAD extends ANONYMOUS_PRIMARY_PHOTO_UPLOAD {
+    model_idx: number;
+    unique: 'Y';
+    finish: 'Y';
 }
