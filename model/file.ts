@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Base } from './base';
-import { FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC,
-
+import {
+  FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC,
   UPLOAD,
   PRIMARY_PHOTO_UPLOAD,
   ANONYMOUS_PRIMARY_PHOTO_UPLOAD
- } from "../interface";
+ } from "../angular-backend";
+import { ERROR_SESSION_ID_EXIST } from './../define';
 import { ProgressService } from "../services/progress";
 import { Observable } from "rxjs";
 import { URL_BACKEND_API } from "../config";
@@ -15,15 +16,23 @@ export * from '../define';
 @Injectable()
 export class File extends Base {
   protected percentage: number = 0;
-  constructor( http: Http, private progress: ProgressService) {
+  constructor(
+    http: Http, private progress: ProgressService
+  ) {
     super( http, 'file' );
   }
 
 
-  uploadAnonymousPrimaryPhoto( req: ANONYMOUS_PRIMARY_PHOTO_UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
+  uploadAnonymousPrimaryPhoto( req: ANONYMOUS_PRIMARY_PHOTO_UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > { 
+    if ( this.logged ) return Observable.throw( this.errorResponse( -40124, 'user-must-not-logged-in-when-anonymous-uploads-primary-photo' )  );
+    if ( req['model_idx'] !== void 0 ) return Observable.throw( this.errorResponse( -40125, 'model-idx-must-not-passed-over-when-anonymous-uploads-primary-photo' )  );
+    if ( req['unique'] !== void 0 ) return Observable.throw( this.errorResponse( -40126, 'unique-must-not-be-set-when-anonymous-uploads-primary-photo' )  );
+    if ( req['finish'] !== void 0 ) return Observable.throw( this.errorResponse( -40127, 'finish-must-not-be-set-when-anonymous-uploads-primary-photo' )  );
     return this.upload( req, file );
   }
   uploadPrimaryPhoto( req: PRIMARY_PHOTO_UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
+    if ( req.model_idx === void 0 ) return Observable.throw( this.errorResponse( -40130, 'model_idx-must-be-set-when-user-upload-primary-photo') ); 
+    if ( req.unique === void 0 || req.unique != 'Y' ) return Observable.throw( this.errorResponse( -40131, 'unique-must-be-Y-when-user-upload-primary-photo') );
     return this.upload( req, file );
   }
 
