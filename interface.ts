@@ -253,7 +253,7 @@ interface IDX_RESPONSE {
     data: {
         idx: number;
     }
-}
+};
 
 export interface FILE {
     idx: number;
@@ -262,6 +262,42 @@ export interface FILE {
     url?: string;
 };
 export type FILES = Array<FILE>;
+
+
+/**
+ * 'FORUM CATEGORY' table
+ */
+
+export interface CATEGORY {
+    idx?: number;
+    created?: string;
+    updated?: string;
+    root_idx?: string;
+    parent_idx?: string;
+    order_no?: string;
+    depth?: string;
+    model?: string;
+    model_idx?: number;
+    id?: string;
+    name?: string;
+    description?: string;
+}
+export type CATEGORIES = Array<CATEGORY>;
+export interface CATEGORY_CREATE extends REQUEST, CATEGORY {}
+export interface CATEGORY_CREATE_RESPONSE extends RESPONSE {
+    data: {
+        idx: number;
+    }
+}
+export interface CATEGORY_EDIT extends REQUEST, CATEGORY {};
+
+export type CATEGORY_DELETE_RESPONSE = DELETE_RESPONSE;
+export type CATEGORY_EDIT_RESPONSE = EDIT_RESPONSE;
+
+
+/**
+ * 'END OF CATEGORY table
+ */
 
 // POST is the resopnse of POST_GET
 // export type POST = POST_FIELDS;

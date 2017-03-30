@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { AdminService } from './../services/admin.service';
+import { AdminService } from './../../services/admin.service';
 import {  PostConfig, PostData,
   POST, POSTS,
   LIST, POST_LIST_RESPONSE, CONFIG_DELETE_RESPONSE, CONFIG_EDIT_RESPONSE,
   CONFIG, CONFIGS, CONFIG_CREATE, CONFIG_EDIT, CONFIG_CREATE_RESPONSE,
   PAGINATION_OPTION
-} from './../../../angular-backend';
+} from './../../../../angular-backend';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
@@ -13,11 +13,11 @@ import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
-  selector: 'backend-admin-forum-page',
-  templateUrl: './forum.html',
-  styleUrls:['./forum.scss']
+  selector: 'backend-admin-forum-post-page',
+  templateUrl: './post.html',
+  styleUrls:['./post.scss']
 })
-export class BackendAdminForumPage {
+export class BackendAdminForumPostPage {
 
   config_idx: number = null;
   searchPostForm: POST = {};

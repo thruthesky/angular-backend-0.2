@@ -5,6 +5,7 @@ import { PostData } from './model/post-data';
 import { PostConfig } from './model/post-config';
 import { Test } from './test/test';
 import { File } from './model/file';
+import { Category } from "./model/category";
 import { ProgressService } from "./services/progress";
 import { BrowserXhr } from "@angular/http";
 import { CustomBrowserXhr } from "./services/custom-browser-xhr";
@@ -15,6 +16,7 @@ export { User } from './model/user';
 export { PostConfig } from './model/post-config';
 export { PostData } from './model/post-data';
 export { File } from './model/file';
+export { Category } from './model/category';
 export { Test } from './test/test';
 
 @NgModule({
@@ -26,6 +28,7 @@ export { Test } from './test/test';
       PostData,
       Test,
       File,
+      Category,
       ProgressService,
       { provide: BrowserXhr, useClass: CustomBrowserXhr } ]
 })

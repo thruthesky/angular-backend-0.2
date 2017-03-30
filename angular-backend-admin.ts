@@ -13,11 +13,14 @@ export { BackendAdminUserListPage } from './pages/admin/user/list/list';
 import { BackendAdminUserEditPage} from './pages/admin/user/edit/edit';
 export { BackendAdminUserEditPage } from './pages/admin/user/edit/edit';
 
+import { BackendAdminForumConfigPage } from './pages/admin/forum/config/config';
+export { BackendAdminForumConfigPage } from './pages/admin/forum/config/config';
 
-import { BackendAdminForumPage } from './pages/admin/forum/forum';
-export { BackendAdminForumPage } from './pages/admin/forum/forum';
+import { BackendAdminForumCategoryPage } from './pages/admin/forum/category/category';
+export { BackendAdminForumCategoryPage } from './pages/admin/forum/category/category';
 
-
+import { BackendAdminForumPostPage } from './pages/admin/forum/post/post';
+export { BackendAdminForumPostPage } from './pages/admin/forum/post/post';
 
 
 import { AdminHeaderComponent } from './pages/admin/components/header/header';
@@ -36,7 +39,9 @@ import { AngularBackendComponentModule } from './modules/angular-backend-compone
     BackendAdminPage,
     BackendAdminUserListPage,
     BackendAdminUserEditPage,
-    BackendAdminForumPage,
+    BackendAdminForumConfigPage,
+    BackendAdminForumCategoryPage,
+    BackendAdminForumPostPage,
     AdminHeaderComponent,
     AdminSidebarComponent,
     InfoBoxComponent,

@@ -1,0 +1,147 @@
+<admin-header></admin-header>
+<div class="container-fluid margin-top-5 mt-sm-5">
+  <div class="row">
+    <admin-sidebar class="{{ admin.hidden_xs_down }} col-sm-3 col-md-2 px-0"></admin-sidebar>
+    <main class="col-12 col-sm-9 col-md-10">
+      <ng-container>
+        <div class="container mb-3">
+          <h2>Category Create</h2>
+          <div class="input-group">
+            <span class="input-group-addon">ID</span>
+            <input type="text" class="form-control"  [(ngModel)]="categoryCreate.id"  placeholder="Category ID">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Model</span>
+            <input type="text" class="form-control" [(ngModel)]="categoryCreate.model" placeholder="Model">
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-addon">Model IDX</span>
+            <input type="text" class="form-control" [(ngModel)]="categoryCreate.model_idx" placeholder="Model IDX">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Name</span>
+            <input type="text" class="form-control" [(ngModel)]="categoryCreate.name" placeholder="Name..">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Description</span>
+            <input type="text" class="form-control" [(ngModel)]="categoryCreate.description" placeholder="Description...">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Parent IDX</span>
+            <input type="text" class="form-control" [(ngModel)]="categoryCreate.parent_idx" placeholder="Parent IDX">
+          </div>
+          <button (click)="onClickCreateCategory()" type="button">Category Create</button>
+        </div>
+
+
+
+
+        <div class="container mb-3">
+          <h2>Forum Search</h2>
+          <div class="row">
+            <div class="col">
+              <div>ID: <input name="id" [(ngModel)]="searchCategoryForm.id" (keyup)="onChangeConfigSearch()"></div>
+            </div>
+            <div class="col">
+              <div>Name: <input name="name" [(ngModel)]="searchCategoryForm.name" (keyup)="onChangeConfigSearch()"></div>
+            </div>
+            <div class="col">
+              <div>Description: <input name="description" [(ngModel)]="searchCategoryForm.description" (keyup)="onChangeConfigSearch()"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container mb-3">
+
+
+          <h2>Forum List</h2>
+
+          <div *ngIf="categories" class="pagination-user" >
+            <table class="table table-responsive">
+              <thead class="thead-inverse">
+              <tr>
+                <th>IDX</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Moderators</th>
+                <th>List</th>
+                <th>View</th>
+                <th>Write</th>
+                <th>Comment</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+              </tr>
+              </thead>
+              <tbody class="users">
+              <tr *ngFor="let category of categories" class="user">
+                <th scope="row">{{category.idx}}</th>
+                <td>
+                  {{category.id}}
+                </td>
+                <td>
+                  <input type="email" name="email" [(ngModel)]="category.model" placeholder="model">
+                </td>
+                <td>
+                  <input type="email" name="email" [(ngModel)]="category.model_idx" placeholder="model_idx">
+                </td>
+                <td>
+                  <input type="text" name="moderator" [(ngModel)]="category.name" placeholder="name">
+                </td>
+                <td>
+                  <input type="number" name="list" [(ngModel)]="category.description" placeholder="description">
+                </td>
+                <td>
+                  <input type="number" name="view" [(ngModel)]="category.parent_idx" placeholder="parent_idx">
+                </td>
+                <td (click)="onClickConfigEdit( category )" class="text-center" role="button"><i class="fa fa-pencil"></i></td>
+                <td (click)="onClickConfigDelete( category.id )" class="text-center" role="button"><i class="fa fa-trash"></i></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <page-navigation
+            [no_of_total_items]=" pageOption['totalRecord'] "
+            [no_of_items_in_one_page] = " pageOption['limitPerPage'] "
+            [no_of_pages_in_navigator] = " pageOption['numberPerNav'] "
+            [no_of_current_page] = " pageOption['currentPage'] "
+            [show_prev_next] = " true "
+            (pageClick)="onConfigPageClick($event)"
+          >
+          </page-navigation>
+        </div>
+
+      </ng-container>
+
+      <!--<ng-container *ngIf="config_idx">-->
+
+        <!--<div class="container mb-3">-->
+          <!--<h2>Post Search</h2>-->
+          <!--<div class="row">-->
+            <!--<div class="col">-->
+              <!--<div>ID: <input name="id" [(ngModel)]="searchPostForm.id" (keyup)="onChangePostSearch()"></div>-->
+            <!--</div>-->
+            <!--<div class="col">-->
+              <!--<div>Title: <input name="title" [(ngModel)]="searchPostForm.title" (keyup)="onChangePostSearch()"></div>-->
+            <!--</div>-->
+            <!--<div class="col">-->
+              <!--<div>Content: <input name="content" [(ngModel)]="searchPostForm.content" (keyup)="onChangePostSearch()"></div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div *ngFor=" let post of posts ">-->
+          <!--{{ post.idx }} - -->
+          <!--{{ post.title }} - -->
+          <!--{{ post.created }} - -->
+
+          <!--{{ post.files | json }}-->
+        <!--</div>-->
+
+      <!--</ng-container>-->
+
+
+    </main>
+  </div>
+</div>
