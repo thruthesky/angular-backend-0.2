@@ -68,6 +68,7 @@ export interface USER_FIELDS extends USER_EDITABLE_FIELDS {
 export interface SESSION_INFO {
     session_id: string;
     id: string;
+    idx: number;
     name: string;
     email: string;
 };
@@ -122,12 +123,6 @@ export interface USER_REGISTER extends REQUEST, USER_REGISTABLE_FIELDS {      //
 
 export type USER_REGISTER_RESPONSE = USER_SESSION_RESPONSE;              // to get response of USER_EDIT
 
-
-export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
-    id?: string;    // =====> This is needed only by admin when admin wants to update user's profile.
-    meta?: METAS;
-    file_hooks?: Array<number>;
-}; // to edit user data
 
 export interface USER_EDIT_RESPONSE extends USER_SESSION_RESPONSE {}; // to get response of user edit. it is only session info and name, email, id.
 
@@ -228,6 +223,7 @@ interface META {
     [key: string] : string;
 }
 type METAS = Array<META>;
+
 interface POST_PRE_FIELDS {
     meta?: METAS;
 };
@@ -369,3 +365,103 @@ export interface PAGINATION_OPTION {
   numberPerNav:number;
   totalRecord:number;
 }
+
+
+export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
+    id?: string;    // =====> This is needed only by admin when admin wants to update user's profile.
+    meta?: METAS;
+    file_hooks?: Array<number>;
+}; // to edit user data
+
+
+/**
+ * ---------------- Strict Interfaces ------------------------------
+ * 
+ * @warning Use interfaces below !!
+ * @warning All the interfaces above are DEPRECATED !!
+ * 
+ * -----------------------------------------------------------------
+ * 
+ */
+
+interface _IDX {
+    idx: string;
+}
+
+interface _IDX_O {
+    idx?: string;
+}
+
+interface _PASSWORD {
+    password: string;
+}
+interface _PASSWORD_O {
+    password?: string;
+}
+
+export interface _REQUEST_O {
+    route?: string;
+    session_id?: string;
+};
+export interface _RESPONSE {
+    readonly code: number;
+    readonly message?: string;
+};
+
+
+
+//// file upload
+
+
+export interface UPLOAD extends _REQUEST_O {
+    model?: string;
+    model_idx?: number;
+    code?: string;
+    unique?: string;
+    finish?: string;
+}
+
+
+export interface ANONYMOUS_PRIMARY_PHOTO_UPLOAD extends _REQUEST_O {
+    model: string;
+    code: 'primary_photo';
+}
+export interface PRIMARY_PHOTO_UPLOAD extends ANONYMOUS_PRIMARY_PHOTO_UPLOAD {
+    model_idx: number;
+    unique: 'Y';
+    finish: 'Y';
+}
+
+
+/// user
+interface _USER_COMMON_FIELDS {
+    name?: string;
+    nickname?: string;
+    email?: string;
+    mobile?: string;
+    landline?: string;
+    gender?: string;
+    birthday?: string;
+    birth_day?: string;
+    birth_month?: string;
+    birth_year?: string;
+    country?: string;
+    province?: string;
+    city?: string;
+    address?: string;
+    zipcode?: string;
+    stamp_last_login?: number;
+    stamp_registration?: number;
+    session_id?: string;
+    meta?: METAS;
+}
+interface _USER_CREATE_FIELDS extends _IDX, _PASSWORD, _USER_COMMON_FIELDS {}
+
+
+interface _USER_EDIT_FIELDS extends _USER_COMMON_FIELDS {}
+
+
+export interface _USER_CREATE extends REQUEST, _USER_CREATE_FIELDS, FILE_HOOKS {}; // to register
+
+
+export interface _USER_EDIT extends _USER_EDIT_FIELDS {};

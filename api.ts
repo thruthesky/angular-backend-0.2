@@ -69,10 +69,6 @@ export class Api {
         else return false;
     }
 
-    protected get info() : SESSION_INFO {
-        return this.getSessionInfo();
-    }
-
     /**
      * @deprecated use session info.
      * @param res
@@ -100,7 +96,34 @@ export class Api {
         localStorage.setItem( API_KEY_SESSION_INFO, JSON.stringify( res.data ) );
     }
 
-    getSessionInfo() : SESSION_INFO {
+    // getSessionInfo() : SESSION_INFO {
+    //     let data = localStorage.getItem( API_KEY_SESSION_INFO );
+    //     //console.log(data);
+    //     if ( data ) {
+    //         try {
+    //             return JSON.parse( data );
+    //         }
+    //         catch (e) {
+    //             return null;
+    //         }
+    //     }
+    //     else return null;
+
+    // }
+
+    getSessionId() : string {
+        return this.info.session_id;
+        // let info = this.getSessionInfo();
+        // // console.info(info);
+        // if ( info ) return info.session_id;
+        // // return localStorage.getItem( API_KEY_SESSION_INFO );
+        // else return null;
+    }
+
+    /**
+     * this.info.id
+     */
+    get info() : SESSION_INFO {
         let data = localStorage.getItem( API_KEY_SESSION_INFO );
         //console.log(data);
         if ( data ) {
@@ -108,21 +131,11 @@ export class Api {
                 return JSON.parse( data );
             }
             catch (e) {
-                return null;
             }
         }
-        else return null;
-
+        return <SESSION_INFO>{};
     }
 
-    getSessionId() : string {
-
-        let info = this.getSessionInfo();
-        // console.info(info);
-        if ( info ) return info.session_id;
-        // return localStorage.getItem( API_KEY_SESSION_INFO );
-        else return null;
-    }
 
 
     protected deleteSessionInfo() {
@@ -182,8 +195,6 @@ export class Api {
                 //console.log("catch() after .timeout()");
                 //console.log(err);
                 if ( err instanceof TimeoutError ) {
-
-
                     return Observable.throw( this.errorResponse( ERROR_TIMEOUT ) );
                 }
                 return Observable.throw( err );
@@ -192,12 +203,19 @@ export class Api {
             .map( (e) => {
                 ///
                 if ( e['_body'] == '' ) throw this.errorResponse( -408, 'response-is-empty.');
+                
+                console.log(e['_body']); // debug. comment out to see errors from server.
                 let re = e.json();
-                if ( this.isError( re ) ) throw re;
+                if ( this.isError( re ) ) {
+                    throw re;
+                }
                 else return re;
              } )
             .catch( err => {
-                if ( err instanceof SyntaxError ) return Observable.throw( this.errorResponse( ERROR_JSON_PARSE )  ); // JSON 에러
+                if ( err instanceof SyntaxError ) {
+                    console.error(err); // debug
+                    return Observable.throw( this.errorResponse( ERROR_JSON_PARSE )  ); // JSON 에러
+                }
                 else if ( err && typeof err['code'] !== void 0 && err['code'] < 0 ) return Observable.throw( err ); // 프로그램 적 에러
                 else return Observable.throw( err );
             } );

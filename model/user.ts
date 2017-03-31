@@ -63,6 +63,8 @@ export class User extends Base {
         return super.data( id );
     }
     register( req: USER_REGISTER ) : Observable<USER_REGISTER_RESPONSE> {
+        if ( req.id === void 0 || ! req.id ) return Observable.throw( this.errorResponse( -4291, 'user-id-is-required-for-register' ))
+        if ( req.password === void 0 ||req.password.length < 5 ) return Observable.throw( this.errorResponse( -4292, 'password-is-required-and-must-be-at-least-5-characters-long-for-register' ))
         req.route = 'register';
         return this.post( req )
         .map( ( res: USER_REGISTER_RESPONSE ) => {
@@ -73,9 +75,12 @@ export class User extends Base {
 
     edit( req: USER_EDIT ) : Observable<USER_EDIT_RESPONSE> {
       console.log('edit::req', req);
-        if ( this.logged == false ) return this.error( -421, 'login-first-before-edit');
+        if ( this.logged == false ) return Observable.throw( this.errorResponse( -421, 'login-first-before-edit') );
+        // if ( req['id'] !== void 0 ) return Observable.throw( this.errorResponse( -422, 'id-has-passed-over-form-submission--user-cannot-edit-id') );
+        if ( req['password'] !== void 0 ) return Observable.throw( this.errorResponse( -423, 'password-has-passed-over-form-submission--user-cannot-edit-password-on-edit-form') );
         return super.edit( req )
             .map( ( res: USER_EDIT_RESPONSE ) => {
+                console.log('edit res: ', res );
                 this.setSessionInfo( res );
                 return res;
             });
