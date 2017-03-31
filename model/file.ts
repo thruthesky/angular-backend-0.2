@@ -23,19 +23,6 @@ export class File extends Base {
   }
 
 
-  uploadAnonymousPrimaryPhoto( req: ANONYMOUS_PRIMARY_PHOTO_UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > { 
-    if ( this.logged ) return Observable.throw( this.errorResponse( -40124, 'user-must-not-logged-in-when-anonymous-uploads-primary-photo' )  );
-    if ( req['model_idx'] !== void 0 ) return Observable.throw( this.errorResponse( -40125, 'model-idx-must-not-passed-over-when-anonymous-uploads-primary-photo' )  );
-    if ( req['unique'] !== void 0 ) return Observable.throw( this.errorResponse( -40126, 'unique-must-not-be-set-when-anonymous-uploads-primary-photo' )  );
-    if ( req['finish'] !== void 0 ) return Observable.throw( this.errorResponse( -40127, 'finish-must-not-be-set-when-anonymous-uploads-primary-photo' )  );
-    return this.upload( req, file );
-  }
-  uploadPrimaryPhoto( req: PRIMARY_PHOTO_UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
-    if ( req.model_idx === void 0 ) return Observable.throw( this.errorResponse( -40130, 'model_idx-must-be-set-when-user-upload-primary-photo') ); 
-    if ( req.unique === void 0 || req.unique != 'Y' ) return Observable.throw( this.errorResponse( -40131, 'unique-must-be-Y-when-user-upload-primary-photo') );
-    return this.upload( req, file );
-  }
-
 
   upload( req:UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
     //
@@ -85,4 +72,32 @@ export class File extends Base {
     console.log('file.src() returns: ', url);
     return url;
   }
+
+
+
+  ////
+
+  private uploadAnonymousPrimaryPhoto( file: any ) : Observable< FILE_UPLOAD_RESPONSE > { 
+    let req: ANONYMOUS_PRIMARY_PHOTO_UPLOAD = {
+      model: 'user',
+      code: 'primary_photo'
+    };
+    return this.upload( req, file );
+  }
+  private uploadUserPrimaryPhoto( file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
+    let req: PRIMARY_PHOTO_UPLOAD = {
+      model: 'user',
+      model_idx: this.info.idx,
+      code: 'primary_photo',
+      unique: 'Y',
+      finish: 'Y'
+    };
+    return this.upload( req, file );
+  }
+  
+  uploadPrimaryPhoto( file ) {
+    if ( this.logged ) return this.uploadUserPrimaryPhoto( file );
+    else return this.uploadAnonymousPrimaryPhoto( file );
+  }
+
 }
