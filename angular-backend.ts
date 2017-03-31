@@ -3,6 +3,7 @@ import { Backend } from './model/backend';
 import { User } from './model/user';
 import { PostData } from './model/post-data';
 import { PostConfig } from './model/post-config';
+import { PostComment } from './model/post-comment';
 import { Test } from './test/test';
 import { File } from './model/file';
 import { Category } from "./model/category";
@@ -15,6 +16,7 @@ export { Backend } from './model/backend';
 export { User } from './model/user';
 export { PostConfig } from './model/post-config';
 export { PostData } from './model/post-data';
+export { PostComment } from './model/post-comment';
 export { File } from './model/file';
 export { Category } from './model/category';
 export { Test } from './test/test';
@@ -26,6 +28,7 @@ export { Test } from './test/test';
       User,
       PostConfig,
       PostData,
+      PostComment,
       Test,
       File,
       Category,

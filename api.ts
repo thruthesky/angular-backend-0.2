@@ -36,12 +36,15 @@ export class Api {
      *
      */
     errorResponse( error_code, error_message = '' ) : RESPONSE {
-        if ( error_message ) return { code: error_code, message: error_message };
-        else return {
-
-            code: -999,
-            message: error_code
-        };
+        if ( error_message ) {
+            return { code: error_code, message: error_message };
+        }
+        else {
+            return {
+                code: -999,
+                message: error_code
+            };
+        }
     }
 
     /**
@@ -202,9 +205,10 @@ export class Api {
 
             .map( (e) => {
                 ///
+                // console.log('response body:', e['_body']); // debug. comment out to see errors from server.
+                
                 if ( e['_body'] == '' ) throw this.errorResponse( -408, 'response-is-empty.');
                 
-                console.log(e['_body']); // debug. comment out to see errors from server.
                 let re = e.json();
                 if ( this.isError( re ) ) {
                     throw re;
@@ -212,8 +216,9 @@ export class Api {
                 else return re;
              } )
             .catch( err => {
+                console.log('caught an error: ', err);
                 if ( err instanceof SyntaxError ) {
-                    console.error(err); // debug
+                    // console.error(err); // debug
                     return Observable.throw( this.errorResponse( ERROR_JSON_PARSE )  ); // JSON 에러
                 }
                 else if ( err && typeof err['code'] !== void 0 && err['code'] < 0 ) return Observable.throw( err ); // 프로그램 적 에러
@@ -249,7 +254,7 @@ export class Api {
         return typeof obj['status'] !== void 0 && obj['status'] == 500;
     }
     getErrorString( error: any ) {
-        if ( typeof error['status'] != 'undefined' ) {
+        if ( error['status'] !== void 0 && error['status'] ) {
             if ( error['status'] == 500 ) return "500 ( INTERNAL SERVER ERROR ) : It is a server error.";
             else return  "ERROR RESPONSE CODE: " + error['status'];
         }
