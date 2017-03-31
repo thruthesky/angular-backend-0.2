@@ -3,163 +3,105 @@
   <div class="row">
     <admin-sidebar class="{{ admin.hidden_xs_down }} col-sm-3 col-md-2 px-0"></admin-sidebar>
     <main class="col-12 col-sm-9 col-md-10">
-      <ng-container *ngIf="! config_idx">
-        <div class="container mb-3">
-          <h2>Forum Create</h2>
-          <div class="input-group">
-            <span class="input-group-addon">ID</span>
-            <input type="text" class="form-control"  [(ngModel)]="configCreate.id"  placeholder="Forum ID">
-          </div>
-
-
-          <div class="input-group">
-            <span class="input-group-addon">Name</span>
-            <input type="text" class="form-control" [(ngModel)]="configCreate.name" placeholder="Forum Name">
-          </div>
-
-          <div class="input-group">
-            <span class="input-group-addon">Description</span>
-            <textarea rows="1" class="form-control" [(ngModel)]="configCreate.description" placeholder="Forum description...."></textarea>
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon">Moderators</span>
-            <input type="text" class="form-control" [(ngModel)]="configCreate.moderators" placeholder="Moderators....">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon">Level List</span>
-            <input type="text" class="form-control" [(ngModel)]="configCreate.level_list" placeholder="Level List....">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon">Level View</span>
-            <input type="text" class="form-control" [(ngModel)]="configCreate.level_view" placeholder="Level View....">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon">Level Write</span>
-            <input type="text" class="form-control" [(ngModel)]="configCreate.level_write" placeholder="Level Write....">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon">Level Comment</span>
-            <input type="text" class="form-control" [(ngModel)]="configCreate.level_comment" placeholder="Level Comment....">
-          </div>
-
-
-          <button (click)="onClickCreateForum()" type="button">Forum Create</button>
+      <div class="container mb-3">
+        <h2>Post Create</h2>
+        <div *ngFor=" let idx of photoIdxes ">
+          <img style="width: 25%; float:left;" src="{{ file.src( { idx: idx } ) }}">
         </div>
 
+        <div class="input-group  mb-1">
+          <label for="file-box">Upload Photos</label>
+          <input type="file" class="form-control-file" id="file-box" #userfile (change)="onChangeFile( userfile )">
+          <small class="form-text text-muted">Please select a photo to upload</small>
+        </div>
+        <div class="input-group  mb-1">
+          <span class="input-group-addon">Post Config</span>
+          <select class="form-control" [(ngModel)]="postCreate.post_config_id">
+            <option *ngFor="let config of postConfigs" value="{{config.id}}">{{config.name}}</option>
+          </select>
+        </div>
+        <div class="input-group  mb-1">
+          <span class="input-group-addon">Title</span>
+          <input type="text" class="form-control"  [(ngModel)]="postCreate.title"  placeholder="Title...">
+        </div>
+        <div class="input-group  mb-1">
+          <span class="input-group-addon">Content</span>
+          <textarea rows="1" class="form-control" [(ngModel)]="postCreate.content" placeholder="Content...."></textarea>
+        </div>
+        <button (click)="onClickCreatePost()" type="button">Post Create</button>
+      </div>
 
-
-
-        <div class="container mb-3">
-          <h2>Forum Search</h2>
-          <div class="row">
-            <div class="col">
-              <div>ID: <input name="id" [(ngModel)]="searchConfigForm.id" (keyup)="onChangeConfigSearch()"></div>
-            </div>
-            <div class="col">
-              <div>Name: <input name="name" [(ngModel)]="searchConfigForm.name" (keyup)="onChangeConfigSearch()"></div>
-            </div>
-            <div class="col">
-              <div>Description: <input name="description" [(ngModel)]="searchConfigForm.description" (keyup)="onChangeConfigSearch()"></div>
+      <div class="container mb-3">
+        <h2>Post Search</h2>
+        <div class="row">
+          <div class="col">
+            <div>Confix ID
+              <select class="form-control" [(ngModel)]="post_config_id" (change)="onChangePostSearch()">
+                <option value="">All</option>
+                <option *ngFor="let config of postConfigs" value="{{config.id}}">{{config.name}}</option>
+              </select>
             </div>
           </div>
-        </div>
-
-        <div class="container mb-3">
-
-
-          <h2>Forum List</h2>
-
-          <div *ngIf="postConfigs" class="pagination-user" >
-            <table class="table table-responsive">
-              <thead class="thead-inverse">
-              <tr>
-                <th>IDX</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Moderators</th>
-                <th>List</th>
-                <th>View</th>
-                <th>Write</th>
-                <th>Comment</th>
-                <th class="text-center">Edit</th>
-                <th class="text-center">Delete</th>
-              </tr>
-              </thead>
-              <tbody class="users">
-              <tr *ngFor="let config of postConfigs" class="user">
-                <th scope="row">{{config.idx}}</th>
-                <td>
-                  {{config.id}}
-                </td>
-                <td>
-                  <input type="email" name="email" [(ngModel)]="config.name" placeholder="Name">
-                </td>
-                <td>
-                  <input type="email" name="email" [(ngModel)]="config.description" placeholder="Description">
-                </td>
-                <td>
-                  <input type="text" name="moderator" [(ngModel)]="config.moderators" placeholder="Moderator">
-                </td>
-                <td>
-                  <input type="number" name="list" [(ngModel)]="config.level_list" placeholder="Level List">
-                </td>
-                <td>
-                  <input type="number" name="view" [(ngModel)]="config.level_view" placeholder="Level View">
-                </td>
-                <td>
-                  <input type="number" name="write" [(ngModel)]="config.level_write" placeholder="Level Write">
-                </td>
-                <td>
-                  <input type="number" name="comment" [(ngModel)]="config.level_comment" placeholder="Level Comment">
-                </td>
-                <td (click)="onClickConfigEdit( config )" class="text-center" role="button"><i class="fa fa-pencil"></i></td>
-                <td (click)="onClickConfigDelete( config.id )" class="text-center" role="button"><i class="fa fa-trash"></i></td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="col">
+            <div>Title <input name="title" [(ngModel)]="searchPostForm.title" (keyup)="onChangePostSearch()"></div>
           </div>
-          <page-navigation
-            [no_of_total_items]=" pageOption['totalRecord'] "
-            [no_of_items_in_one_page] = " pageOption['limitPerPage'] "
-            [no_of_pages_in_navigator] = " pageOption['numberPerNav'] "
-            [no_of_current_page] = " pageOption['currentPage'] "
-            [show_prev_next] = " true "
-            (pageClick)="onConfigPageClick($event)"
-          >
-          </page-navigation>
-        </div>
-
-      </ng-container>
-
-      <ng-container *ngIf="config_idx">
-
-        <div class="container mb-3">
-          <h2>Post Search</h2>
-          <div class="row">
-            <div class="col">
-              <div>ID: <input name="id" [(ngModel)]="searchPostForm.id" (keyup)="onChangePostSearch()"></div>
-            </div>
-            <div class="col">
-              <div>Title: <input name="title" [(ngModel)]="searchPostForm.title" (keyup)="onChangePostSearch()"></div>
-            </div>
-            <div class="col">
-              <div>Content: <input name="content" [(ngModel)]="searchPostForm.content" (keyup)="onChangePostSearch()"></div>
-            </div>
+          <div class="col">
+            <div>Content <input name="content" [(ngModel)]="searchPostForm.content" (keyup)="onChangePostSearch()"></div>
           </div>
         </div>
+      </div>
 
-        <div *ngFor=" let post of posts ">
-          {{ post.idx }} -
-          {{ post.title }} -
-          {{ post.created }} -
+      <div class="container mb-3">
 
-          {{ post.files | json }}
+
+        <h2>Post List</h2>
+
+        <div *ngIf="posts" class="pagination-user" >
+          <table class="table table-responsive">
+            <thead class="thead-inverse">
+            <tr>
+              <th>IDX</th>
+              <th>Config IDX</th>
+              <th>Title</th>
+              <th>Content</th>
+              <th>Attached</th>
+              <th class="text-center">Edit</th>
+              <th class="text-center">Delete</th>
+            </tr>
+            </thead>
+            <tbody class="users">
+            <tr *ngFor="let post of posts" class="user" [ngClass]="{strikeout: post.deleted == '1'}">
+              <th scope="row">{{post.idx}}</th>
+              <td>
+                {{post.post_config_idx}}
+              </td>
+              <td>
+                <input [disabled]="post.deleted == '1'" type="text" name="title" [(ngModel)]="post.title" placeholder="Title">
+              </td>
+              <td>
+                <input [disabled]="post.deleted == '1'" type="text" name="content" [(ngModel)]="post.content" placeholder="Content">
+              </td>
+              <td>
+                <div *ngFor=" let _file of post.files ">
+                  <img style="width:25%; float:left;" src="{{ file.src( { idx: _file.idx } ) }}">
+                </div>
+              </td>
+              <td (click)="onClickPostEdit( post )" class="text-center" role="button"><i class="fa fa-pencil"></i></td>
+              <td (click)="onClickPostDelete( post )" class="text-center" role="button"><i class="fa fa-trash"></i></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-
-      </ng-container>
-
-
+        <page-navigation
+                [no_of_total_items]=" pageOption['totalRecord'] "
+                [no_of_items_in_one_page] = " pageOption['limitPerPage'] "
+                [no_of_pages_in_navigator] = " pageOption['limitPerNavigation'] "
+                [no_of_current_page] = " pageOption['currentPage'] "
+                [show_prev_next] = " true "
+                (pageClick)="onPostPageClick($event)"
+        >
+        </page-navigation>
+      </div>
     </main>
   </div>
 </div>

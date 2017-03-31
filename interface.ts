@@ -313,7 +313,9 @@ export type CONFIG_DELETE_RESPONSE = DELETE_RESPONSE;
 export type CONFIG_EDIT_RESPONSE = EDIT_RESPONSE;
 export interface CONFIG_GET extends REQUEST, CONFIG_IDX {};                     // to get a forum config fields.
 export interface CONFIG_RESPONSE extends RESPONSE {
-    data: CONFIG
+    data: {
+        configs: CONFIGS
+    }
 };                     // to receive a complete forum config fields. Use this after create/update/get/delete a forum
 
 
@@ -321,6 +323,7 @@ export interface POST_CREATE extends REQUEST, POST_CREATIBLE_FIELDS {};         
 export interface POST_EDIT extends REQUEST, POST_EDITABLE_FIELDS {};    // to update a post
 export interface POST_CREATE_RESPONSE extends RESPONSE, IDX_RESPONSE {};
 export interface POST_EDIT_RESPONSE extends RESPONSE, IDX_RESPONSE {};
+export type POST_DELETE_RESPONSE = DELETE_RESPONSE;
 
 export interface POST_DELETE extends REQUEST, POST_IDX {};                                         // to update a post
 export interface POST_GET extends REQUEST, POST_IDX {};
@@ -360,10 +363,10 @@ export interface IMG_SRC {
 
 
 export interface PAGINATION_OPTION {
-  limitPerPage:number;
-  currentPage:number;
-  numberPerNav:number;
-  totalRecord:number;
+    limitPerNavigation:number;
+    limitPerPage:number;
+    currentPage:number;
+    totalRecord:number;
 }
 
 

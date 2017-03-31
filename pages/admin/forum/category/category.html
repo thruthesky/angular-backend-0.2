@@ -38,7 +38,7 @@
 
 
         <div class="container mb-3">
-          <h2>Forum Search</h2>
+          <h2>Category Search</h2>
           <div class="row">
             <div class="col">
               <div>ID: <input name="id" [(ngModel)]="searchCategoryForm.id" (keyup)="onChangeConfigSearch()"></div>
@@ -55,7 +55,7 @@
         <div class="container mb-3">
 
 
-          <h2>Forum List</h2>
+          <h2>Category List</h2>
 
           <div *ngIf="categories" class="pagination-user" >
             <table class="table table-responsive">
@@ -81,10 +81,10 @@
                   {{category.id}}
                 </td>
                 <td>
-                  <input type="email" name="email" [(ngModel)]="category.model" placeholder="model">
+                  <input type="text" name="email" [(ngModel)]="category.model" placeholder="model">
                 </td>
                 <td>
-                  <input type="email" name="email" [(ngModel)]="category.model_idx" placeholder="model_idx">
+                  <input type="text" name="email" [(ngModel)]="category.model_idx" placeholder="model_idx">
                 </td>
                 <td>
                   <input type="text" name="moderator" [(ngModel)]="category.name" placeholder="name">
@@ -104,7 +104,7 @@
           <page-navigation
             [no_of_total_items]=" pageOption['totalRecord'] "
             [no_of_items_in_one_page] = " pageOption['limitPerPage'] "
-            [no_of_pages_in_navigator] = " pageOption['numberPerNav'] "
+            [no_of_pages_in_navigator] = " pageOption['limitPerNavigation'] "
             [no_of_current_page] = " pageOption['currentPage'] "
             [show_prev_next] = " true "
             (pageClick)="onConfigPageClick($event)"

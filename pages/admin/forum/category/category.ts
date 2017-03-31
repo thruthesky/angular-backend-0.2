@@ -29,7 +29,7 @@ export class BackendAdminForumCategoryPage {
   pageOption: PAGINATION_OPTION = {
     limitPerPage: 5,
     currentPage:3,
-    numberPerNav: 4, //
+    limitPerNavigation: 4, //
     totalRecord: 0
   };
 
