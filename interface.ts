@@ -338,6 +338,21 @@ export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
 }; // to edit user data
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * ---------------- Strict Interfaces ------------------------------
  * 
@@ -347,6 +362,8 @@ export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
  * -----------------------------------------------------------------
  * 
  */
+
+export type NUMBERS = Array<number>;
 
 interface _IDX {
     idx: string;
@@ -373,8 +390,36 @@ export interface _RESPONSE {
 };
 
 
+interface _META {
+    [key: string] : any;
+};
+interface _METAS {
+    meta?: Array<_META>;
+};
+
+
 
 //// file upload
+
+
+interface _FILE_HOOKS {
+    file_hooks?: NUMBERS;
+};
+
+
+export interface _FILE {
+    idx: number;
+    model: string;
+    model_idx: number;
+    code: string;
+    name: string;
+    type: string;
+    size: number;
+    no_of_download: number;
+    url: string;
+};
+export type _FILES = Array<_FILE>;
+
 
 
 export interface UPLOAD extends _REQUEST_O {
@@ -385,9 +430,20 @@ export interface UPLOAD extends _REQUEST_O {
     finish?: string;
 }
 
+export interface UPLOAD_RESPONSE extends _RESPONSE {
+    data: _FILE;
+};
 
+
+
+/**
+ * User primary photo interfaces
+ * 
+ * @note this is a special delcaration for user primary phto upload since it needs more care.
+ * 
+ */
 export interface ANONYMOUS_PRIMARY_PHOTO_UPLOAD extends _REQUEST_O {
-    model: string;
+    model: 'user';
     code: 'primary_photo';
 }
 export interface PRIMARY_PHOTO_UPLOAD extends ANONYMOUS_PRIMARY_PHOTO_UPLOAD {
@@ -397,7 +453,9 @@ export interface PRIMARY_PHOTO_UPLOAD extends ANONYMOUS_PRIMARY_PHOTO_UPLOAD {
 }
 
 
-/// user
+/**
+ * 
+ */
 interface _USER_COMMON_FIELDS {
     name?: string;
     nickname?: string;
@@ -425,7 +483,53 @@ interface _USER_CREATE_FIELDS extends _IDX, _PASSWORD, _USER_COMMON_FIELDS {}
 interface _USER_EDIT_FIELDS extends _USER_COMMON_FIELDS {}
 
 
-export interface _USER_CREATE extends REQUEST, _USER_CREATE_FIELDS, FILE_HOOKS {}; // to register
+export interface _USER_CREATE extends REQUEST, _USER_CREATE_FIELDS, _FILE_HOOKS {}; // to register
 
 
 export interface _USER_EDIT extends _USER_EDIT_FIELDS {};
+
+
+
+/// post
+
+
+export interface _POST_CONFIG_ID {
+    post_config_id: string;
+};
+
+
+interface _POST_COMMON_FIELDS_O {
+    title?: string;
+    content?: string;
+    name?: string;
+    password?: string;
+    address?: string;
+    birthdate?: string;
+    city?: string;
+    contact?: string;
+    country?: string;
+    created?: string,
+    email?: string;
+    gender?: string;
+    landline?: string;
+    last_name?: string;
+    middle_name?: string;
+    mobile?: string;
+    parent_idx?: string;
+    province?: string;
+    secret?: string;
+}
+
+
+export interface _POST_CREATE extends
+    _REQUEST_O,
+    _POST_COMMON_FIELDS_O,
+    _POST_CONFIG_ID,
+    _FILE_HOOKS,
+    _METAS {};
+
+export interface _POST_CREATE_RESPONSE extends
+    _RESPONSE,
+    _IDX
+    {};
+export interface _POST_EDIT {};

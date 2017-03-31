@@ -5,7 +5,8 @@ import {
   FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC,
   UPLOAD,
   PRIMARY_PHOTO_UPLOAD,
-  ANONYMOUS_PRIMARY_PHOTO_UPLOAD
+  ANONYMOUS_PRIMARY_PHOTO_UPLOAD,
+  UPLOAD_RESPONSE
  } from "../angular-backend";
 import { ERROR_SESSION_ID_EXIST } from './../define';
 import { ProgressService } from "../services/progress";
@@ -75,7 +76,7 @@ export class File extends Base {
 
 
 
-  ////
+  //// User Primary Photo Upload
 
   private uploadAnonymousPrimaryPhoto( file: any ) : Observable< FILE_UPLOAD_RESPONSE > { 
     let req: ANONYMOUS_PRIMARY_PHOTO_UPLOAD = {
@@ -100,4 +101,14 @@ export class File extends Base {
     else return this.uploadAnonymousPrimaryPhoto( file );
   }
 
+
+
+  //// File upload for post
+  uploadPostFile( file ) : Observable<UPLOAD_RESPONSE> {
+    let req: UPLOAD = {
+      model: 'post_data',
+      code: ''
+    };
+    return this.upload( req, file );
+  }
 }

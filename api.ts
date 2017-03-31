@@ -36,12 +36,15 @@ export class Api {
      *
      */
     errorResponse( error_code, error_message = '' ) : RESPONSE {
-        if ( error_message ) return { code: error_code, message: error_message };
-        else return {
-
-            code: -999,
-            message: error_code
-        };
+        if ( error_message ) {
+            return { code: error_code, message: error_message };
+        }
+        else {
+            return {
+                code: -999,
+                message: error_code
+            };
+        }
     }
 
     /**
