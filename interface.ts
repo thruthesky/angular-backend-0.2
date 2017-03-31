@@ -366,12 +366,23 @@ export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
 export type NUMBERS = Array<number>;
 
 interface _IDX {
-    idx: string;
+    idx: number;
 }
 
 interface _IDX_O {
-    idx?: string;
+    idx?: number;
 }
+
+interface _ROOT_IDX {
+    root_idx: number;
+}
+interface _PARENT_IDX {
+    parent_idx: number;
+}
+
+interface _ID { id: string; };
+interface _ID_O { id?: string; };
+
 
 interface _PASSWORD {
     password: string;
@@ -399,6 +410,22 @@ interface _METAS {
 
 
 
+//// global
+
+export interface _LIST extends _REQUEST_O {
+    select?: string;
+    from?: number;
+    where?: string;
+    bind?: string;
+    order?: string;
+    limit?: number;
+    extra?: any;
+    page?: number;
+};
+
+
+
+
 //// file upload
 
 
@@ -418,7 +445,12 @@ export interface _FILE {
     no_of_download: number;
     url: string;
 };
-export type _FILES = Array<_FILE>;
+
+interface _FILES {
+    files?: Array<_FILE>;
+}
+
+
 
 
 
@@ -493,12 +525,53 @@ export interface _USER_EDIT extends _USER_EDIT_FIELDS {};
 /// post
 
 
+export interface _POST_USER {
+    user?: {
+        idx: number;
+        id: string;
+        name: string;
+        url_primary_photo?: string;
+    }
+}
+
+export interface _CONFIG_COMMON_WRITE_FIELDS {
+    name?: string;
+    description?: string;
+    moderators?: string;
+    level_list?: number;
+    level_view?: number;
+    level_write?: number;
+    level_comment?: number;
+};
+
+export interface _CONFIG_COMMON_READ_FIELDS {
+    readonly idx: number;
+    readonly created: string;
+    readonly updated: number;
+    readonly id: string;
+    readonly name: string;
+    readonly description: string;
+    readonly moderators: string;
+    readonly level_list: number;
+    readonly level_view: number;
+    readonly level_write: number;
+    readonly level_comment: number;
+    readonly deleted: string;
+}
+
+
+export interface _CONFIG_CREATE extends _ID, _CONFIG_COMMON_WRITE_FIELDS {};
+export interface _CONFIG_EDIT extends _IDX, _CONFIG_COMMON_WRITE_FIELDS {};
+export interface _CONFIG_READ extends _CONFIG_COMMON_READ_FIELDS {};
+
+export type _CONFIGS = Array< _CONFIG_READ >;
+
 export interface _POST_CONFIG_ID {
     post_config_id: string;
 };
 
 
-interface _POST_COMMON_FIELDS_O {
+interface _POST_COMMON_WRITE_FIELDS {
     title?: string;
     content?: string;
     name?: string;
@@ -520,16 +593,102 @@ interface _POST_COMMON_FIELDS_O {
     secret?: string;
 }
 
+interface _POST_COMMON_READ_FIELDS {
+    readonly title: string;
+    readonly content: string;
+    readonly name: string;
+    readonly password: string;
+    readonly address: string;
+    readonly birthdate: string;
+    readonly city: string;
+    readonly contact: string;
+    readonly country: string;
+    readonly created: string,
+    readonly email: string;
+    readonly gender: string;
+    readonly landline: string;
+    readonly last_name: string;
+    readonly middle_name: string;
+    readonly mobile: string;
+    readonly province: string;
+    readonly secret: string;
+}
+
+
+interface _COMMENT_COMMON_READ_FIELDS {
+    readonly content: string;
+    readonly name: string;
+    readonly password: string;
+    readonly address: string;
+    readonly city: string;
+    readonly contact: string;
+    readonly country: string;
+    readonly created: string,
+    readonly email: string;
+    readonly gender: string;
+    readonly landline: string;
+    readonly last_name: string;
+    readonly middle_name: string;
+    readonly mobile: string;
+    readonly province: string;
+}
+
+
 
 export interface _POST_CREATE extends
     _REQUEST_O,
-    _POST_COMMON_FIELDS_O,
+    _POST_COMMON_WRITE_FIELDS,
     _POST_CONFIG_ID,
     _FILE_HOOKS,
     _METAS {};
 
 export interface _POST_CREATE_RESPONSE extends
     _RESPONSE,
-    _IDX
-    {};
+    _IDX {};
+
 export interface _POST_EDIT {};
+
+
+export interface _POST extends
+    _IDX,
+    _POST_COMMON_READ_FIELDS,
+    _POST_USER,
+    _FILES,
+    _COMMENTS,
+    _METAS {}
+export type _POSTS = Array<_POST>;
+
+
+export interface _COMMENT extends 
+    _IDX,
+    _ROOT_IDX,
+    _PARENT_IDX,
+    _COMMENT_COMMON_READ_FIELDS,
+    _FILES,
+    _POST_USER,
+    _METAS {};
+export interface _COMMENT_DATA {
+    data: _COMMENT;
+}
+interface _COMMENTS {
+    comments?: Array<_COMMENT>;
+}
+
+
+export interface _POST_LIST_RESPONSE extends _RESPONSE {
+    data: {
+        configs: _CONFIGS,
+        posts: _POSTS,
+        total: number
+    }
+};
+
+
+export interface _COMMENT_CREATE extends _REQUEST_O, _FILE_HOOKS {
+    parent_idx: number;
+    content: string;
+};
+
+export interface _COMMENT_CREATE_RESPONSE extends
+    _RESPONSE,
+    _COMMENT_DATA {};

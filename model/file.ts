@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Base } from './base';
 import {
   FILE_UPLOAD, FILE_UPLOAD_RESPONSE, IMG_SRC,
@@ -40,9 +40,18 @@ export class File extends Base {
     if ( req['unique'] ) formData.append( 'unique', req.unique );
     if ( req['finish'] ) formData.append( 'finish', req.finish );
     
+
+    // let headers  = new Headers({  'Content-Type': 'multipart/form-data' });
+    // let options  = new RequestOptions({ headers: headers });
+
     console.log( file );
     console.log( formData ) ;
-    let o = this.http.post( URL_BACKEND_API, formData);
+    let o: Observable<any> = this.http.post( URL_BACKEND_API, formData );
+
+    // o.map(e => {
+    //   console.log('e: ', e);
+    // })
+    
 
     let subscription = this.progress.uploadProgress.subscribe( res => {
       console.log("progress: ", res);
@@ -53,6 +62,11 @@ export class File extends Base {
       if ( this.percentage == 100 ) subscription.unsubscribe();
     });
 
+    // return o;
+
+
+    
+    //console.log('o:', o);
     return this.processQuery( o );
     //   .subscribe(res=>{
     //   console.info("file upload success: ", res);

@@ -40,14 +40,18 @@ export class Base extends Api {
     list( req: LIST = <LIST> {} ) : Observable< any > {
         req['route'] = this.taxonomy + '.list';
 
-        if ( ! req['limit'] ) req.limit = NO_OF_ITEMS_PER_PAGE;
 
+        /**
+         * Pagination helper
+         */
+        if ( ! req['limit'] ) req.limit = NO_OF_ITEMS_PER_PAGE;
         if ( req['page'] ) {
             let page = req['page'] > 0 ? req['page'] : 1;
             let limit = req.limit;
             req.from =  ( page - 1 ) * limit;
             delete( req.page );
         }
+        //
 
         req.session_id = this.getSessionId();
         return this.post( req );
