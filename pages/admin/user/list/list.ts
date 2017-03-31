@@ -118,6 +118,7 @@ export class BackendAdminUserListPage {
       //console.info( 'loadSearchedData', res );
       this.paginationUsers = res.data.users;
       this.totalRecord = parseInt(res.data.total);
+
     }, err => this.user.alert(err));
   }
 

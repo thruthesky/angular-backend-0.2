@@ -6,7 +6,7 @@
       <div class="container mb-3">
         <h2>Post Create</h2>
         <div *ngFor=" let idx of photoIdxes ">
-          <img style="width: 25%; float:left;" src="{{ file.src( { idx: idx } ) }}">
+          <img style="width: 25%; float:left;" src="{{ idx.url}}">
         </div>
 
         <div class="input-group  mb-1">
@@ -71,7 +71,9 @@
             </thead>
             <tbody class="users">
             <tr *ngFor="let post of posts" class="user" [ngClass]="{strikeout: post.deleted == '1'}">
-              <th scope="row">{{post.idx}}</th>
+              <th scope="row" (click)="onClickShowPostDetail(post.idx)">
+                {{post.idx}}
+              </th>
               <td>
                 {{post.post_config_idx}}
               </td>
@@ -83,7 +85,7 @@
               </td>
               <td>
                 <div *ngFor=" let _file of post.files ">
-                  <img style="width:25%; float:left;" src="{{ file.src( { idx: _file.idx } ) }}">
+                  <img style="width:25%; float:left;" src="{{ _file.url }}">
                 </div>
               </td>
               <td (click)="onClickPostEdit( post )" class="text-center" role="button"><i class="fa fa-pencil"></i></td>

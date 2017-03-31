@@ -34,6 +34,8 @@ import { AdminService } from './pages/admin/services/admin.service';
 
 import { AngularBackendComponentModule } from './modules/angular-backend-components.module';
 
+import { PostEditModalComponent } from './pages/admin/components/modal/post/edit/edit';
+
 @NgModule({
   declarations: [
     BackendAdminPage,
@@ -45,7 +47,8 @@ import { AngularBackendComponentModule } from './modules/angular-backend-compone
     AdminHeaderComponent,
     AdminSidebarComponent,
     InfoBoxComponent,
-    ProgressGroupComponent
+    ProgressGroupComponent,
+    PostEditModalComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +56,10 @@ import { AngularBackendComponentModule } from './modules/angular-backend-compone
     FormsModule,
     AngularBackendComponentModule
   ],
-  providers: [ AdminService ]
+  providers: [ AdminService ],
+  entryComponents: [
+    PostEditModalComponent
+  ]
 })
 export class AngularBackendAdmin {}
 

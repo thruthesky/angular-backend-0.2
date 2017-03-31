@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from './../../services/admin.service';
 import {  File, PostData, PostConfig,
   POST, POSTS, POST_CREATE, POST_EDIT,
@@ -15,6 +16,8 @@ import {  File, PostData, PostConfig,
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import {ActivatedRoute} from "@angular/router";
+
+import { PostEditModalComponent } from "./../../components/modal/post/edit/edit";
 
 
 
@@ -54,6 +57,7 @@ export class BackendAdminForumPostPage {
                private file: File,
                private postConfig: PostConfig,
                private route: ActivatedRoute,
+               private modal       : NgbModal
   ) {
 
     admin.onClickMenuMore();
@@ -146,6 +150,7 @@ export class BackendAdminForumPostPage {
       console.log('this.postData.list::', res);
 
       this.posts = res.data.posts;
+
       this.pageOption.totalRecord = parseInt(res.data.total);
 
 
@@ -195,6 +200,18 @@ export class BackendAdminForumPostPage {
     }, err => {
       console.log('error', err);
     });
+  }
+
+
+  onClickShowPostDetail( idx?:string ) {
+    console.log('onClickShowPostDetail::idx', idx);
+    let modalRef = this.modal.open ( PostEditModalComponent );
+
+    // modalRef.result.then( (x) => {
+    //     // console.log( this.user.loginUser );
+    //     //this.login = this.user.isLogin();
+    //     console.log("user login status: ", this.user.logged);
+    // }).catch( () =>console.log('exit '));
   }
 
 
