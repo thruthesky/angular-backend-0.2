@@ -634,21 +634,6 @@ interface _COMMENT_COMMON_READ_FIELDS {
 }
 
 
-
-export interface _POST_CREATE extends
-    _REQUEST_O,
-    _POST_COMMON_WRITE_FIELDS,
-    _POST_CONFIG_ID,
-    _FILE_HOOKS,
-    _METAS {};
-
-export interface _POST_CREATE_RESPONSE extends
-    _RESPONSE,
-    _IDX {};
-
-export interface _POST_EDIT {};
-
-
 export interface _POST extends
     _IDX,
     _POST_COMMON_READ_FIELDS,
@@ -657,6 +642,21 @@ export interface _POST extends
     _COMMENTS,
     _METAS {}
 export type _POSTS = Array<_POST>;
+
+
+export interface _POST_CREATE extends
+    _REQUEST_O,
+    _POST_COMMON_WRITE_FIELDS,
+    _POST_CONFIG_ID,
+    _FILE_HOOKS,
+    _METAS {};
+    
+export interface _POST_CREATE_RESPONSE extends _RESPONSE {
+    data: _POST
+};
+
+export interface _POST_EDIT {};
+
 
 
 export interface _COMMENT extends 
