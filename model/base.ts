@@ -68,7 +68,10 @@ export class Base extends Api {
     let req: DELETE_REQUEST = {
       route: this.taxonomy + '.delete'
     }
-    if ( Number.isInteger( idx ) ) req.idx = idx;
+    
+    /// bug fix: if idx is numeric, then it is a number.
+    let no = parseInt( idx );
+    if ( Number.isInteger( no ) ) req.idx = idx;
     else req.id = idx;
 
     return this.post(req);

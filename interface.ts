@@ -391,6 +391,9 @@ interface _PASSWORD_O {
     password?: string;
 }
 
+interface _CONTENT {
+    content: string;
+}
 export interface _REQUEST_O {
     route?: string;
     session_id?: string;
@@ -460,11 +463,15 @@ export interface UPLOAD extends _REQUEST_O {
     code?: string;
     unique?: string;
     finish?: string;
-}
+};
+
+export type _UPLOAD = UPLOAD;
 
 export interface UPLOAD_RESPONSE extends _RESPONSE {
     data: _FILE;
 };
+export type _UPLOAD_RESPONSE = UPLOAD_RESPONSE;
+
 
 
 
@@ -655,7 +662,15 @@ export interface _POST_CREATE_RESPONSE extends _RESPONSE {
     data: _POST
 };
 
-export interface _POST_EDIT {};
+export interface _POST_EDIT extends
+    _REQUEST_O,
+    _IDX,
+    _POST_COMMON_WRITE_FIELDS,
+    _FILE_HOOKS,
+    _METAS {};
+export interface _POST_EDIT_RESPONSE extends _RESPONSE {
+    data: _POST
+};
 
 
 
@@ -665,8 +680,7 @@ export interface _COMMENT extends
     _PARENT_IDX,
     _COMMENT_COMMON_READ_FIELDS,
     _FILES,
-    _POST_USER,
-    _METAS {};
+    _POST_USER {};
 export interface _COMMENT_DATA {
     data: _COMMENT;
 }
@@ -684,11 +698,21 @@ export interface _POST_LIST_RESPONSE extends _RESPONSE {
 };
 
 
-export interface _COMMENT_CREATE extends _REQUEST_O, _FILE_HOOKS {
-    parent_idx: number;
-    content: string;
-};
-
+export interface _COMMENT_CREATE extends
+    _REQUEST_O,
+    _PARENT_IDX,
+    _CONTENT,
+    _FILE_HOOKS {};
 export interface _COMMENT_CREATE_RESPONSE extends
+    _RESPONSE,
+    _COMMENT_DATA {};
+
+
+export interface _COMMENT_EDIT extends
+    _REQUEST_O,
+    _IDX,
+    _CONTENT,
+    _FILE_HOOKS {};
+export interface _COMMENT_EDIT_RESPONSE extends
     _RESPONSE,
     _COMMENT_DATA {};
