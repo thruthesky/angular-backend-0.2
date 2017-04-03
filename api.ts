@@ -2,7 +2,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { URL_BACKEND_API, BACKEND_API_CONNECTION_TIMEOUT } from './config';
 
-import { RESPONSE, SESSION_INFO, USER_SESSION_RESPONSE } from './interface';
+import { RESPONSE, _SESSION_INFO, _USER_SESSION_RESPONSE } from './interface';
 
 import { API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT } from './define';
 
@@ -72,6 +72,15 @@ export class Api {
         else return false;
     }
 
+    get admin() : boolean {
+        if ( this.getSessionId() ) {
+            if ( this.info.admin ) return true;
+        }
+        return false;
+    }
+    
+
+
     /**
      * @deprecated use session info.
      * @param res
@@ -90,7 +99,7 @@ export class Api {
      *
      * @param res - it can by any interface ( type ) as long as it has res.data.sessoin_id
      */
-    protected setSessionInfo( res: USER_SESSION_RESPONSE ) {
+    protected setSessionInfo( res: _USER_SESSION_RESPONSE ) {
         if ( res === void 0 || res.data === void 0 || res.data.session_id === void 0 ) {
             // No session_id will be returned if admin edits user info.
             // alert("CRITICAL ERROR: sessionSessionId() - please report this to admin.");
@@ -126,7 +135,7 @@ export class Api {
     /**
      * this.info.id
      */
-    get info() : SESSION_INFO {
+    get info() : _SESSION_INFO {
         let data = localStorage.getItem( API_KEY_SESSION_INFO );
         //console.log(data);
         if ( data ) {
@@ -136,7 +145,7 @@ export class Api {
             catch (e) {
             }
         }
-        return <SESSION_INFO>{};
+        return <_SESSION_INFO>{};
     }
 
 

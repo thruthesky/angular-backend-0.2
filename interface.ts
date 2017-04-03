@@ -445,6 +445,25 @@ export interface _DELETE_RESPONSE extends _RESPONSE {
 
 
 
+///// user
+
+export interface _SESSION_INFO {
+    session_id: string;
+    id: string;
+    idx: number;
+    name: string;
+    email: string;
+    admin?: number;
+};
+
+interface _SESSION_INFO_DAT {
+    data: _SESSION_INFO;
+}
+
+export interface _USER_SESSION_RESPONSE extends _RESPONSE, _SESSION_INFO_DAT {};
+
+
+
 
 
 //// file upload

@@ -59,6 +59,7 @@ export class User extends Base {
      */
 
     data( id? ) : Observable<USER_DATA_RESPONSE> {
+        if ( id === void 0 ) id = this.info.id;
         if ( this.logged == false ) return this.error( -420, 'login-first-before-get-user-info');
         return super.data( id );
     }
