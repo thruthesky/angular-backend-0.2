@@ -26,6 +26,10 @@ export class File extends Base {
 
 
   upload( req:UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
+    /**
+     * @todo Do right error handling.
+     */
+    if ( file === void 0 || file.name === void 0 ) return;
     //
     // req.route = 'upload';
     // req.session_id = this.getSessionId();

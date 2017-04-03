@@ -134,4 +134,23 @@ this.backend.internalServerError().subscribe( re => {
 });
 ````
 
+# Image optimization
+
+## on Templae
+````
+<img [src]=" file.url + '&type=jpg&resize=best-fit&width=100&height=100&quality=1' " style="width: 100%;">
+````
+
+## on Class
+
+````
+this.postData.list( req ).subscribe((res: _POST_LIST_RESPONSE ) => {
+            console.log( res.data.posts );
+            res.data.posts.map( (p: _POST) => {
+                p.files.map( (f: _FILE) => {
+                    f.url += "&resize=best-fit&width=100&height=100";
+                });
+            });
+            this.share.posts = res.data.posts;
+````
 
