@@ -60,7 +60,7 @@ interface USER_REGISTABLE_FIELDS extends USER_EDITABLE_FIELDS {
 export interface USER_FIELDS extends USER_EDITABLE_FIELDS {
     idx?: number;
     id?: string;
-    readonly primary_photo_idx?: number;
+    primary_photo: _FILE;
 };
 
 
@@ -307,11 +307,8 @@ export interface FILE_UPLOAD extends REQUEST {
     finish?: string;
 }
 
-
 export interface FILE_UPLOAD_RESPONSE extends RESPONSE {
-    data?: {
-        idx: number;
-    }
+    data?: _FILE;
 }
 
 export interface IMG_SRC {
@@ -365,6 +362,13 @@ export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
  * @warning All the interfaces above are DEPRECATED !!
  * 
  * -----------------------------------------------------------------
+ * 
+ * 
+ * Naming rules
+ * 
+ *      begin with '_'
+ *      optioanl param has '_O' or else it's not otioanl.
+ *      interface that has field attr for extending purpose has '_I' and it shouldn't be exported.
  * 
  */
 
@@ -445,22 +449,26 @@ export interface _DELETE_RESPONSE extends _RESPONSE {
 
 
 
-///// user
+//////////////////////////////// user
 
-export interface _SESSION_INFO {
+/// User response data after crud.
+interface _USER_CRUD_FIELDS {
     session_id: string;
     id: string;
     idx: number;
     name: string;
     email: string;
     admin?: number;
-};
-
-interface _SESSION_INFO_DAT {
-    data: _SESSION_INFO;
 }
 
-export interface _USER_SESSION_RESPONSE extends _RESPONSE, _SESSION_INFO_DAT {};
+interface _USER_CRUD_DATA {
+    data: _USER_CRUD_FIELDS;
+}
+
+export interface _SESSION_INFO extends _USER_CRUD_FIELDS {};
+
+
+export interface _USER_CRUD_RESPONSE extends _RESPONSE, _USER_CRUD_DATA {};
 
 
 
@@ -474,6 +482,8 @@ interface _FILE_HOOKS {
 };
 
 
+
+
 export interface _FILE {
     idx: number;
     model: string;
@@ -485,6 +495,7 @@ export interface _FILE {
     no_of_download: number;
     url: string;
 };
+
 
 interface _FILES {
     files?: Array<_FILE>;
@@ -528,9 +539,13 @@ export interface PRIMARY_PHOTO_UPLOAD extends ANONYMOUS_PRIMARY_PHOTO_UPLOAD {
     finish: 'Y';
 }
 
+export interface _PRIMARY_PHOTO {
+    primary_photo: _FILE;
+}
+
 
 /**
- * 
+ * user common fields for crud.
  */
 interface _USER_COMMON_FIELDS {
     name?: string;
@@ -553,16 +568,33 @@ interface _USER_COMMON_FIELDS {
     session_id?: string;
     meta?: METAS;
 }
-interface _USER_CREATE_FIELDS extends _IDX, _PASSWORD, _USER_COMMON_FIELDS {}
 
 
-interface _USER_EDIT_FIELDS extends _USER_COMMON_FIELDS {}
+
+// to register
+export interface _USER_CREATE extends
+    _REQUEST_O,
+    _IDX, _PASSWORD, _USER_COMMON_FIELDS,
+    _FILE_HOOKS {};
+export interface _USER_CREATE_RESPONSE extends _USER_CRUD_RESPONSE {};
+
+export interface _USER_EDIT extends
+    _REQUEST_O,
+    _IDX,
+    _PRIMARY_PHOTO,
+    _USER_COMMON_FIELDS {};
+export interface _USER_EDIT_RESPONSE extends _USER_CRUD_RESPONSE {};
 
 
-export interface _USER_CREATE extends REQUEST, _USER_CREATE_FIELDS, _FILE_HOOKS {}; // to register
+// user data read/load
+export interface _USER_DATA_RESPONSE extends
+    _RESPONSE,
+    _IDX,
+    _ID,
+    _PRIMARY_PHOTO,
+    _USER_COMMON_FIELDS {};
+    
 
-
-export interface _USER_EDIT extends _USER_EDIT_FIELDS {};
 
 
 

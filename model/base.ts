@@ -86,8 +86,10 @@ export class Base extends Api {
     let req: DATA_REQUEST = {
       route: this.taxonomy + '.data'
     }
-    if ( Number.isInteger( idx ) ) req.idx = idx;
-    else req.id = idx;
+    if ( idx ) {
+      if ( Number.isInteger( idx ) ) req.idx = idx;
+      else req.id = idx;
+    }
     return this.post( req );
   }
 

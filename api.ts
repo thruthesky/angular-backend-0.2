@@ -150,7 +150,7 @@ export class Api {
 
 
 
-    protected deleteSessionInfo() {
+    public deleteSessionInfo() {
         localStorage.removeItem( API_KEY_SESSION_INFO );
     }
 
@@ -217,7 +217,10 @@ export class Api {
                 // console.log('response body:', e['_body']); // debug. comment out to see errors from server.
                 
                 if ( e['_body'] == '' ) throw this.errorResponse( -408, 'response-is-empty.');
-                
+                if ( (<string>e['_body']).charAt(0) != '{' ) {
+                    console.info("Maybe error");
+                    console.log(e['_body']);
+                }
                 let re = e.json();
                 if ( this.isError( re ) ) {
                     throw re;
@@ -225,9 +228,9 @@ export class Api {
                 else return re;
              } )
             .catch( err => {
-                console.log('caught an error: ', err);
+                //console.log('caught an error: ', err);
                 if ( err instanceof SyntaxError ) {
-                    // console.error(err); // debug
+                    console.error(err); // debug
                     return Observable.throw( this.errorResponse( ERROR_JSON_PARSE )  ); // JSON 에러
                 }
                 else if ( err && typeof err['code'] !== void 0 && err['code'] < 0 ) return Observable.throw( err ); // 프로그램 적 에러
