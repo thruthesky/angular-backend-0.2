@@ -4,7 +4,10 @@ import { URL_BACKEND_API, BACKEND_API_CONNECTION_TIMEOUT } from './config';
 
 import { RESPONSE, _SESSION_INFO, _USER_SESSION_RESPONSE } from './interface';
 
-import { API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT } from './define';
+import {
+    API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT,
+    ERROR_NO_ERROR_CODE
+} from './define';
 
 
 
@@ -242,17 +245,33 @@ export class Api {
 
 
     /**
-     * return true if the obj is error.
+     * return true if the obj is error ( or error response )
      *
+     * 
      *
-     * obj { code: ... } 에서 code 값이 없거나 참의 값이면 에러로 간주한다.
+     * @param obj
+     *      obj must be a form of "{ code: -123, message: 'error message'}"
+     *      if 'code' does not exist, it is considered as an ERROR.
+     *      if 'code' is less than 0, then it is an error.
+     * 
+     *      { code: ... } 에서 code 값이 없거나 참의 값이면 에러로 간주한다.
      *
      * 참고로 internal sever error 의 경우에는 code 값이 없으로 '참'을 리턴한다.
+     * 
+     * @return
+     *      truthy value if the object is an error response.
+     *      false if no error.
+     * @code
+     *      
+            if ( this.file.isError(err) ) return;
+
+     * @endcode
+     * 
      */
     isError( obj: any ) {
         if ( obj ) {
-            if ( obj['code'] === void 0 ) return true; // if obj.code not exist.
-            if ( obj['code'] ) return true; // if obj.code is not 0.
+            if ( obj['code'] === void 0 ) return ERROR_NO_ERROR_CODE; // if obj.code not exist.
+            if ( obj['code'] ) return obj['code']; // if obj.code is not 0.
         }
         return false;
     }

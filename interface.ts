@@ -449,8 +449,9 @@ export interface _DELETE_RESPONSE extends _RESPONSE {
 
 
 
-//////////////////////////////// user
-
+////////////////////////////////
+//////////////////////////////// User Interfaces
+////////////////////////////////
 /// User response data after crud.
 interface _USER_CRUD_FIELDS {
     session_id: string;
@@ -469,6 +470,7 @@ export interface _SESSION_INFO extends _USER_CRUD_FIELDS {};
 
 
 export interface _USER_CRUD_RESPONSE extends _RESPONSE, _USER_CRUD_DATA {};
+export type _USER_SESSION_RESPONSE = _USER_CRUD_RESPONSE;
 
 
 
@@ -692,7 +694,7 @@ interface _POST_COMMON_READ_FIELDS {
 
 
 interface _COMMENT_COMMON_READ_FIELDS {
-    readonly content: string;
+    readonly content: string;        /* can be changed to enable HTML */
     readonly name: string;
     readonly password: string;
     readonly address: string;

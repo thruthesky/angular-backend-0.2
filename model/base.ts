@@ -85,11 +85,20 @@ export class Base extends Api {
   data( idx: any ) : Observable<any> {
     let req: DATA_REQUEST = {
       route: this.taxonomy + '.data'
-    }
+    };
     if ( idx ) {
       if ( Number.isInteger( idx ) ) req.idx = idx;
       else req.id = idx;
     }
+    return this.post( req );
+  }
+
+
+  like( idx: number ) : Observable<any> {
+    let req = {
+      route: this.taxonomy + '.like',
+      idx: idx
+    };
     return this.post( req );
   }
 
