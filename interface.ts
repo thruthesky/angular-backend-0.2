@@ -506,7 +506,6 @@ interface _FILES {
 
 
 
-
 export interface UPLOAD extends _REQUEST_O {
     model?: string;
     model_idx?: number;
@@ -543,6 +542,22 @@ export interface PRIMARY_PHOTO_UPLOAD extends ANONYMOUS_PRIMARY_PHOTO_UPLOAD {
 
 export interface _PRIMARY_PHOTO {
     primary_photo: _FILE;
+}
+
+
+
+export interface _VOTE_RESPONSE extends _RESPONSE {
+    data: {
+        readonly idx: number;
+        readonly vote_good: number;
+        readonly vote_bad: number;
+    }
+}
+
+export interface _REPORT_RESPONSE extends _RESPONSE {
+    data: {
+        readonly report: number;
+    }
 }
 
 
@@ -690,11 +705,14 @@ interface _POST_COMMON_READ_FIELDS {
     readonly mobile: string;
     readonly province: string;
     readonly secret: string;
+    report: number;             // editable to display
+    vote_good: number;          // this can be changed upon user 'like' click
+    vote_bad: number;          // this can be changed upon user 'dislike' click
 }
 
 
 interface _COMMENT_COMMON_READ_FIELDS {
-    readonly content: string;        /* can be changed to enable HTML */
+    readonly content: string;
     readonly name: string;
     readonly password: string;
     readonly address: string;
@@ -709,6 +727,9 @@ interface _COMMENT_COMMON_READ_FIELDS {
     readonly middle_name: string;
     readonly mobile: string;
     readonly province: string;
+    report: number;             // editable to display
+    vote_good: number;          // this can be changed upon user 'like' click
+    vote_bad: number;          // this can be changed upon user 'dislike' click
 }
 
 

@@ -3,7 +3,9 @@ import { NO_OF_ITEMS_PER_PAGE } from '../config';
 import {
     LIST,
     DATA_REQUEST,
-    DELETE_REQUEST, DELETE_RESPONSE
+    DELETE_REQUEST, DELETE_RESPONSE,
+    _VOTE_RESPONSE,
+    _REPORT_RESPONSE
 } from '../angular-backend';
 import { Observable } from 'rxjs/Observable';
 export class Base extends Api {
@@ -94,9 +96,19 @@ export class Base extends Api {
   }
 
 
-  like( idx: number ) : Observable<any> {
+  vote( idx: number, choice: string = 'G' ) : Observable<_VOTE_RESPONSE> {
     let req = {
-      route: this.taxonomy + '.like',
+      route: this.taxonomy + '.vote',
+      idx: idx,
+      choice: choice
+    };
+    return this.post( req );
+  }
+
+
+  report( idx: number ) : Observable<_REPORT_RESPONSE> {
+    let req = {
+      route: this.taxonomy + '.report',
       idx: idx
     };
     return this.post( req );
