@@ -2,9 +2,12 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { URL_BACKEND_API, BACKEND_API_CONNECTION_TIMEOUT } from './config';
 
-import { RESPONSE, SESSION_INFO, USER_SESSION_RESPONSE } from './interface';
+import { RESPONSE, _SESSION_INFO, _USER_SESSION_RESPONSE } from './interface';
 
-import { API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT } from './define';
+import {
+    API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT,
+    ERROR_NO_ERROR_CODE
+} from './define';
 
 
 
@@ -72,6 +75,15 @@ export class Api {
         else return false;
     }
 
+    get admin() : boolean {
+        if ( this.getSessionId() ) {
+            if ( this.info.admin ) return true;
+        }
+        return false;
+    }
+    
+
+
     /**
      * @deprecated use session info.
      * @param res
@@ -90,7 +102,7 @@ export class Api {
      *
      * @param res - it can by any interface ( type ) as long as it has res.data.sessoin_id
      */
-    protected setSessionInfo( res: USER_SESSION_RESPONSE ) {
+    protected setSessionInfo( res: _USER_SESSION_RESPONSE ) {
         if ( res === void 0 || res.data === void 0 || res.data.session_id === void 0 ) {
             // No session_id will be returned if admin edits user info.
             // alert("CRITICAL ERROR: sessionSessionId() - please report this to admin.");
@@ -126,7 +138,7 @@ export class Api {
     /**
      * this.info.id
      */
-    get info() : SESSION_INFO {
+    get info() : _SESSION_INFO {
         let data = localStorage.getItem( API_KEY_SESSION_INFO );
         //console.log(data);
         if ( data ) {
@@ -136,12 +148,12 @@ export class Api {
             catch (e) {
             }
         }
-        return <SESSION_INFO>{};
+        return <_SESSION_INFO>{};
     }
 
 
 
-    protected deleteSessionInfo() {
+    public deleteSessionInfo() {
         localStorage.removeItem( API_KEY_SESSION_INFO );
     }
 
@@ -208,7 +220,10 @@ export class Api {
                 // console.log('response body:', e['_body']); // debug. comment out to see errors from server.
                 
                 if ( e['_body'] == '' ) throw this.errorResponse( -408, 'response-is-empty.');
-                
+                if ( (<string>e['_body']).charAt(0) != '{' ) {
+                    console.info("Maybe error");
+                    console.log(e['_body']);
+                }
                 let re = e.json();
                 if ( this.isError( re ) ) {
                     throw re;
@@ -216,9 +231,9 @@ export class Api {
                 else return re;
              } )
             .catch( err => {
-                console.log('caught an error: ', err);
+                //console.log('caught an error: ', err);
                 if ( err instanceof SyntaxError ) {
-                    // console.error(err); // debug
+                    console.error(err); // debug
                     return Observable.throw( this.errorResponse( ERROR_JSON_PARSE )  ); // JSON 에러
                 }
                 else if ( err && typeof err['code'] !== void 0 && err['code'] < 0 ) return Observable.throw( err ); // 프로그램 적 에러
@@ -230,17 +245,33 @@ export class Api {
 
 
     /**
-     * return true if the obj is error.
+     * return true if the obj is error ( or error response )
      *
+     * 
      *
-     * obj { code: ... } 에서 code 값이 없거나 참의 값이면 에러로 간주한다.
+     * @param obj
+     *      obj must be a form of "{ code: -123, message: 'error message'}"
+     *      if 'code' does not exist, it is considered as an ERROR.
+     *      if 'code' is less than 0, then it is an error.
+     * 
+     *      { code: ... } 에서 code 값이 없거나 참의 값이면 에러로 간주한다.
      *
      * 참고로 internal sever error 의 경우에는 code 값이 없으로 '참'을 리턴한다.
+     * 
+     * @return
+     *      truthy value if the object is an error response.
+     *      false if no error.
+     * @code
+     *      
+            if ( this.file.isError(err) ) return;
+
+     * @endcode
+     * 
      */
     isError( obj: any ) {
         if ( obj ) {
-            if ( obj['code'] === void 0 ) return true; // if obj.code not exist.
-            if ( obj['code'] ) return true; // if obj.code is not 0.
+            if ( obj['code'] === void 0 ) return ERROR_NO_ERROR_CODE; // if obj.code not exist.
+            if ( obj['code'] ) return obj['code']; // if obj.code is not 0.
         }
         return false;
     }

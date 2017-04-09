@@ -8,7 +8,10 @@ import {
   ANONYMOUS_PRIMARY_PHOTO_UPLOAD,
   UPLOAD_RESPONSE
  } from "../angular-backend";
-import { ERROR_SESSION_ID_EXIST } from './../define';
+import {
+  ERROR_SESSION_ID_EXIST,
+  RES_ERROR_NO_FILE_SELECTED
+} from './../define';
 import { ProgressService } from "../services/progress";
 import { Observable } from "rxjs";
 import { URL_BACKEND_API } from "../config";
@@ -26,10 +29,11 @@ export class File extends Base {
 
 
   upload( req:UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
-    /**
-     * @todo Do right error handling.
-     */
-    if ( file === void 0 || file.name === void 0 ) return;
+    
+    
+    if ( file === void 0 || file.name === void 0 ) {
+      return Observable.throw( RES_ERROR_NO_FILE_SELECTED );
+    }
     //
     // req.route = 'upload';
     // req.session_id = this.getSessionId();

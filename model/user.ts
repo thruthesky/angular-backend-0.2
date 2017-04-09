@@ -59,6 +59,9 @@ export class User extends Base {
      */
 
     data( id? ) : Observable<USER_DATA_RESPONSE> {
+
+        // if id is empty, it will get self data.
+        // if ( id === void 0 ) id = this.info.id;
         if ( this.logged == false ) return this.error( -420, 'login-first-before-get-user-info');
         return super.data( id );
     }
@@ -80,7 +83,7 @@ export class User extends Base {
         if ( req['password'] !== void 0 ) return Observable.throw( this.errorResponse( -423, 'password-has-passed-over-form-submission--user-cannot-edit-password-on-edit-form') );
         return super.edit( req )
             .map( ( res: USER_EDIT_RESPONSE ) => {
-                console.log('edit res: ', res );
+                //console.log('edit res: ', res );
                 this.setSessionInfo( res );
                 return res;
             });

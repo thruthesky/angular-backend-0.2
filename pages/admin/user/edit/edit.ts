@@ -48,7 +48,7 @@ export class BackendAdminUserEditPage {
       this.edit.email = this.user_data.email;
       this.edit.gender = this.user_data.gender;
       this.edit.id = this.user_data.id;
-      this.edit_src_photo = this.file.src( { idx: this.user_data.primary_photo_idx });
+      this.edit_src_photo = this.file.src( { idx: this.user_data.primary_photo.idx });
       /** this.edit = res.data.user; **/
       console.log('onClickLoadData::res', res);
     }, err => this.user.alert(err));

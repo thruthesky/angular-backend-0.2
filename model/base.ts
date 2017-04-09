@@ -3,7 +3,9 @@ import { NO_OF_ITEMS_PER_PAGE } from '../config';
 import {
     LIST,
     DATA_REQUEST,
-    DELETE_REQUEST, DELETE_RESPONSE
+    DELETE_REQUEST, DELETE_RESPONSE,
+    _VOTE_RESPONSE,
+    _REPORT_RESPONSE
 } from '../angular-backend';
 import { Observable } from 'rxjs/Observable';
 export class Base extends Api {
@@ -85,9 +87,30 @@ export class Base extends Api {
   data( idx: any ) : Observable<any> {
     let req: DATA_REQUEST = {
       route: this.taxonomy + '.data'
+    };
+    if ( idx ) {
+      if ( Number.isInteger( idx ) ) req.idx = idx;
+      else req.id = idx;
     }
-    if ( Number.isInteger( idx ) ) req.idx = idx;
-    else req.id = idx;
+    return this.post( req );
+  }
+
+
+  vote( idx: number, choice: string = 'G' ) : Observable<_VOTE_RESPONSE> {
+    let req = {
+      route: this.taxonomy + '.vote',
+      idx: idx,
+      choice: choice
+    };
+    return this.post( req );
+  }
+
+
+  report( idx: number ) : Observable<_REPORT_RESPONSE> {
+    let req = {
+      route: this.taxonomy + '.report',
+      idx: idx
+    };
     return this.post( req );
   }
 
