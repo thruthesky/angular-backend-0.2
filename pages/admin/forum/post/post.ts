@@ -205,14 +205,36 @@ export class BackendAdminForumPostPage {
 
   onClickShowPostDetail( idx?:string ) {
     console.log('onClickShowPostDetail::idx', idx);
-    let modalRef = this.modal.open ( PostEditModalComponent );
 
-    // modalRef.result.then( (x) => {
-    //     // console.log( this.user.loginUser );
-    //     //this.login = this.user.isLogin();
-    //     console.log("user login status: ", this.user.logged);
-    // }).catch( () =>console.log('exit '));
+    let query = <LIST>{
+      where: `idx = ?`,
+      bind: idx,
+      extra: {file: true}
+    };
+
+    this.postData.list( query ).subscribe( (res:POST_LIST_RESPONSE) => {
+      console.log('onClickShowPostDetail::', res);
+      this.showPostDetail( res.data.posts[0] );
+    }, err => this.postData.alert( err ));
+
   }
+
+  showPostDetail( post: POST) {
+    let modalOption = {};
+    //if ( option.class ) modalOption['windowClass'] = option.class;
+    modalOption['windowClass'] = 'post-modal-view';
+    let modalRef = this.modal.open ( PostEditModalComponent, modalOption );
+
+
+    modalRef.componentInstance['post'] = post;
+
+    modalRef.result.then((result) => {
+      console.info( `Closed with: ${result}` );
+    }, (reason) => {
+      console.info( "dismissed", reason );
+    });
+  }
+
 
 
 }

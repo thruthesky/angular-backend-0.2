@@ -30,7 +30,9 @@ export class BackendAdminUserListPage {
   totalRecord: number = 0;
 
   searchChangeDebounce = new Subject();
-  constructor( public admin: AdminService, public user: User
+  constructor(
+      public admin: AdminService,
+      public user: User
   ) {
 
     admin.onClickMenuMore();
