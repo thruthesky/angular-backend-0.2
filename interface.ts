@@ -830,7 +830,8 @@ export interface _POST_LIST_RESPONSE extends _RESPONSE {
     data: {
         configs: _CONFIGS,
         posts: _POSTS,
-        total: number
+        total: number,
+        page: number
     }
 };
 
