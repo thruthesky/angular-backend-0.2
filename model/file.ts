@@ -17,6 +17,9 @@ import { Observable } from "rxjs";
 import { URL_BACKEND_API } from "../config";
 export * from '../interface';
 export * from '../define';
+
+
+type CALLBACK_NUMBER = (percentage: number) => void;
 @Injectable()
 export class File extends Base {
   protected percentage: number = 0;
@@ -28,15 +31,13 @@ export class File extends Base {
 
 
 
-  upload( req:UPLOAD, file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
+  upload( req:UPLOAD, file: any, callback?: CALLBACK_NUMBER ) : Observable< FILE_UPLOAD_RESPONSE > {
     
     
     if ( file === void 0 || file.name === void 0 ) {
       return Observable.throw( RES_ERROR_NO_FILE_SELECTED );
     }
-    //
-    // req.route = 'upload';
-    // req.session_id = this.getSessionId();
+    
     let session_id = this.getSessionId();
     let formData = new FormData();
     formData.append( 'userfile', file, file.name);
@@ -49,38 +50,28 @@ export class File extends Base {
     if ( req['finish'] ) formData.append( 'finish', req.finish );
     
 
-    // let headers  = new Headers({  'Content-Type': 'multipart/form-data' });
-    // let options  = new RequestOptions({ headers: headers });
-
     console.log( file );
     console.log( formData ) ;
     let o: Observable<any> = this.http.post( URL_BACKEND_API, formData );
 
-    // o.map(e => {
-    //   console.log('e: ', e);
-    // })
-    
+
+
 
     let subscription = this.progress.uploadProgress.subscribe( res => {
-      console.log("progress: ", res);
-      console.log('total::', res.total, 'Loaded::', res.loaded);
+      // console.log("progress: ", res);
+      // console.log('total::', res.total, 'Loaded::', res.loaded);
       this.percentage = Math.round(res.loaded/res.total*100);
-      console.log('this.percentage::',this.percentage);
-      console.log(subscription);
+      // console.log('this.percentage::',this.percentage);
+      // console.log(subscription);
+
+
+      if ( callback ) callback( this.percentage );
       if ( this.percentage == 100 ) subscription.unsubscribe();
+
+
     });
 
-    // return o;
-
-
-    
-    //console.log('o:', o);
     return this.processQuery( o );
-    //   .subscribe(res=>{
-    //   console.info("file upload success: ", res);
-    // }, err => {
-    //   console.error(err);
-    // })
   }
 
   url( idx: number ) : string {
@@ -100,14 +91,14 @@ export class File extends Base {
 
   //// User Primary Photo Upload
 
-  private uploadAnonymousPrimaryPhoto( file: any ) : Observable< FILE_UPLOAD_RESPONSE > { 
+  private uploadAnonymousPrimaryPhoto( file: any, callback?: CALLBACK_NUMBER ) : Observable< FILE_UPLOAD_RESPONSE > { 
     let req: ANONYMOUS_PRIMARY_PHOTO_UPLOAD = {
       model: 'user',
       code: 'primary_photo'
     };
-    return this.upload( req, file );
+    return this.upload( req, file, callback );
   }
-  private uploadUserPrimaryPhoto( file: any ) : Observable< FILE_UPLOAD_RESPONSE > {
+  private uploadUserPrimaryPhoto( file: any, callback?: CALLBACK_NUMBER ) : Observable< FILE_UPLOAD_RESPONSE > {
     let req: PRIMARY_PHOTO_UPLOAD = {
       model: 'user',
       model_idx: this.info.idx,
@@ -115,22 +106,48 @@ export class File extends Base {
       unique: 'Y',
       finish: 'Y'
     };
-    return this.upload( req, file );
+    return this.upload( req, file, callback );
   }
   
-  uploadPrimaryPhoto( file ) {
+  uploadPrimaryPhoto( file, callback?: CALLBACK_NUMBER ) {
     if ( this.logged ) return this.uploadUserPrimaryPhoto( file );
-    else return this.uploadAnonymousPrimaryPhoto( file );
+    else return this.uploadAnonymousPrimaryPhoto( file, callback );
   }
 
 
 
-  //// File upload for post
-  uploadPostFile( file ) : Observable<UPLOAD_RESPONSE> {
+
+  /**
+   * 
+   * File upload for post
+   * 
+   * 
+   * @param file 
+   * @param callback 
+   * 
+   * @code
+
+    onChangeFile( _ ) {
+        this.file.uploadPostFile( _.files[0], percentage => {
+            console.log('percentage:', percentage);
+        } ).subscribe( (res:_UPLOAD_RESPONSE) => {
+            this.files.push( res.data );
+            console.log('files: ', this.files);
+        }, err => {
+            console.log('err:', err);
+            if ( this.file.isError(err) == ERROR_NO_FILE_SELECTED ) return;
+            this.file.alert(err);
+        });
+    }
+
+   * @endcode
+   * 
+   */
+  uploadPostFile( file, callback?: CALLBACK_NUMBER ) : Observable<UPLOAD_RESPONSE> {
     let req: UPLOAD = {
       model: 'post_data',
       code: ''
     };
-    return this.upload( req, file );
+    return this.upload( req, file, callback );
   }
 }

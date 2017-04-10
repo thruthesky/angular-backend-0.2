@@ -44,15 +44,18 @@ export class Base extends Api {
 
 
         /**
-         * Pagination helper
+         * @deprecated code. // Pagination helper.
+         * 
+         * To make it clear and easy understanding,
+         * 
          */
-        if ( ! req['limit'] ) req.limit = NO_OF_ITEMS_PER_PAGE;
-        if ( req['page'] ) {
-            let page = req['page'] > 0 ? req['page'] : 1;
-            let limit = req.limit;
-            req.from =  ( page - 1 ) * limit;
-            delete( req.page );
-        }
+        // if ( ! req['limit'] ) req.limit = NO_OF_ITEMS_PER_PAGE;
+        // if ( req['page'] ) {
+        //     let page = req['page'] > 0 ? req['page'] : 1;
+        //     let limit = req.limit;
+        //     req.from =  ( page - 1 ) * limit;
+        //     delete( req.page );
+        // }
         //
 
         req.session_id = this.getSessionId();

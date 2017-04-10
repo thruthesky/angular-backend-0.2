@@ -14,7 +14,7 @@ export class PageNavigationComponent {
   @Input() no_of_total_items :number = null;
   @Input() no_of_items_in_one_page:number = null;
   @Input() no_of_pages_in_navigator:number = null;
-  @Input() no_of_current_page:number = null;
+  @Input() no_of_current_page:number = 1;
   @Input() show_prev_next:boolean = true;
   @Input() show_first_last:boolean = true;
 
@@ -43,7 +43,9 @@ export class PageNavigationComponent {
   }
 
   showPagination() {
-    //console.log('this.no_of_total_items:', this.no_of_total_items);
+    console.log('this.no_of_total_items:', this.no_of_total_items);
+    console.log('this.no_of_items_in_one_page:', this.no_of_items_in_one_page);
+    console.log('this.no_of_pages_in_navigator:', this.no_of_pages_in_navigator);
     this.no_of_total_pages = Math.ceil(this.no_of_total_items / this.no_of_items_in_one_page);
 
     this.currentDisplay = Math.floor( (this.no_of_current_page -1) / this.no_of_pages_in_navigator);
