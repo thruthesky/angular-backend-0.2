@@ -828,10 +828,12 @@ interface _COMMENTS {
 
 export interface _POST_LIST_RESPONSE extends _RESPONSE {
     data: {
-        configs: _CONFIGS,
-        posts: _POSTS,
-        total: number,
-        page: number
+        configs: _CONFIGS;
+        posts: _POSTS;
+        total: number;
+        page: number;
+        limit: number;
+        post_config_id: string;
     }
 };
 
