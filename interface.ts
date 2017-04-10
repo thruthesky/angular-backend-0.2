@@ -626,6 +626,12 @@ interface _USER_COMMON_FIELDS {
 }
 
 
+export interface _USER_RESPONSE extends
+    _IDX,
+    _ID,
+    _PRIMARY_PHOTO,
+    _USER_COMMON_FIELDS {}
+
 
 // to register
 export interface _USER_CREATE extends
@@ -644,11 +650,11 @@ export interface _USER_EDIT_RESPONSE extends _USER_CRUD_RESPONSE {};
 
 // user data read/load
 export interface _USER_DATA_RESPONSE extends
-    _RESPONSE,
-    _IDX,
-    _ID,
-    _PRIMARY_PHOTO,
-    _USER_COMMON_FIELDS {};
+    _RESPONSE {
+        data : {
+            user: _USER_RESPONSE
+        }
+    };
     
 
 
