@@ -34,18 +34,18 @@ export class PageNavigationComponent {
   @Output() pageClick = new EventEmitter();
 
   constructor() {
-    console.log('pagination::constructor()');
+    //console.log('pagination::constructor()');
   }
 
   ngOnChanges(){
-    console.log("ngOnChanges: ...");
+    //console.log("ngOnChanges: ...");
     if ( this.no_of_total_items > 0 ) this.showPagination();
   }
 
   showPagination() {
-    console.log('this.no_of_total_items:', this.no_of_total_items);
-    console.log('this.no_of_items_in_one_page:', this.no_of_items_in_one_page);
-    console.log('this.no_of_pages_in_navigator:', this.no_of_pages_in_navigator);
+    //console.log('this.no_of_total_items:', this.no_of_total_items);
+    //console.log('this.no_of_items_in_one_page:', this.no_of_items_in_one_page);
+    //console.log('this.no_of_pages_in_navigator:', this.no_of_pages_in_navigator);
     this.no_of_total_pages = Math.ceil(this.no_of_total_items / this.no_of_items_in_one_page);
 
     this.currentDisplay = Math.floor( (this.no_of_current_page -1) / this.no_of_pages_in_navigator);
