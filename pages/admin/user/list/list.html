@@ -5,18 +5,6 @@
     <main class="col-12 col-sm-9 col-md-10">
 
 
-      <h2>Login</h2>
-      <div class="user-box">
-        <div *ngIf=" ! user.logged " class="login-form">
-          <input name="id" [(ngModel)]="_id"><input name="password" [(ngModel)]="_password"><button (click)="onClickLogin(_id, _password)" type="button">Login</button>
-        </div>
-        <div *ngIf=" user.logged " class="user-info">
-          User are logged in: {{ user.getSessionInfo().id }}
-          <button (click)="onClickLogout()" type="button">logout</button>
-        </div>
-      </div>
-
-
 
       <h2>User management By admin</h2>
 

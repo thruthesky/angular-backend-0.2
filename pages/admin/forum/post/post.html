@@ -2,40 +2,40 @@
 <div class="container-fluid margin-top-5 mt-sm-5">
   <div class="row">
     <admin-sidebar class="{{ admin.hidden_xs_down }} col-sm-3 col-md-2 px-0"></admin-sidebar>
+    
+    
+    
     <main class="col-12 col-sm-9 col-md-10">
-      <div class="container mb-3">
-        <h2>Post Create</h2>
-        <div *ngFor=" let idx of photoIdxes ">
-          <img style="width: 25%; float:left;" src="{{ idx.url}}">
-        </div>
 
-        <div class="input-group  mb-1">
-          <label for="file-box">Upload Photos</label>
-          <input type="file" class="form-control-file" id="file-box" #userfile (change)="onChangeFile( userfile )">
-          <small class="form-text text-muted">Please select a photo to upload</small>
-        </div>
-        <div class="input-group  mb-1">
-          <span class="input-group-addon">Post Config</span>
-          <select class="form-control" [(ngModel)]="postCreate.post_config_id">
-            <option *ngFor="let config of postConfigs" value="{{config.id}}">{{config.name}}</option>
-          </select>
-        </div>
-        <div class="input-group  mb-1">
-          <span class="input-group-addon">Title</span>
-          <input type="text" class="form-control"  [(ngModel)]="postCreate.title"  placeholder="Title...">
-        </div>
-        <div class="input-group  mb-1">
-          <span class="input-group-addon">Content</span>
-          <textarea rows="1" class="form-control" [(ngModel)]="postCreate.content" placeholder="Content...."></textarea>
-        </div>
-        <button (click)="onClickCreatePost()" type="button">Post Create</button>
-      </div>
+      <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary">Create New Post</button>      
+
+      <!--
+
+        * How to create a post under a forum. [post_config_id] works only 'creating'
+
+              [post_config_id] = " 'qna' "
+
+        * How to edit a post. Give a full record of a post into [post] property.
+
+              [post]=" postToEdit "
+
+        -->
+      <post-form-basic-component
+        *ngIf=" showPostForm "
+        [post_config_id] = " 'qna' "
+        [post] = " postPostForm "
+        (create) = " reloadPosts() "
+        (edit) = " showPostForm = false "
+        (cancel) = " showPostForm = false "
+      ></post-form-basic-component>
+
 
       <div class="container mb-3">
         <h2>Post Search</h2>
         <div class="row">
           <div class="col">
-            <div>Confix ID
+            <div>
+              Forums: Input forum id you want to search. Separate by comma(,)
               <select class="form-control" [(ngModel)]="post_config_id" (change)="onChangePostSearch()">
                 <option value="">All</option>
                 <option *ngFor="let config of postConfigs" value="{{config.id}}">{{config.name}}</option>
@@ -60,6 +60,7 @@
           <table class="table table-responsive">
             <thead class="thead-inverse">
             <tr>
+              <th>E</th>
               <th>IDX</th>
               <th>Config IDX</th>
               <th>Title</th>
@@ -71,6 +72,8 @@
             </thead>
             <tbody class="users">
             <tr *ngFor="let post of posts" class="post" role="button" [ngClass]="{strikeout: post.deleted == '1'}">
+              <td (click)=" postPostForm = post; showPostForm = true " class="text-center" role="button"><i class="fa fa-pencil"></i></td>
+              
               <th scope="row" (click)="onClickShowPostDetail(post.idx)">
                 {{post.idx}}
               </th>

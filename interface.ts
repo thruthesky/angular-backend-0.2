@@ -702,7 +702,8 @@ export interface _CONFIG_CREATE extends _ID, _CONFIG_COMMON_WRITE_FIELDS {};
 export interface _CONFIG_EDIT extends _IDX, _CONFIG_COMMON_WRITE_FIELDS {};
 export interface _CONFIG_READ extends _CONFIG_COMMON_READ_FIELDS {};
 
-export type _CONFIGS = Array< _CONFIG_READ >;
+export type _CONFIG = _CONFIG_COMMON_READ_FIELDS;
+export type _CONFIGS = Array< _CONFIG >;
 
 export interface _POST_CONFIG_ID {
     post_config_id: string;

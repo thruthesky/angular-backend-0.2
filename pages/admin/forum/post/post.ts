@@ -9,7 +9,8 @@ import {  File, PostData, PostConfig,
 
   CONFIGS, CONFIG_RESPONSE,
 
-  UPLOAD
+  UPLOAD,
+  _POST_EDIT
 
 } from './../../../../angular-backend';
 
@@ -51,6 +52,10 @@ export class BackendAdminForumPostPage {
 
   searchPostChangeDebounce = new Subject();
 
+
+  //
+  showPostForm: boolean = false;
+  postPostForm: _POST_EDIT = <_POST_EDIT>{};
 
   constructor( public admin: AdminService,
                private postData: PostData,
@@ -161,6 +166,15 @@ export class BackendAdminForumPostPage {
 
     }, err => this.postData.alert( err ));
   }
+
+
+  reloadPosts() {
+    this.searchPostForm = {};
+    this.onChangedPostSearch();
+    //this.loadPostData();
+  }
+
+  
 
   onClickPostEdit( _post: POST ) {
 

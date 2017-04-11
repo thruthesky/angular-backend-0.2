@@ -45,28 +45,7 @@ export class BackendAdminUserListPage {
 
 
   }
-
-  onClickLogin(id, password) {
-    let req: USER_LOGIN = {
-      id: id,
-      password: password
-    };
-    this.user.login(req).subscribe((res: USER_LOGIN_RESPONSE) => {
-      console.log(res);
-    }, err => {
-      this.user.alert(err);
-      console.log(err);
-    });
-  }
-
-  onClickLogout() {
-    this.user.logout().subscribe((res: USER_LOGOUT_RESPONSE) => {
-      console.log(res);
-    }, err => {
-      this.user.alert(err);
-    });
-  }
-
+  
   onPageClick($event) {
     //console.log('onPageClick::$event',$event);
     this.currentPage = $event;

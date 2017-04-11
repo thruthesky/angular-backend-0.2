@@ -6,6 +6,6 @@
 
 //export const URL_BACKEND_API = 'http://backend.sonub.com/index.php'; // real server
 export const URL_BACKEND_API = 'http://backend.org/index.php'; // Mr. Song's test server.
-export const BACKEND_API_CONNECTION_TIMEOUT = 25000;
+export const BACKEND_API_CONNECTION_TIMEOUT = 45000; // request time out
 
 export const NO_OF_ITEMS_PER_PAGE = 5;
