@@ -177,7 +177,7 @@ export class Api {
         data = this.buildQuery( data );
 
         let url = URL_BACKEND_API + '?' + data;
-        // console.log("post: ", url); // debug in console
+        console.log("post: ", url); // debug in console
 
         let o = this.http.post( URL_BACKEND_API, data, this.requestOptions )
         return this.processQuery( o, option );

@@ -1,3 +1,4 @@
+// import { Optional } from '@angular/core';
 import { Api } from '../api';
 import { NO_OF_ITEMS_PER_PAGE } from '../config';
 import {
@@ -9,8 +10,12 @@ import {
 } from '../angular-backend';
 import { Observable } from 'rxjs/Observable';
 export class Base extends Api {
-  constructor(public http, public taxonomy) {
+  constructor (
+    public http,
+    public taxonomy ) {
     super(http);
+
+
   }
 
 
@@ -116,5 +121,6 @@ export class Base extends Api {
     };
     return this.post( req );
   }
+
 
 }

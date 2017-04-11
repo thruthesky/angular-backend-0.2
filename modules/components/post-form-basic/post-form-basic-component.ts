@@ -21,10 +21,11 @@ export class PostFormBasicComponent implements OnInit {
 
     @Input() post_config_id: string;            // post config id to create. this is only used when create a new post.
     @Input() post: _POST = <_POST>{};           // post data to edit. this is only used when editing.
-
+    @Input() option;
 
     formGroup: FormGroup;
     files: Array<_FILE> = [];
+
 
     
     constructor(
@@ -94,6 +95,11 @@ export class PostFormBasicComponent implements OnInit {
         this.cancel.emit();
     }
 
+    /**
+     * 
+     * Emits the newly created post. Meaning, the post list page should take it and unshift it.
+     * 
+     */
     createPost() {
         let create = <_POST_CREATE> this.formGroup.value;
         //create.post_config_id = this.post_config_id;
@@ -104,6 +110,9 @@ export class PostFormBasicComponent implements OnInit {
         }, err => this.postData.alert( err ) );
     }
 
+    /**
+     * After edit, it assigns to original reference. Meaning, it does two-way binding.
+     */
     editPost() {
         let edit = <_POST_EDIT> this.formGroup.value;
         edit.idx = this.post.idx;

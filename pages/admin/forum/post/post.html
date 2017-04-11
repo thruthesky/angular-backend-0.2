@@ -9,17 +9,6 @@
 
       <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary">Create New Post</button>      
 
-      <!--
-
-        * How to create a post under a forum. [post_config_id] works only 'creating'
-
-              [post_config_id] = " 'qna' "
-
-        * How to edit a post. Give a full record of a post into [post] property.
-
-              [post]=" postToEdit "
-
-        -->
       <post-form-basic-component
         *ngIf=" showPostForm "
         [post_config_id] = " 'qna' "

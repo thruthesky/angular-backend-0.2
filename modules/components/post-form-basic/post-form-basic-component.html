@@ -8,13 +8,13 @@
         <file-form-basic-component [files]=" files "></file-form-basic-component>
 
         
-        <div *ngIf=" isCreate() " class="form-group">
+        <div *ngIf=" option?.hideForumID !== true && isCreate() " class="form-group">
           <label for="title-box">Forum ID</label>
           <input type="text" class="form-control" id="title-box" formControlName="post_config_id">
           <small class="form-text text-muted">Input forum ID like 'qna'</small>
         </div>
 
-        <div class="form-group">
+        <div *ngIf=" option?.hideTitle !== true " class="form-group">
           <label for="title-box">Title</label>
           <input type="text" class="form-control" id="title-box" formControlName="title">
           <small class="form-text text-muted">Input title</small>

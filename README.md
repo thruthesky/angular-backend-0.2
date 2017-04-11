@@ -154,3 +154,61 @@ this.postData.list( req ).subscribe((res: _POST_LIST_RESPONSE ) => {
             this.share.posts = res.data.posts;
 ````
 
+
+
+
+
+
+
+# Post Form Basic Component How to Use
+
+
+
+* If you want to create a post under a forum. give a forum id to [post_config_id]. This works only 'creating'
+
+````
+[post_config_id] = " 'qna' "
+````
+
+* How to edit a post. Give a full record of a post into [post] property.
+
+````
+[post]=" postToEdit "
+````
+
+* Example with a create button.
+
+Below will show 'forum id' and 'content' input.
+
+````
+    <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary">Create New Post</button>
+    <post-form-basic-component
+    *ngIf=" showPostForm "
+    [post_config_id] = " post_config_id "
+    [option] = " {
+        hideForumID: false,
+        hideTitle: true
+    } "
+    [post] = " postPostForm "
+    (create) = " list.data.posts.unshift( $event ); showPostForm = false "
+    (edit) = " showPostForm = false "
+    (cancel) = " showPostForm = false "
+    ></post-form-basic-component>
+````
+
+* To show 'title', 'content' input box.
+````
+    <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary">Create New Post</button>
+    <post-form-basic-component
+    *ngIf=" showPostForm "
+    [post_config_id] = " post_config_id "
+    [option] = " {
+        hideForumID: true
+    } "
+    [post] = " postPostForm "
+    (create) = " list.data.posts.unshift( $event ); showPostForm = false "
+    (edit) = " showPostForm = false "
+    (cancel) = " showPostForm = false "
+    ></post-form-basic-component>
+````
+
