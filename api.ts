@@ -452,7 +452,7 @@ export class Api {
   }
 
   splitBirthdays( u ) {
-      if ( u['birthday'] !== void 0 ) {
+      if ( u['birthday'] !== void 0 && u['birthday'] && (<string>u['birthday']).indexOf('-') != -1 ) {
           let dates = (<string>u['birthday']).split( '-' );
           if ( dates.length == 3 ) {
               u.birth_year = dates[0];

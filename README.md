@@ -168,6 +168,8 @@ this.postData.list( req ).subscribe((res: _POST_LIST_RESPONSE ) => {
     * src/app/community-app/pages/register2 for user registration and update
     * src/app/community-app/pages/forum2 for forum. it uses post-view-basic-component, post-form-baisc-component, comment-view-basic-component, comment-form-basic-component, pagination-component.
 
+    * This app works with [AngularBackend version 0.1.0](https://github.com/thruthesky/angular-backend/tree/0.1.0)
+
 
 # Post Form Basic Component How to Use
 

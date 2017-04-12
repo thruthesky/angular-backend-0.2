@@ -72,8 +72,6 @@ export class Base extends Api {
     return this.post(req);
   }
 
-
-  
   delete( idx: any ): Observable<DELETE_RESPONSE> {
     let req: DELETE_REQUEST = {
       route: this.taxonomy + '.delete'
