@@ -45,7 +45,7 @@ export class BackendAdminUserListPage {
 
 
   }
-  
+
   onPageClick($event) {
     //console.log('onPageClick::$event',$event);
     this.currentPage = $event;
@@ -107,7 +107,12 @@ export class BackendAdminUserListPage {
 
   onClickEdit( user: USER ) {
     console.log(user);
-    let edit: USER_EDIT = { id: user.id, email: user.email };
+    let edit: USER_EDIT = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      gender: user.gender
+    };
     this.user.edit( edit ).subscribe( (res: USER_EDIT_RESPONSE) => {
       console.log("edit response: ", res);
     }, err => this.user.alert( err ) );

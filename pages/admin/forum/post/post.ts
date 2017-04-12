@@ -88,16 +88,11 @@ export class BackendAdminForumPostPage {
       }
     });
 
-    this.postConfig.list({limit:20}).subscribe( (res:CONFIG_RESPONSE) => {
-      console.log('postConfig.list::', res);
-      this.postConfigs = res.data.configs;
-    });
-
     this.loadPostData();
 
 
     this.searchPostChangeDebounce
-      .debounceTime(300) // wait 300ms after the last event before emitting last event
+      .debounceTime(500) // wait 500ms after the last event before emitting last event
       .subscribe(() => this.onChangedPostSearch());
   }
 
@@ -174,7 +169,7 @@ export class BackendAdminForumPostPage {
     //this.loadPostData();
   }
 
-  
+
 
   onClickPostEdit( _post: POST ) {
 

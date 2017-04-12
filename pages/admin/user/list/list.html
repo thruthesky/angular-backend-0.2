@@ -45,7 +45,10 @@
               <input type="email" name="email" [(ngModel)]="user.name" placeholder="Name">
             </td>
             <td>
-              <input type="text" name="gender" [(ngModel)]="user.gender" placeholder="M/F">
+              <select [(ngModel)]="user.gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+              </select>
             </td>
             <td>
               <input type="email" name="email" [(ngModel)]="user.email" placeholder="Email Address">

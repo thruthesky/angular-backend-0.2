@@ -2,12 +2,12 @@
 <div class="container-fluid margin-top-5 mt-sm-5">
   <div class="row">
     <admin-sidebar class="{{ admin.hidden_xs_down }} col-sm-3 col-md-2 px-0"></admin-sidebar>
-    
-    
-    
+
+
+
     <main class="col-12 col-sm-9 col-md-10">
 
-      <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary">Create New Post</button>      
+      <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary">Create New Post</button>
 
       <post-form-basic-component
         *ngIf=" showPostForm "
@@ -23,13 +23,7 @@
         <h2>Post Search</h2>
         <div class="row">
           <div class="col">
-            <div>
-              Forums: Input forum id you want to search. Separate by comma(,)
-              <select class="form-control" [(ngModel)]="post_config_id" (change)="onChangePostSearch()">
-                <option value="">All</option>
-                <option *ngFor="let config of postConfigs" value="{{config.id}}">{{config.name}}</option>
-              </select>
-            </div>
+              <div>Forum ID <input name="title" [(ngModel)]="post_config_id" (keyup)="onChangePostSearch()"></div>
           </div>
           <div class="col">
             <div>Title <input name="title" [(ngModel)]="searchPostForm.title" (keyup)="onChangePostSearch()"></div>
@@ -62,7 +56,7 @@
             <tbody class="users">
             <tr *ngFor="let post of posts" class="post" role="button" [ngClass]="{strikeout: post.deleted == '1'}">
               <td (click)=" postPostForm = post; showPostForm = true " class="text-center" role="button"><i class="fa fa-pencil"></i></td>
-              
+
               <th scope="row" (click)="onClickShowPostDetail(post.idx)">
                 {{post.idx}}
               </th>
