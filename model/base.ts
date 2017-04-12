@@ -63,7 +63,7 @@ export class Base extends Api {
         // }
         //
 
-        req.session_id = this.getSessionId();
+        // req.session_id = this.getSessionId();
         return this.post( req );
   }
 

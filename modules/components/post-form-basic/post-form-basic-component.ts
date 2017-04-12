@@ -46,6 +46,7 @@ export class PostFormBasicComponent implements OnInit {
 
         console.log('post config id: ', this.post_config_id );
         if ( this.isCreate() ) {
+            console.log("creating");
             this.files = [];
             this.formGroup = this.fb.group({
                 post_config_id: [ this.post_config_id ],

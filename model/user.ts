@@ -7,7 +7,7 @@ export * from '../interface';
 export * from '../define';
 import {
     USER_DATA, USER_DATA_RESPONSE,
-    USER_LOGIN, USER_LOGIN_RESPONSE, USER_LOGOUT, USER_LOGOUT_RESPONSE,
+    _USER_LOGIN, _USER_LOGIN_RESPONSE, USER_LOGOUT, USER_LOGOUT_RESPONSE,
     USER_REGISTER, USER_REGISTER_RESPONSE,
     USER_EDIT, USER_EDIT_RESPONSE,
     LIST, USER_LIST_RESPONSE,
@@ -90,7 +90,7 @@ export class User extends Base {
             });
     }
 
-    login( req: USER_LOGIN ) : Observable<USER_LOGIN_RESPONSE> {
+    login( req: _USER_LOGIN ) : Observable<_USER_LOGIN_RESPONSE> {
         req.route = 'login';
         return this.post( req )
             .map( (res: any) => {

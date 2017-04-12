@@ -7,6 +7,11 @@ import { PostViewBasicComponent } from './components/post-view-basic/post-view-b
 
 import { CommentFormBasicComponent } from './components/comment-form-basic/comment-form-basic-component';
 import { CommentViewBasicComponent } from './components/comment-view-basic/comment-view-basic-component';
+
+
+import { RegisterFormBasicComponent } from './components/register-form-basic/register-form-basic-component';
+import { LoginFormBasicComponent } from './components/login-form-basic/login-form-basic-component';
+
 import { FileFormBasicComponent } from './components/file-form-basic/file-form-basic-component';
 @NgModule({
     declarations: [
@@ -15,6 +20,8 @@ import { FileFormBasicComponent } from './components/file-form-basic/file-form-b
         PostViewBasicComponent,
         CommentFormBasicComponent,
         CommentViewBasicComponent,
+        RegisterFormBasicComponent,
+        LoginFormBasicComponent,
         FileFormBasicComponent
     ],
     imports: [
@@ -28,6 +35,8 @@ import { FileFormBasicComponent } from './components/file-form-basic/file-form-b
         PostViewBasicComponent,
         CommentFormBasicComponent,
         CommentViewBasicComponent,
+        RegisterFormBasicComponent,
+        LoginFormBasicComponent,
         FileFormBasicComponent
     ]
 })

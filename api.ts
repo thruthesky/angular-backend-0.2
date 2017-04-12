@@ -2,7 +2,9 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { URL_BACKEND_API, BACKEND_API_CONNECTION_TIMEOUT } from './config';
 
-import { RESPONSE, _SESSION_INFO, _USER_SESSION_RESPONSE } from './interface';
+import { _RESPONSE, _SESSION_INFO, _USER_SESSION_RESPONSE
+    
+} from './interface';
 
 import {
     API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT,
@@ -38,7 +40,7 @@ export class Api {
      * @endcode
      *
      */
-    errorResponse( error_code, error_message = '' ) : RESPONSE {
+    errorResponse( error_code, error_message = '' ) : _RESPONSE {
         if ( error_message ) {
             return { code: error_code, message: error_message };
         }
@@ -171,8 +173,14 @@ export class Api {
     post( data: any, option = {} ) : any {
 
         let session_id = this.getSessionId();
-        //console.log(session_id);
-        if ( session_id ) data['session_id'] = session_id;
+        console.log('post session_id: ', session_id);
+        if ( session_id ) {
+            data['session_id'] = session_id;
+        }
+        else {
+            console.log("session id is undefiend. so, it not set.");
+            console.log( data );
+        }
 
         data = this.buildQuery( data );
 
@@ -441,6 +449,31 @@ export class Api {
       .replace(/\)/g, '%29')
       .replace(/\*/g, '%2A')
       .replace(/%20/g, '+')
+  }
+
+  splitBirthdays( u ) {
+      if ( u['birthday'] !== void 0 ) {
+          let dates = (<string>u['birthday']).split( '-' );
+          if ( dates.length == 3 ) {
+              u.birth_year = dates[0];
+              u.birth_month = dates[1];
+              u.birth_day = dates[2];
+          }
+      }
+    return u;
+  }
+
+
+  mk2c( d ) {
+      if ( d < 10 ) return '0' + d;
+      else return d;
+  }
+
+  composeBirthday( u ) {
+      if ( u['birth_day'] !== void 0 ) {
+          u['birthday'] = u['birth_year'] + '-' + this.mk2c(u['birth_month']) + '-' + this.mk2c(u['birth_day']);
+      }
+    return u;
   }
 
 
