@@ -7,7 +7,7 @@
     
     <main class="col-12 col-sm-9 col-md-10">
 
-      <button *ngIf=" ! showPostForm " (click)=" showPostForm = true " class="btn btn-secondary">Create New Post</button>      
+      <button *ngIf=" ! showPostForm " (click)=" postPostForm = {}; showPostForm = true " class="btn btn-secondary">Create New Post</button>      
 
       <post-form-basic-component
         *ngIf=" showPostForm "

@@ -159,6 +159,11 @@ this.postData.list( req ).subscribe((res: _POST_LIST_RESPONSE ) => {
 
 
 
+# Basic Components
+
+* You can re-use basic components that are ready to be used as angular backend component.
+
+
 
 # Post Form Basic Component How to Use
 

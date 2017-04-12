@@ -387,6 +387,11 @@ export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
 
 
 
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -514,6 +519,11 @@ export type _USER_SESSION_RESPONSE = _USER_CRUD_RESPONSE;
 
 
 
+export interface _USER_LOGIN extends _REQUEST_O, _ID, _PASSWORD {};        // to login
+export type _USER_LOGIN_RESPONSE = _USER_SESSION_RESPONSE;              // to get response of USER_LOGIN
+
+
+
 
 //// file upload
 
@@ -603,14 +613,13 @@ export interface _REPORT_RESPONSE extends _RESPONSE {
 /**
  * user common fields for crud.
  */
-interface _USER_COMMON_FIELDS {
+export interface _USER_COMMON_FIELDS {
     name?: string;
     nickname?: string;
     email?: string;
     mobile?: string;
     landline?: string;
     gender?: string;
-    birthday?: string;
     birth_day?: string;
     birth_month?: string;
     birth_year?: string;
