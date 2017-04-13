@@ -401,19 +401,19 @@ export interface USER_EDIT extends REQUEST, USER_EDITABLE_FIELDS {
 
 /**
  * ---------------- New Strict Interfaces ------------------------------
- * 
+ *
  * @warning Use interfaces below !!
  * @warning All the interfaces above are DEPRECATED !!
- * 
+ *
  * -----------------------------------------------------------------
- * 
- * 
+ *
+ *
  * Naming rules
- * 
+ *
  *      begin with '_'
  *      optioanl param has '_O' or else it's not otioanl.
  *      interface that has field attr for extending purpose has '_I' and it shouldn't be exported.
- * 
+ *
  */
 
 export type NUMBERS = Array<number>;
@@ -570,14 +570,19 @@ export interface UPLOAD_RESPONSE extends _RESPONSE {
 };
 export type _UPLOAD_RESPONSE = UPLOAD_RESPONSE;
 
+export interface _FILE_LIST_RESPONSE extends _RESPONSE {
+  data: {
+    files: _FILES,
 
+  }
+};
 
 
 /**
  * User primary photo interfaces
- * 
+ *
  * @note this is a special delcaration for user primary phto upload since it needs more care.
- * 
+ *
  */
 export interface ANONYMOUS_PRIMARY_PHOTO_UPLOAD extends _REQUEST_O {
     model: 'user';
@@ -664,7 +669,7 @@ export interface _USER_DATA_RESPONSE extends
             user: _USER_RESPONSE
         }
     };
-    
+
 
 
 
@@ -804,7 +809,7 @@ export interface _POST_CREATE extends
     _POST_CONFIG_ID,
     _FILE_HOOKS,
     _METAS {};
-    
+
 export interface _POST_CREATE_RESPONSE extends _RESPONSE {
     data: _POST
 };
@@ -821,7 +826,7 @@ export interface _POST_EDIT_RESPONSE extends _RESPONSE {
 
 
 
-export interface _COMMENT extends 
+export interface _COMMENT extends
     _IDX,
     _ROOT_IDX,
     _PARENT_IDX,

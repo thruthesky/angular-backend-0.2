@@ -23,6 +23,10 @@ import { BackendAdminForumPostPage } from './pages/admin/forum/post/post';
 export { BackendAdminForumPostPage } from './pages/admin/forum/post/post';
 
 
+import { BackendAdminFileListPage } from './pages/admin/file/file';
+export { BackendAdminFileListPage } from './pages/admin/file/file';
+
+
 import { AdminHeaderComponent } from './pages/admin/components/header/header';
 import { AdminSidebarComponent } from './pages/admin/components/sidebar/sidebar';
 
@@ -44,6 +48,7 @@ import { PostEditModalComponent } from './pages/admin/components/modal/post/edit
     BackendAdminForumConfigPage,
     BackendAdminForumCategoryPage,
     BackendAdminForumPostPage,
+    BackendAdminFileListPage,
     AdminHeaderComponent,
     AdminSidebarComponent,
     InfoBoxComponent,
