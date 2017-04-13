@@ -163,10 +163,14 @@ this.postData.list( req ).subscribe((res: _POST_LIST_RESPONSE ) => {
 
 * You can re-use basic components that are ready to be used as angular backend component.
 
-* If you want to see the use case ( examples ) see [CommunityApp version 0.1.0](https://github.com/thruthesky/community-app/tree/0.1.0)
+
+* If you want to see the use case ( examples ) see [CommunityApp version 0.1.1](https://github.com/thruthesky/community-app/tree/0.1.1)
     * src/app/community-app/pages/login for user login.
     * src/app/community-app/pages/register2 for user registration and update
     * src/app/community-app/pages/forum2 for forum. it uses post-view-basic-component, post-form-baisc-component, comment-view-basic-component, comment-form-basic-component, pagination-component.
+
+    * This app works with [AngularBackend version 0.1.1](https://github.com/thruthesky/angular-backend/tree/0.1.1)
+
 
 
 # Post Form Basic Component How to Use
