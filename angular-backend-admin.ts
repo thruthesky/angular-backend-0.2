@@ -35,6 +35,7 @@ import { AdminService } from './pages/admin/services/admin.service';
 import { AngularBackendComponentModule } from './modules/angular-backend-components.module';
 
 import { PostEditModalComponent } from './pages/admin/components/modal/post/edit/edit';
+import { AngularBackendAdminRoutingModule } from './angular-backend-admin.routing';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { PostEditModalComponent } from './pages/admin/components/modal/post/edit
     CommonModule,
     RouterModule,
     FormsModule,
-    AngularBackendComponentModule
+    AngularBackendComponentModule,
+    AngularBackendAdminRoutingModule
   ],
   providers: [ AdminService ],
   entryComponents: [
