@@ -12,8 +12,8 @@ import {
     templateUrl: 'post-view-basic-component.html'
 })
 export class PostViewBasicComponent {
-    @Input() post: _POST;
-    @Input() list: _POST_LIST_RESPONSE;
+    @Input() post: _POST;                       // 'post data' to show in 'view'
+    @Input() list: _POST_LIST_RESPONSE;         // whole post list.
     showPostEditForm: boolean = false;
     showCommentForm: boolean = false;
 
@@ -22,6 +22,9 @@ export class PostViewBasicComponent {
         private domSanitizer: DomSanitizer
     ) {}
 
+    ngOnInit() {
+        //console.log("post-view-basic-component: post: ", this.post);
+    }
 
     onClickLike( choice ) {
         this.postData.vote( this.post.idx, choice ).subscribe( (res:_VOTE_RESPONSE) => {
@@ -39,6 +42,7 @@ export class PostViewBasicComponent {
     }
 
     get myPost() {
+        if ( this.post.user === void 0 ) return false; // 'post data' may not have user information.
         return this.post.user.id == this.postData.info.id;
     }
 

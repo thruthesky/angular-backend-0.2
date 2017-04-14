@@ -95,7 +95,7 @@ export class Base extends Api {
       route: this.taxonomy + '.data'
     };
     if ( idx ) {
-      if ( Number.isInteger( idx ) ) req.idx = idx;
+      if ( ! isNaN( idx ) ) req.idx = idx;
       else req.id = idx;
     }
     return this.post( req );
