@@ -23,3 +23,5 @@ export const API_KEY_SESSION_INFO = 'user-session-id';
 export const ERROR_NO_FILE_SELECTED = -40010;
 export const RES_ERROR_NO_FILE_SELECTED = { code: ERROR_NO_FILE_SELECTED, message: "no-file-selected-to-upload" };
 
+export const ERROR_DISCONNECTED = -80011;
+export const RES_ERROR_DISCONNECTED = { code: ERROR_DISCONNECTED, message: 'You have no internet. Please check if you are online.' };
