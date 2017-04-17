@@ -12,6 +12,7 @@ import { BrowserXhr } from "@angular/http";
 import { CustomBrowserXhr } from "./services/custom-browser-xhr";
 
 export * from './interface';
+export * from './define';
 export { Backend } from './model/backend';
 export { User } from './model/user';
 export { PostConfig } from './model/post-config';

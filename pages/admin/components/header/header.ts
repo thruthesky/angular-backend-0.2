@@ -18,9 +18,15 @@ export class AdminHeaderComponent implements OnInit{
   }
   ngOnInit(){
       if( ! this.user.logged ) return;
-      this.user.data().subscribe( res =>{
-        this.usertype = res.data.user.id;
-      });
+
+
+
+
+      // This needs internet connection every load.
+      // We must limit internet connection as much as possible.
+      // this.user.data().subscribe( res =>{
+      //   this.usertype = res.data.user.id;
+      // });
   }
   onClickLogout(){
     this.user.logout().subscribe((res: USER_LOGOUT_RESPONSE) => {
