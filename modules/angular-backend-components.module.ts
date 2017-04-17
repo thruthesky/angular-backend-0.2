@@ -12,6 +12,7 @@ import { CommentViewBasicComponent } from './components/comment-view-basic/comme
 import { RegisterFormBasicComponent } from './components/register-form-basic/register-form-basic-component';
 import { LoginFormBasicComponent } from './components/login-form-basic/login-form-basic-component';
 
+import { PaswordChangeFormBasicComponent } from './components/password-change-form-basic/password-change-form-basic-component';
 import { FileFormBasicComponent } from './components/file-form-basic/file-form-basic-component';
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { FileFormBasicComponent } from './components/file-form-basic/file-form-b
         CommentViewBasicComponent,
         RegisterFormBasicComponent,
         LoginFormBasicComponent,
-        FileFormBasicComponent
+        FileFormBasicComponent,
+        PaswordChangeFormBasicComponent
     ],
     imports: [
         CommonModule,
@@ -37,7 +39,8 @@ import { FileFormBasicComponent } from './components/file-form-basic/file-form-b
         CommentViewBasicComponent,
         RegisterFormBasicComponent,
         LoginFormBasicComponent,
-        FileFormBasicComponent
+        FileFormBasicComponent,
+        PaswordChangeFormBasicComponent
     ]
 })
 export class AngularBackendComponentModule {}

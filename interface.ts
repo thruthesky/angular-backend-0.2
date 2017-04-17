@@ -525,6 +525,18 @@ export type _USER_LOGIN_RESPONSE = _USER_SESSION_RESPONSE;              // to ge
 
 
 
+export interface _USER_PASSWORD_CHANGE extends
+    _REQUEST_O {
+        old_password: string;
+        new_password: string;
+    };
+export type _USER_PASSWORD_CHANGE_RESPONSE = _USER_SESSION_RESPONSE;              // to get response of password change
+
+
+
+
+
+
 //// file upload
 
 
@@ -742,14 +754,16 @@ interface _POST_COMMON_WRITE_FIELDS {
 }
 
 interface _POST_COMMON_READ_FIELDS {
-    readonly title: string;
+    title: string;                  // this is changable.
     readonly content: string;
     readonly name: string;
     readonly password: string;
+    readonly first_image_idx: number;
     readonly address: string;
     readonly birthdate: string;
     readonly city: string;
     readonly contact: string;
+    readonly link: string;
     readonly country: string;
     readonly created: string,
     readonly email: string;

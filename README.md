@@ -175,6 +175,17 @@ this.postData.list( req ).subscribe((res: _POST_LIST_RESPONSE ) => {
 
 # Post Form Basic Component How to Use
 
+* Options for form input box  show/hide
+
+
+````
+    [option] = " {
+        showForumID: false,
+        showTitle: true,
+        showContent: false,
+        showLink: true
+    } "
+````
 
 
 * If you want to create a post under a forum. give a forum id to [post_config_id]. This works only 'creating'
@@ -199,7 +210,7 @@ Below will show 'forum id' and 'content' input.
     *ngIf=" showPostForm "
     [post_config_id] = " post_config_id "
     [option] = " {
-        hideForumID: false,
+        showForumID: true,
         hideTitle: true
     } "
     [post] = " postPostForm "
@@ -216,7 +227,7 @@ Below will show 'forum id' and 'content' input.
     *ngIf=" showPostForm "
     [post_config_id] = " post_config_id "
     [option] = " {
-        hideForumID: true
+        showForumID: false
     } "
     [post] = " postPostForm "
     (create) = " list.data.posts.unshift( $event ); showPostForm = false "

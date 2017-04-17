@@ -74,9 +74,11 @@ export class File extends Base {
     return this.processQuery( o );
   }
 
+
   url( idx: number ) : string {
-    return URL_BACKEND_API + '?route=download&idx='+idx;
+    return this.fileUrl( idx );
   }
+
   src( option: IMG_SRC ) {
     let url = this.url( option.idx );
     if ( option['width'] ) url += 'width=' + option.width;

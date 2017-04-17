@@ -11,7 +11,8 @@ import {
     USER_REGISTER, USER_REGISTER_RESPONSE,
     USER_EDIT, USER_EDIT_RESPONSE,
     LIST, USER_LIST_RESPONSE,
-    _USER_DATA_RESPONSE
+    _USER_DATA_RESPONSE,
+    _USER_PASSWORD_CHANGE, _USER_PASSWORD_CHANGE_RESPONSE
 
 } from '../interface';
 // import { KEY_SESSION_ID } from './defines';
@@ -109,6 +110,14 @@ export class User extends Base {
     }
 
 
+    changePassword( req: _USER_PASSWORD_CHANGE ) : Observable<_USER_PASSWORD_CHANGE_RESPONSE> {
+        req.route = 'change_password';
+        return this.post( req )
+            .map( (res: _USER_PASSWORD_CHANGE_RESPONSE) => {
+                this.deleteSessionInfo();
+                return res;
+            });
+    }
 
 
 }

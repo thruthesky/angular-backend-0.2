@@ -50,8 +50,9 @@ export class PostFormBasicComponent implements OnInit {
             this.files = [];
             this.formGroup = this.fb.group({
                 post_config_id: [ this.post_config_id ],
-                title: [ ],
-                content: [ ]
+                title: [],
+                content: [],
+                link: []
             });
         }
         else { // edit
@@ -59,7 +60,8 @@ export class PostFormBasicComponent implements OnInit {
             this.formGroup = this.fb.group({
                 // post_config_id: [],
                 title: [ this.post.title ],
-                content: [ this.post.content ]
+                content: [ this.post.content ],
+                link: [ this.post.link ]
             });
         }
         
