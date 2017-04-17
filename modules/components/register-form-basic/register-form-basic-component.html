@@ -13,9 +13,18 @@
       </div>
 
       
+      
+      <div class="row" *ngIf=" percentage ">
+          <div class="progress bg-grey w-100 my-1">
+            <div class="progress-bar" role="progressbar" [style.width]=" percentage + '%' " aria-valuemin="0" aria-valuemax="100">{{ percentage }}%</div>
+          </div>
+      </div>
+
       <div class="row form-group">
+      
         <input class="form-control-file" #userfile type="file" (change)="onChangeFileUpload( userfile )">
       </div>
+      
 
 
       <ng-container *ngIf=" ! user.logged ">

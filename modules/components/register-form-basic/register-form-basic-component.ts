@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -35,11 +35,13 @@ export class RegisterFormBasicComponent {
   data = <u>{};
 
   form: FormGroup;
+  percentage: number = 0;
 
   constructor (
     private router: Router,
     private fb: FormBuilder,
     public user: User,
+    private ngZone: NgZone,
     //private router: Router,
     private file: File ) {
 
@@ -152,12 +154,18 @@ export class RegisterFormBasicComponent {
 
 
 
-  onChangeFileUpload( fileInput ) {
-    let file = fileInput.files[0];
-    this.file.uploadPrimaryPhoto( file ).subscribe(res => {
+  onChangeFileUpload( _ ) {
+    this.file.uploadPrimaryPhoto( _.files[0], p => {
+      this.percentage = p;
+      this.ngZone.run( () => {} );
+      console.log('p: ', this.percentage);
+    } )
+    .subscribe(res => {
       console.log("Register::onChangeFileUpload:: success: ", res);
       (<u>this.data).primary_photo = res.data;
+      this.percentage = 0;
     }, err => {
+      this.percentage = 0;
       this.file.alert(err);
     });
   }

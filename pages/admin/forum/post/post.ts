@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from './../../services/admin.service';
 import {  File, PostData, PostConfig,
   POST, POSTS, POST_CREATE, POST_EDIT,
@@ -61,8 +61,7 @@ export class BackendAdminForumPostPage {
                private postData: PostData,
                private file: File,
                private postConfig: PostConfig,
-               private route: ActivatedRoute,
-               private modal       : NgbModal
+               private route: ActivatedRoute
   ) {
 
     admin.onClickMenuMore();
@@ -232,16 +231,18 @@ export class BackendAdminForumPostPage {
     let modalOption = {};
     //if ( option.class ) modalOption['windowClass'] = option.class;
     modalOption['windowClass'] = 'post-modal-view';
-    let modalRef = this.modal.open ( PostEditModalComponent, modalOption );
+    // @attention (commented-out by JaeHo) - Do not make the code depending on 3rd party.
+    
+    // let modalRef = this.modal.open ( PostEditModalComponent, modalOption );
 
 
-    modalRef.componentInstance['post'] = post;
+    // modalRef.componentInstance['post'] = post;
 
-    modalRef.result.then((result) => {
-      console.info( `Closed with: ${result}` );
-    }, (reason) => {
-      console.info( "dismissed", reason );
-    });
+    // modalRef.result.then((result) => {
+    //   console.info( `Closed with: ${result}` );
+    // }, (reason) => {
+    //   console.info( "dismissed", reason );
+    // });
   }
 
 

@@ -33,6 +33,7 @@ export class CommentFormBasicComponent implements OnInit {
   files: Array<_FILE> = [];
 
 
+  @Input() post: _POST;                 /// pass-by-reference. Parent post data.
   @Input() list: _POST_LIST_RESPONSE;    /// pass-by-reference. For inserting newly created comment in proper place.
 
   constructor(
@@ -43,7 +44,7 @@ export class CommentFormBasicComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    console.log('parent post: ', this.post);
     this.createForm();
   }
 
@@ -83,7 +84,9 @@ export class CommentFormBasicComponent implements OnInit {
 
 
       /// inserting comment into the proper position.
-      let post = this.list.data.posts.find( (post: _POST) => post.idx == res.data.root_idx );
+      //let post = this.list.data.posts.find( (post: _POST) => post.idx == res.data.root_idx );
+      let post = this.post;
+      console.log('parent post: ', post);
       if ( post === void 0 ) return;
       if ( post.comments === void 0 ) post.comments = [];
 

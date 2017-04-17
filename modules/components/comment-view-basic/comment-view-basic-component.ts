@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PostComment } from './../../../angular-backend';
 import {
     _COMMENT,
+    _POST,
     _POST_LIST_RESPONSE,
     _VOTE_RESPONSE,
     _REPORT_RESPONSE
@@ -15,6 +16,7 @@ export class CommentViewBasicComponent {
     @Input() comment: _COMMENT;
 
     mode: 'create' | 'edit' | '' = '';
+    @Input() post: _POST;
     @Input() list: _POST_LIST_RESPONSE;
     constructor(
         private postComment: PostComment,

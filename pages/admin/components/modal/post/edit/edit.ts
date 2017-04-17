@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import {  PostData,
     POST, POSTS, POST_LIST_RESPONSE
@@ -18,8 +18,8 @@ export class PostEditModalComponent{
     posts: POSTS = [];
 
     constructor(
-        private postData: PostData,
-        public activeModal: NgbActiveModal
+        private postData: PostData
+        // public activeModal: NgbActiveModal
     ) {
 
         //

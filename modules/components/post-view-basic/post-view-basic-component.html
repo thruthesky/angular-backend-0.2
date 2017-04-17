@@ -4,7 +4,7 @@
     <table>
       <tr>
         <td width="1%">
-          <img *ngIf=" post.user.url_primary_photo " src="{{ post.user.url_primary_photo }}"
+          <img *ngIf=" post.user?.url_primary_photo " src="{{ post.user.url_primary_photo }}"
           style=" width: 40px; height: 40px; border-radius: 50%; ">
         </td>
         <td>
@@ -46,9 +46,9 @@
 
 
 
-
 <comment-form-basic-component
   *ngIf = " showCommentForm "
+  [post] = " post "
   [list] = " list "
   [parent_idx]=" post.idx "
   (create) = " showCommentForm = false "

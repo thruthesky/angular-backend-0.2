@@ -8,7 +8,8 @@ import { _RESPONSE, _SESSION_INFO, _USER_SESSION_RESPONSE
 
 import {
     API_KEY_SESSION_INFO, ERROR_JSON_PARSE, ERROR_TIMEOUT,
-    ERROR_NO_ERROR_CODE
+    ERROR_NO_ERROR_CODE,
+    RES_ERROR_DISCONNECTED
 } from './define';
 
 
@@ -239,12 +240,15 @@ export class Api {
                 else return re;
              } )
             .catch( err => {
-                //console.log('caught an error: ', err);
+                console.log('Api::processQuery(): caught an error: ', err);
                 if ( err instanceof SyntaxError ) {
                     console.error(err); // debug
                     return Observable.throw( this.errorResponse( ERROR_JSON_PARSE )  ); // JSON 에러
                 }
-                else if ( err && typeof err['code'] !== void 0 && err['code'] < 0 ) return Observable.throw( err ); // 프로그램 적 에러
+                else if ( err && err['code'] !== void 0 && err['code'] < 0 ) return Observable.throw( err ); // 프로그램 적 에러
+                else if ( err['_body'] && err['_body']['total'] == 0 && err['_body']['type'] == 'error' ) {
+                    return Observable.throw( RES_ERROR_DISCONNECTED );
+                }
                 else return Observable.throw( err );
             } );
     }
@@ -451,7 +455,17 @@ export class Api {
       .replace(/%20/g, '+')
   }
 
+  /**
+   * 
+   * It gets 'YYYY-MM-DD' input value from form 'date' input and splits into 'birth_year', 'birth_month', 'birth_day'.
+   * 
+   * 
+   * @param u - user form.
+   */
   splitBirthdays( u ) {
+      u.birth_year = 0;
+      u.birth_month = 0;
+      u.birth_day = 0;
       if ( u['birthday'] !== void 0 && u['birthday'] && (<string>u['birthday']).indexOf('-') != -1 ) {
           let dates = (<string>u['birthday']).split( '-' );
           if ( dates.length == 3 ) {

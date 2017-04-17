@@ -479,11 +479,11 @@ export interface _LIST extends _REQUEST_O {
     page?: number;
 };
 
+export interface _DATA_REQUEST extends _REQUEST_O, _IDX_O, _ID_O {};
 
 
 
 export interface _DELETE_REQUEST extends _REQUEST_O, _IDX_O, _ID_O {}; // universal. all kinds of delete requst.
-export interface _DATA_REQUEST extends _REQUEST_O, _IDX_O, _ID_O {};
 export interface _DELETE_RESPONSE extends _RESPONSE {
     data: {
         idx?: number;
@@ -871,3 +871,11 @@ export interface _COMMENT_EDIT extends
 export interface _COMMENT_EDIT_RESPONSE extends
     _RESPONSE,
     _COMMENT_DATA {};
+
+
+export interface _POST_DATA_RESPONSE extends
+    _RESPONSE {
+        data: {
+            post: _POST;
+        }
+    };

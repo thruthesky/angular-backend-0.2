@@ -106,11 +106,13 @@ export class File extends Base {
       unique: 'Y',
       finish: 'Y'
     };
+    console.log("uploadUserPrimaryPhoto : ", req);
     return this.upload( req, file, callback );
   }
   
   uploadPrimaryPhoto( file, callback?: CALLBACK_NUMBER ) {
-    if ( this.logged ) return this.uploadUserPrimaryPhoto( file );
+    console.log("uploadPrimaryPhoto: ");
+    if ( this.logged ) return this.uploadUserPrimaryPhoto( file, callback );
     else return this.uploadAnonymousPrimaryPhoto( file, callback );
   }
 
