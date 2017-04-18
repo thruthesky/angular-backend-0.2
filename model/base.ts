@@ -1,6 +1,6 @@
 // import { Optional } from '@angular/core';
 import { Api } from '../api';
-import { URL_BACKEND_API, NO_OF_ITEMS_PER_PAGE } from '../config';
+import { NO_OF_ITEMS_PER_PAGE } from '../config';
 import {
     LIST,
     DATA_REQUEST,
@@ -130,7 +130,7 @@ export class Base extends Api {
    * @param idx 
    */  
   fileUrl( idx: number ) : string {
-    return URL_BACKEND_API + '?route=download&idx='+idx;
+    return this.backendUrl() + '?route=download&idx='+idx;
   }
 
 }

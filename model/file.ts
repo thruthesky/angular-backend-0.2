@@ -14,7 +14,6 @@ import {
 } from './../define';
 import { ProgressService } from "../services/progress";
 import { Observable } from "rxjs";
-import { URL_BACKEND_API } from "../config";
 export * from '../interface';
 export * from '../define';
 
@@ -52,7 +51,7 @@ export class File extends Base {
 
     console.log( file );
     console.log( formData ) ;
-    let o: Observable<any> = this.http.post( URL_BACKEND_API, formData );
+    let o: Observable<any> = this.http.post( this.backendUrl(), formData );
 
 
 

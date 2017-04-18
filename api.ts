@@ -29,6 +29,10 @@ export class Api {
 
 
 
+  backendUrl() {
+    if ( window['url_backend_api'] !== void 0 ) return window['url_backend_api'];
+    else return URL_BACKEND_API;
+  }
 
     /**
      *
@@ -185,10 +189,10 @@ export class Api {
 
         data = this.buildQuery( data );
 
-        let url = URL_BACKEND_API + '?' + data;
+        let url = this.backendUrl() + '?' + data;
         console.log("post: ", url); // debug in console
 
-        let o = this.http.post( URL_BACKEND_API, data, this.requestOptions )
+        let o = this.http.post( this.backendUrl(), data, this.requestOptions )
         return this.processQuery( o, option );
     }
 
@@ -349,30 +353,30 @@ export class Api {
     // }
 
     version() {
-        return this.get( URL_BACKEND_API + '?route=version');
+        return this.get( this.backendUrl() + '?route=version');
     }
 
     errorCall() {
-        return this.get( URL_BACKEND_API + '?route=system.error');
+        return this.get( this.backendUrl() + '?route=system.error');
     }
     successCall() {
         return this.version();
     }
     scriptError() {
-        return this.get( URL_BACKEND_API + '?route=system.scriptError');
+        return this.get( this.backendUrl() + '?route=system.scriptError');
     }
     timeoutError() {
-        return this.get( URL_BACKEND_API + '?route=system.timeoutError', { 'timeout': 1000 } );
+        return this.get( this.backendUrl() + '?route=system.timeoutError', { 'timeout': 1000 } );
     }
 
     internalServerError() {
-        return this.get( URL_BACKEND_API + '?route=system.internalServerError');
+        return this.get( this.backendUrl() + '?route=system.internalServerError');
     }
     routeMethodError() {
-        return this.get( URL_BACKEND_API + '?route=system.routeMethodError' );
+        return this.get( this.backendUrl() + '?route=system.routeMethodError' );
     }
     routeRequiredError() {
-        return this.get( URL_BACKEND_API + '?route=system.routeRequiredError' );
+        return this.get( this.backendUrl() + '?route=system.routeRequiredError' );
     }
 
 

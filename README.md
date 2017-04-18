@@ -30,6 +30,12 @@ $ git clone https://github.com/thruthesky/angular-backend
 
 
 
+# Examples
+
+* https://github.com/thruthesky/community-app
+* https://github.com/thruthesky/woman - Favorite functionality.
+
+
 
 # How To Use (사용법)
 
@@ -236,3 +242,81 @@ Below will show 'forum id' and 'content' input.
     ></post-form-basic-component>
 ````
 
+
+
+
+
+# How to set backend api.
+
+You can adjust it in angular-backend/config.ts
+
+Or you can adjust it in application code.
+
+
+````
+export class HomePage {
+    constructor() {
+        window['url_backend_api'] = "http://backend.sonub.com/index.php";
+    }
+}
+````
+
+
+
+
+# Meta - How to code with Meta
+
+````
+
+    onClickFavorite( post: _POST ) {
+        console.log("onClickFavorite: ", post);
+
+        if ( this.isFavorite( post ) ) { // alredy favorite. delete it.
+            let f = this.findFavorite( post );
+            this.meta.delete( f.idx ).subscribe( (res: _DELETE_RESPONSE) => {
+                console.log('delete favorite: ', res);
+                this.favorites.splice( this.favorites.findIndex(m => m.idx == res.data.idx), 1);
+            }, err => {
+                this.meta.alert( err );
+            });
+        }
+        else {
+            let req: _META_CREATE = {
+                model: 'favorite',
+                model_idx: post.idx,
+                code: '' + post.idx
+            };
+            this.meta.create( req ).subscribe( (res: _META_CREATE_RESPONSE) =>{
+                console.log('meta create: ', res);
+                this.favorites.push( res.data.meta );
+            }, err => {
+                this.meta.alert( err );
+            });
+        }
+    }
+
+    getFavorites() {
+        let req: _LIST = {
+            where: 'model=?',
+            bind: 'favorite',
+            limit: 100
+        };
+        this.meta.list( req ).subscribe( (res: _META_LIST_RESPONSE) =>{
+            console.log("favorites: ", res);
+            if ( res.data && res.data.meta && res.data.meta.length ) {
+                this.favorites = res.data.meta;
+            }
+            else {
+                // this.favorites;
+            }
+        }, err => {
+            this.meta.alert( err );
+        })
+    }
+    isFavorite( post ) {
+        return this.favorites.findIndex( (m: _META_FIELDS) => m.model_idx == post.idx ) != -1;
+    }
+    findFavorite( post ) {
+        return this.favorites.find( (m: _META_FIELDS) => m.model_idx == post.idx );
+    }
+````

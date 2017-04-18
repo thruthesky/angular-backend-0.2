@@ -6,6 +6,7 @@ import { PostConfig } from './model/post-config';
 import { PostComment } from './model/post-comment';
 import { Test } from './test/test';
 import { File } from './model/file';
+import { Meta } from './model/meta';
 import { Category } from "./model/category";
 import { ProgressService } from "./services/progress";
 import { BrowserXhr } from "@angular/http";
@@ -19,6 +20,7 @@ export { PostConfig } from './model/post-config';
 export { PostData } from './model/post-data';
 export { PostComment } from './model/post-comment';
 export { File } from './model/file';
+export { Meta } from './model/meta';
 export { Category } from './model/category';
 export { Test } from './test/test';
 
@@ -32,6 +34,7 @@ export { Test } from './test/test';
       PostComment,
       Test,
       File,
+      Meta,
       Category,
       ProgressService,
       { provide: BrowserXhr, useClass: CustomBrowserXhr } ]

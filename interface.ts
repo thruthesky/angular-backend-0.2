@@ -457,13 +457,6 @@ export interface _RESPONSE {
 };
 
 
-interface _META {
-    [key: string] : any;
-};
-interface _METAS {
-    meta?: Array<_META>;
-};
-
 
 
 //// global
@@ -888,3 +881,49 @@ export interface _POST_DATA_RESPONSE extends
             post: _POST;
         }
     };
+
+///
+/// Meta
+///
+
+
+interface _META {
+    [key: string] : any;
+};
+interface _METAS {
+    meta?: Array<_META>;
+};
+
+export interface _META_FIELDS {
+    idx: number;
+    created: number;
+    updated: number;
+    model: string;
+    model_idx: number;
+    code: string;
+    data: string;
+    user_idx: number;
+}
+
+export interface _META_CREATE extends _REQUEST_O {
+    model: string;
+    model_idx: number;
+    code: string;
+    data?: string;
+}
+
+export interface _META_CREATE_RESPONSE extends _RESPONSE {
+    data: {
+        meta: _META_FIELDS
+    }
+}
+
+
+export interface _META_LIST_RESPONSE extends _RESPONSE {
+    data: {
+        meta: Array<_META_FIELDS>;
+        total: number;
+        page: number;
+        limit: number;
+    }
+};
