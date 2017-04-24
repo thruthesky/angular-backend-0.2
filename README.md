@@ -320,3 +320,4 @@ export class HomePage {
         return this.favorites.find( (m: _META_FIELDS) => m.model_idx == post.idx );
     }
 ````
+"." 
