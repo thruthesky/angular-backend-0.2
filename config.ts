@@ -9,3 +9,5 @@ export const URL_BACKEND_API = 'http://backend.org/index.php'; // Mr. Song's tes
 export const BACKEND_API_CONNECTION_TIMEOUT = 45000; // request time out
 
 export const NO_OF_ITEMS_PER_PAGE = 5;
+
+
